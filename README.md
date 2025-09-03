@@ -1,2 +1,0 @@
-# Azavista
-payload project

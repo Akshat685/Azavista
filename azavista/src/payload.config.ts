@@ -7,8 +7,15 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+// ✅ Import the Cloudinary plugin
+import { cloudinaryStorage } from 'payload-cloudinary'
+
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Navbar } from './collections/Navbar'
+import { Hero } from './collections/Hero'
+import { SmarterEvents } from './collections/SmarterEvents'
+import { EventFeatures } from './collections/EventFeatures'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Navbar , Hero , SmarterEvents , EventFeatures],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -34,6 +41,18 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
+
+    // ✅ Cloudinary plugin config
+    cloudinaryStorage({
+      config: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+      },
+      collections: {
+        media: true, // 👈 enable Cloudinary uploads for your "Media" collection
+      },
+      folder: 'azavista-media', // 👈 optional: set default Cloudinary folder
+    }),
   ],
 })
