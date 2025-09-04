@@ -73,6 +73,10 @@ export interface Config {
     hero: Hero;
     smarterEvents: SmarterEvent;
     'event-features': EventFeature;
+    'custom-feature': CustomFeature;
+    'why-azavista': WhyAzavista;
+    caseStudiesBlock: CaseStudiesBlock;
+    testimonialsBlock: TestimonialsBlock;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +89,10 @@ export interface Config {
     hero: HeroSelect<false> | HeroSelect<true>;
     smarterEvents: SmarterEventsSelect<false> | SmarterEventsSelect<true>;
     'event-features': EventFeaturesSelect<false> | EventFeaturesSelect<true>;
+    'custom-feature': CustomFeatureSelect<false> | CustomFeatureSelect<true>;
+    'why-azavista': WhyAzavistaSelect<false> | WhyAzavistaSelect<true>;
+    caseStudiesBlock: CaseStudiesBlockSelect<false> | CaseStudiesBlockSelect<true>;
+    testimonialsBlock: TestimonialsBlockSelect<false> | TestimonialsBlockSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -302,26 +310,106 @@ export interface SmarterEvent {
  */
 export interface EventFeature {
   id: number;
-  tabLabel: string;
-  heading: string;
-  description: {
-    root: {
-      type: string;
-      children: {
+  tabs: {
+    tabLabel: string;
+    heading: string;
+    description: {
+      root: {
         type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      [k: string]: unknown;
     };
-    [k: string]: unknown;
-  };
+    image: number | Media;
+    id?: string | null;
+  }[];
   buttonLabel?: string | null;
   buttonUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "custom-feature".
+ */
+export interface CustomFeature {
+  id: number;
+  subheading: string;
+  heading: string;
+  buttonLabel: string;
+  buttonUrl: string;
   image: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-azavista".
+ */
+export interface WhyAzavista {
+  id: number;
+  badge: string;
+  title: string;
+  subtitle: string;
+  features?:
+    | {
+        icon: number | Media;
+        headingBlue: string;
+        headingBlack: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "caseStudiesBlock".
+ */
+export interface CaseStudiesBlock {
+  id: number;
+  badge: string;
+  title: string;
+  subtitle?: string | null;
+  cards?:
+    | {
+        category?: string | null;
+        title?: string | null;
+        description?: string | null;
+        image?: (number | null) | Media;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  id: number;
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  items?:
+    | {
+        quote: string;
+        author: string;
+        role?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -355,6 +443,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'event-features';
         value: number | EventFeature;
+      } | null)
+    | ({
+        relationTo: 'custom-feature';
+        value: number | CustomFeature;
+      } | null)
+    | ({
+        relationTo: 'why-azavista';
+        value: number | WhyAzavista;
+      } | null)
+    | ({
+        relationTo: 'caseStudiesBlock';
+        value: number | CaseStudiesBlock;
+      } | null)
+    | ({
+        relationTo: 'testimonialsBlock';
+        value: number | TestimonialsBlock;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -523,12 +627,90 @@ export interface SmarterEventsSelect<T extends boolean = true> {
  * via the `definition` "event-features_select".
  */
 export interface EventFeaturesSelect<T extends boolean = true> {
-  tabLabel?: T;
+  tabs?:
+    | T
+    | {
+        tabLabel?: T;
+        heading?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  buttonLabel?: T;
+  buttonUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "custom-feature_select".
+ */
+export interface CustomFeatureSelect<T extends boolean = true> {
+  subheading?: T;
   heading?: T;
-  description?: T;
   buttonLabel?: T;
   buttonUrl?: T;
   image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-azavista_select".
+ */
+export interface WhyAzavistaSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        headingBlue?: T;
+        headingBlack?: T;
+        description?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "caseStudiesBlock_select".
+ */
+export interface CaseStudiesBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        category?: T;
+        title?: T;
+        description?: T;
+        image?: T;
+        link?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        quote?: T;
+        author?: T;
+        role?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

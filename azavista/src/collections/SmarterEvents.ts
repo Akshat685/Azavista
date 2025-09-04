@@ -1,6 +1,6 @@
-import type { Block } from "payload";
+import type { CollectionConfig } from "payload";
 
-export const SmarterEvents : Block = {
+export const SmarterEvents : CollectionConfig = {
   slug: "smarterEvents",
   labels: {
     singular: "SmartEvent Feature",

@@ -1,4 +1,3 @@
-// storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -7,7 +6,6 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-// ✅ Import the Cloudinary plugin
 import { cloudinaryStorage } from 'payload-cloudinary'
 
 import { Users } from './collections/Users'
@@ -16,6 +14,10 @@ import { Navbar } from './collections/Navbar'
 import { Hero } from './collections/Hero'
 import { SmarterEvents } from './collections/SmarterEvents'
 import { EventFeatures } from './collections/EventFeatures'
+import { CustomFeature } from './collections/CustomFeature'
+import { WhyAzavista } from './collections/WhyAzavista'
+import { CaseStudies } from './collections/CaseStudies'
+import { Testimonials } from './collections/Testimonials'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Navbar , Hero , SmarterEvents , EventFeatures],
+  collections: [Users, Media, Navbar, Hero, SmarterEvents, EventFeatures, CustomFeature, WhyAzavista, CaseStudies , Testimonials],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -42,7 +44,6 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
 
-    // ✅ Cloudinary plugin config
     cloudinaryStorage({
       config: {
         cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -50,9 +51,9 @@ export default buildConfig({
         api_secret: process.env.CLOUDINARY_API_SECRET,
       },
       collections: {
-        media: true, // 👈 enable Cloudinary uploads for your "Media" collection
+        media: true, 
       },
-      folder: 'azavista-media', // 👈 optional: set default Cloudinary folder
+      folder: 'azavista-media', 
     }),
   ],
 })

@@ -7,6 +7,10 @@ import Navbar from './components/Navbar';
 import HeroBlock from './components/HeroBlock';
 import SmarterEvents from './components/SmarterEvents';
 import TabsSection from './components/TabsSection';
+import CustomFeature from './components/CustomFeature';
+import WhyAzavista from './components/WhyAzavista';
+import CaseStudies from './components/CaseStudies';
+import Testimonials from './components/Testimonials';
 
 export default async function HomePage() {
   const payload = await getPayload({ config });
@@ -25,19 +29,22 @@ export default async function HomePage() {
   });
   const smartEvent = smartEventRes.docs[0];
 
-  // Fetch Event Features (Tabs)
-  const tabsRes = await payload.find({
-    collection: 'event-features',
-    limit: 5,
+  const caseStudiesRes = await payload.find({
+    collection: 'caseStudiesBlock',
+    limit: 1,
   });
-  const tabs = tabsRes.docs;
+  const caseStudies = caseStudiesRes.docs[0];
 
   return (
     <>
       <Navbar />
       {hero && <HeroBlock data={hero} />}
       {smartEvent && <SmarterEvents data={smartEvent} />}
-      {tabs.length > 0 && <TabsSection tabs={tabs} />}
+      <TabsSection />
+      <CustomFeature />
+      <WhyAzavista />
+      {caseStudies && <CaseStudies data={caseStudies} />}
+      <Testimonials />
     </>
   );
 }

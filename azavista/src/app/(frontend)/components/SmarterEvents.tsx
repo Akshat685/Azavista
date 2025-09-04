@@ -22,8 +22,8 @@ export default function SmarterEvents({ data }: { data: any }) {
     const imgHeight = image?.cloudinary?.height || 400;
 
     return (
-        <section className="py-16 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 bg-white mb-12">
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-4">
                 {heading && (
                     <h1 className="text-center text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-20 mt-4">
                         {heading}
