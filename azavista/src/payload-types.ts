@@ -77,6 +77,9 @@ export interface Config {
     'why-azavista': WhyAzavista;
     caseStudiesBlock: CaseStudiesBlock;
     testimonialsBlock: TestimonialsBlock;
+    Seamless: Seamless;
+    getstarted: Getstarted;
+    footer: Footer;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -93,6 +96,9 @@ export interface Config {
     'why-azavista': WhyAzavistaSelect<false> | WhyAzavistaSelect<true>;
     caseStudiesBlock: CaseStudiesBlockSelect<false> | CaseStudiesBlockSelect<true>;
     testimonialsBlock: TestimonialsBlockSelect<false> | TestimonialsBlockSelect<true>;
+    Seamless: SeamlessSelect<false> | SeamlessSelect<true>;
+    getstarted: GetstartedSelect<false> | GetstartedSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -415,6 +421,74 @@ export interface TestimonialsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Seamless".
+ */
+export interface Seamless {
+  id: number;
+  title: string;
+  description?: string | null;
+  buttonLabel?: string | null;
+  buttonUrl?: string | null;
+  mainLogo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "getstarted".
+ */
+export interface Getstarted {
+  id: number;
+  sectionLabel: string;
+  heading: string;
+  description: string;
+  buttonText: string;
+  buttonLink: string;
+  backgroundImage: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  logo: number | Media;
+  headquarters?:
+    | {
+        title: string;
+        address: string;
+        id?: string | null;
+      }[]
+    | null;
+  links?:
+    | {
+        groupTitle: string;
+        items?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform: string;
+        url: string;
+        icon: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  copyright: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -459,6 +533,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'testimonialsBlock';
         value: number | TestimonialsBlock;
+      } | null)
+    | ({
+        relationTo: 'Seamless';
+        value: number | Seamless;
+      } | null)
+    | ({
+        relationTo: 'getstarted';
+        value: number | Getstarted;
+      } | null)
+    | ({
+        relationTo: 'footer';
+        value: number | Footer;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -711,6 +797,71 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
         role?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Seamless_select".
+ */
+export interface SeamlessSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  buttonLabel?: T;
+  buttonUrl?: T;
+  mainLogo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "getstarted_select".
+ */
+export interface GetstartedSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  description?: T;
+  buttonText?: T;
+  buttonLink?: T;
+  backgroundImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  headquarters?:
+    | T
+    | {
+        title?: T;
+        address?: T;
+        id?: T;
+      };
+  links?:
+    | T
+    | {
+        groupTitle?: T;
+        items?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        icon?: T;
+        id?: T;
+      };
+  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
 }

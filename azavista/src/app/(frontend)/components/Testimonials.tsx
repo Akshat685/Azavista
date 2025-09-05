@@ -53,7 +53,7 @@ export default async function Testimonials(): Promise<JSX.Element | null> {
                     {data.items?.map((item: TestimonialItem, index: number) => (
                         <div
                             key={index}
-                            className="bg-blue-50 rounded-lg p-6 text-left shadow-sm relative"
+                            className="bg-gray-100 rounded-lg p-6 text-left shadow-sm relative"
                         >
                             {/* Quote Icon - Fixed syntax */}
                             <div className="absolute top-6 left-6 text-6xl text-blue-200 font-serif leading-none">

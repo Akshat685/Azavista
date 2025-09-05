@@ -4,12 +4,10 @@ import { CollectionConfig } from "payload";
 export const EventFeatures: CollectionConfig = {
   slug: "event-features",
   labels: {
-    singular: "Event Features Section",
-    plural: "Event Features Sections",
+    singular: "Tabs Section",
+    plural: "Tabs Sections",
   },
-  admin: {
-    useAsTitle: "id", // shows ID in the admin list
-  },
+ 
   fields: [
     {
       name: "tabs",

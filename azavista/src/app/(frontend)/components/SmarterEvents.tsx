@@ -1,9 +1,34 @@
-"use client";
-
 import Image from "next/image";
 import { FaChartBar } from "react-icons/fa";
+import { getPayload } from "payload";
+import config from "@/payload.config";
 
-export default function SmarterEvents({ data }: { data: any }) {
+interface CloudinaryImage {
+    cloudinary?: {
+        secure_url?: string;
+        width?: number;
+        height?: number;
+    };
+    url?: string;
+    thumbnailURL?: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+}
+
+
+export default async function SmarterEvents() {
+    const payload = await getPayload({ config });
+
+    const smartEventRes = await payload.find({
+        collection: "smarterEvents",
+        limit: 1,
+        depth: 1,
+    });
+
+    const data = smartEventRes.docs[0];
+    if (!data) return null;
+
     const {
         heading,
         image,
@@ -16,10 +41,13 @@ export default function SmarterEvents({ data }: { data: any }) {
         secondaryButtonUrl,
     } = data;
 
+    const media = image as CloudinaryImage | undefined;
+
     const imageUrl =
-        image?.cloudinary?.secure_url || image?.url || image?.thumbnailURL || "";
-    const imgWidth = image?.cloudinary?.width || 600;
-    const imgHeight = image?.cloudinary?.height || 400;
+        media?.cloudinary?.secure_url || media?.url || media?.thumbnailURL || "";
+    const imgWidth = media?.cloudinary?.width || 600;
+    const imgHeight = media?.cloudinary?.height || 400;
+    const imageAlt = media?.alt || "Feature image";
 
     return (
         <section className="py-16 bg-white mb-12">
@@ -36,7 +64,7 @@ export default function SmarterEvents({ data }: { data: any }) {
                             {imageUrl ? (
                                 <Image
                                     src={imageUrl}
-                                    alt={image?.alt || "Feature image"}
+                                    alt={imageAlt}
                                     width={imgWidth}
                                     height={imgHeight}
                                     className="object-cover h-[320px] w-full"
@@ -49,17 +77,16 @@ export default function SmarterEvents({ data }: { data: any }) {
                         </div>
                     </div>
 
-
                     <div>
                         {categoryLabel && (
-                            <div className="flex items-center gap-2 text-[#3BB7C4] font-semibold text-lg mb-10 ">
+                            <div className="flex items-center gap-2 text-[#3BB7C4] font-semibold text-lg mb-10">
                                 <FaChartBar className="text-lg" />
                                 <span className="text-[black]">{categoryLabel}</span>
                             </div>
                         )}
 
                         {title && (
-                            <h3 className="text-2xl sm:text-3xl  text-gray-900 mb-10">
+                            <h3 className="text-2xl sm:text-3xl text-gray-900 mb-10">
                                 {title}
                             </h3>
                         )}

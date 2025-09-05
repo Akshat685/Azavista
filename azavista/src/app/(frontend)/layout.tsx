@@ -1,16 +1,25 @@
 import React from "react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 export const metadata = {
-  description: "A blank template using Payload in a Next.js app.",
-  title: "Payload Blank Template",
+  description: "Azavista Website",
+  title: "Azavista Website",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
+        <Navbar />
 
         <main className="container mx-auto">{children}</main>
+
+        <Footer />
       </body>
     </html>
   );

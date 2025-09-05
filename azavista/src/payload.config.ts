@@ -18,6 +18,12 @@ import { CustomFeature } from './collections/CustomFeature'
 import { WhyAzavista } from './collections/WhyAzavista'
 import { CaseStudies } from './collections/CaseStudies'
 import { Testimonials } from './collections/Testimonials'
+import { Seamless } from './collections/Seamless'
+import { Getstarted } from './collections/GetStarted'
+import { Footer } from './collections/Footer'
+// import { PlatformMenu } from './collections/PlatformMenu'
+// import { SolutionsMenu } from './collections/SolutionsMenu'
+// import { ResourcesMenu } from './collections/ResourcesMenu'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -29,7 +35,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Navbar, Hero, SmarterEvents, EventFeatures, CustomFeature, WhyAzavista, CaseStudies , Testimonials],
+  collections: [Users, Media, Navbar, Hero, SmarterEvents, EventFeatures,
+    CustomFeature, WhyAzavista, CaseStudies, Testimonials, Seamless, Getstarted, Footer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -46,14 +53,15 @@ export default buildConfig({
 
     cloudinaryStorage({
       config: {
-        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET,
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "",
+        api_key: process.env.CLOUDINARY_API_KEY || "",
+        api_secret: process.env.CLOUDINARY_API_SECRET || "",
+
       },
       collections: {
-        media: true, 
+        media: true,
       },
-      folder: 'azavista-media', 
+      folder: 'azavista-media',
     }),
   ],
 })
