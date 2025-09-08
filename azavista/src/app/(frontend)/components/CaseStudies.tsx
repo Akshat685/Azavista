@@ -1,4 +1,3 @@
-// src/app/(frontend)/components/CaseStudies.tsx
 import { getPayload } from "payload";
 import config from "@/payload.config";
 import Image from "next/image";

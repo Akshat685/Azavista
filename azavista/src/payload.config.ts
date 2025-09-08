@@ -21,9 +21,7 @@ import { Testimonials } from './collections/Testimonials'
 import { Seamless } from './collections/Seamless'
 import { Getstarted } from './collections/GetStarted'
 import { Footer } from './collections/Footer'
-// import { PlatformMenu } from './collections/PlatformMenu'
-// import { SolutionsMenu } from './collections/SolutionsMenu'
-// import { ResourcesMenu } from './collections/ResourcesMenu'
+
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

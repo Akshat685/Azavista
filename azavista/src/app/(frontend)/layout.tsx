@@ -3,8 +3,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 export const metadata = {
+  title: "Azavista ",
   description: "Azavista Website",
-  title: "Azavista Website",
 };
 
 export default async function RootLayout({
