@@ -12,6 +12,8 @@ import Testimonials from './components/Testimonials';
 import Seamless from './components/Seamless';
 import Getstarted from './components/Getstarted';
 
+export const revalidate = 60; //60secs
+
 export default async function HomePage() {
 
   return (
