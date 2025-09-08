@@ -7,6 +7,9 @@ export const EventFeatures: CollectionConfig = {
     singular: "Tabs Section",
     plural: "Tabs Sections",
   },
+  access: {
+    read: () => true, 
+  },
  
   fields: [
     {

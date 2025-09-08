@@ -8,6 +8,26 @@ export const PlatformMenu: CollectionConfig = {
   },
   fields: [
     {
+      name: "highlight",
+      type: "group",
+      fields: [
+        { name: "title", type: "text" },
+        { name: "description", type: "textarea" },
+        { name: "link", type: "text" },
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
+    },
+    {
+      name: "order",
+      type: "number",
+      label: "Order",
+      defaultValue: 0,
+    },
+    {
       name: "category",
       type: "text",
       required: true,

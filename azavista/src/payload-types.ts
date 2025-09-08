@@ -70,6 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     navbar: Navbar;
+    platformMenu: PlatformMenu;
+    solutionsMenu: SolutionsMenu;
+    resourcesMenu: ResourcesMenu;
     hero: Hero;
     smarterEvents: SmarterEvent;
     'event-features': EventFeature;
@@ -89,6 +92,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     navbar: NavbarSelect<false> | NavbarSelect<true>;
+    platformMenu: PlatformMenuSelect<false> | PlatformMenuSelect<true>;
+    solutionsMenu: SolutionsMenuSelect<false> | SolutionsMenuSelect<true>;
+    resourcesMenu: ResourcesMenuSelect<false> | ResourcesMenuSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     smarterEvents: SmarterEventsSelect<false> | SmarterEventsSelect<true>;
     'event-features': EventFeaturesSelect<false> | EventFeaturesSelect<true>;
@@ -263,6 +269,76 @@ export interface Navbar {
     | null;
   ctaLabel?: string | null;
   ctaUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "platformMenu".
+ */
+export interface PlatformMenu {
+  id: number;
+  highlight?: {
+    title?: string | null;
+    description?: string | null;
+    link?: string | null;
+    image?: (number | null) | Media;
+  };
+  order?: number | null;
+  category: string;
+  items: {
+    title: string;
+    description?: string | null;
+    link: string;
+    icon?: (number | null) | Media;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "solutionsMenu".
+ */
+export interface SolutionsMenu {
+  id: number;
+  order?: number | null;
+  highlight?: {
+    title?: string | null;
+    description?: string | null;
+    link?: string | null;
+    image?: (number | null) | Media;
+  };
+  category: string;
+  items?:
+    | {
+        title: string;
+        description?: string | null;
+        link?: string | null;
+        icon?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resourcesMenu".
+ */
+export interface ResourcesMenu {
+  id: number;
+  order?: number | null;
+  category: string;
+  items?:
+    | {
+        title: string;
+        description?: string | null;
+        link?: string | null;
+        icon?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -507,6 +583,18 @@ export interface PayloadLockedDocument {
         value: number | Navbar;
       } | null)
     | ({
+        relationTo: 'platformMenu';
+        value: number | PlatformMenu;
+      } | null)
+    | ({
+        relationTo: 'solutionsMenu';
+        value: number | SolutionsMenu;
+      } | null)
+    | ({
+        relationTo: 'resourcesMenu';
+        value: number | ResourcesMenu;
+      } | null)
+    | ({
         relationTo: 'hero';
         value: number | Hero;
       } | null)
@@ -663,6 +751,79 @@ export interface NavbarSelect<T extends boolean = true> {
       };
   ctaLabel?: T;
   ctaUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "platformMenu_select".
+ */
+export interface PlatformMenuSelect<T extends boolean = true> {
+  highlight?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        link?: T;
+        image?: T;
+      };
+  order?: T;
+  category?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        link?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "solutionsMenu_select".
+ */
+export interface SolutionsMenuSelect<T extends boolean = true> {
+  order?: T;
+  highlight?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        link?: T;
+        image?: T;
+      };
+  category?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        link?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resourcesMenu_select".
+ */
+export interface ResourcesMenuSelect<T extends boolean = true> {
+  order?: T;
+  category?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        link?: T;
+        icon?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

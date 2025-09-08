@@ -7,6 +7,7 @@ export const SolutionsMenu: CollectionConfig = {
     plural: "Solutions Menu",
   },
   fields: [
+    { name: "order", type: "number", label: "Order", defaultValue: 0 },
     {
       name: "highlight", // big left card
       type: "group",

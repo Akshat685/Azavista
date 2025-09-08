@@ -7,6 +7,7 @@ export const ResourcesMenu: CollectionConfig = {
     plural: "Resources Menu",
   },
   fields: [
+    { name: "order", type: "number", label: "Order", defaultValue: 0 },
     {
       name: "category",
       type: "text", // "Learn" or "Connect"

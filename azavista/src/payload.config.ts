@@ -21,6 +21,9 @@ import { Testimonials } from './collections/Testimonials'
 import { Seamless } from './collections/Seamless'
 import { Getstarted } from './collections/GetStarted'
 import { Footer } from './collections/Footer'
+import { PlatformMenu } from './collections/PlatformMenu'
+import { ResourcesMenu } from './collections/ResourcesMenu'
+import { SolutionsMenu } from './collections/SolutionsMenu'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -33,8 +36,24 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Navbar, Hero, SmarterEvents, EventFeatures,
-    CustomFeature, WhyAzavista, CaseStudies, Testimonials, Seamless, Getstarted, Footer],
+  collections: [
+    Users,
+    Media,
+    Navbar,
+    PlatformMenu,
+    SolutionsMenu,
+    ResourcesMenu,
+    Hero,
+    SmarterEvents,
+    EventFeatures,
+    CustomFeature,
+    WhyAzavista,
+    CaseStudies,
+    Testimonials,
+    Seamless,
+    Getstarted,
+    Footer,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
