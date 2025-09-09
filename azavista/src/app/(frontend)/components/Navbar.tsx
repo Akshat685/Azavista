@@ -98,9 +98,9 @@ export default async function Navbar() {
     }
 
     return (
-      <nav className="sticky top-0 bg-white z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
-          <div className="flex items-center h-16">
+      <nav className="sticky top-0 bg-[#f1f4f9] z-50 ">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
               {logoUrl ? (
@@ -109,116 +109,240 @@ export default async function Navbar() {
                   alt={logoAlt}
                   width={logoWidth}
                   height={logoHeight}
-                  className="h-8 w-auto sm:h-10"
+                  className="h-8 w-auto"
                   priority
                 />
               ) : (
-                <span className="text-gray-500 font-bold text-sm sm:text-base">
-                  No Logo
-                </span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-blue-600 rounded"></div>
+                  <span className="text-gray-900 font-bold text-lg">AZAVISTA</span>
+                  <span className="text-xs text-gray-500 font-medium">EVENT TECHNOLOGY</span>
+                </div>
               )}
             </div>
 
-            {/* Desktop Links + Mega menus */}
-            <div className="hidden ml-10 md:flex flex-grow items-center">
-              <div className="flex items-baseline space-x-4 lg:space-x-8">
-                {/* Platform mega - optional highlight + four columns */}
-                <div className="relative group">
-                  <span className="cursor-pointer text-gray-700 hover:text-blue-600 px-3 py-2 text-sm lg:text-base font-medium rounded-md">Platform</span>
-                  <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition duration-200 fixed left-1/2 -translate-x-1/2 top-16 bg-white shadow-xl rounded-xl p-6 border border-gray-100 w-[calc(100vw-48px)] max-w-[1400px] pointer-events-none z-50">
-                    <div className={`pointer-events-auto grid gap-12 ${platformHighlight
-                        ? 'grid-cols-[300px,repeat(2,minmax(220px,1fr))] lg:grid-cols-[300px,repeat(3,minmax(220px,1fr))] xl:grid-cols-[300px,repeat(4,minmax(240px,1fr))]'
-                        : 'grid-cols-[repeat(2,minmax(220px,1fr))] lg:grid-cols-[repeat(3,minmax(220px,1fr))] xl:grid-cols-[repeat(4,minmax(240px,1fr))]'
-                      }`}>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              {/* Platform */}
+              <div className="relative group">
+                <button className="text-gray-600 hover:text-blue-600 text-sm font-medium py-4 border-b-2 border-transparent group-hover:border-blue-600  transition-all duration-200">
+                  Platform
+                </button>
+                <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 fixed left-0 right-0 top-16 bg-white  w-screen pointer-events-none z-50">
+                  <div className="pointer-events-auto p-8">
+                    <div className="flex gap-8">
+                      {/* Left highlight section */}
                       {platformHighlight?.highlight && (
-                        <div className="bg-gray-50 rounded-xl p-5">
-                          {(() => {
-                            const hl = platformHighlight.highlight;
-                            const img = mediaUrl(hl?.image as Media | number | undefined);
-                            return (
-                              <div>
-                                {img && (
-                                  <Image src={img} alt={hl?.title || "Highlight"} width={280} height={180} className="rounded-xl object-cover mb-4" />
-                                )}
-                                <h4 className="text-lg font-semibold mb-2">{hl?.title}</h4>
-                                <p className="text-sm text-gray-600 mb-3">{hl?.description}</p>
-                                {hl?.link && (
-                                  <Link href={hl.link} className="text-blue-600 text-sm font-medium">Contact Sales &gt;</Link>
-                                )}
-                              </div>
-                            );
-                          })()}
+                        <div className="w-80 flex-shrink-0">
+                          <div className="bg-gray-50 rounded-lg p-6">
+                            {(() => {
+                              const hl = platformHighlight.highlight;
+                              const img = mediaUrl(hl?.image as Media | number | undefined);
+                              return (
+                                <>
+                                  {img && (
+                                    <div className="mb-4">
+                                      <Image
+                                        src={img}
+                                        alt={hl?.title || ""}
+                                        width={320}
+                                        height={180}
+                                        className="rounded-lg w-full h-40 object-cover"
+                                      />
+                                    </div>
+                                  )}
+                                  <h3 className="text-lg font-bold text-gray-900 mb-2">
+                                    {hl?.title}
+                                  </h3>
+                                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                                    {hl?.description}
+                                  </p>
+                                  {hl?.link && (
+                                    <Link
+                                      href={hl.link}
+                                      className="text-blue-600 text-sm font-medium hover:text-blue-700"
+                                    >
+                                      Contact Sales &gt;
+                                    </Link>
+                                  )}
+                                </>
+                              );
+                            })()}
+                          </div>
                         </div>
                       )}
 
-                      {platformColumns.map((doc, i) => (
-                        <div key={i} className="md:col-span-1">
-                          <p className="uppercase text-xs tracking-wider text-gray-500 font-semibold mb-3">{doc.category}</p>
-                          <ul className="space-y-4">
-                            {doc.items?.map((item, idx) => (
-                              <li key={idx} className="flex gap-3">
-                                {item.icon && (<Image src={mediaUrl(item.icon)} alt={item.title} width={24} height={24} className="mt-1" />)}
-                                <div>
-                                  <Link href={item.link || "#"} className="text-sm font-semibold text-gray-900 hover:text-blue-600">{item.title}</Link>
-                                  {item.description && (<p className="text-xs text-gray-500 mt-1 max-w-xs">{item.description}</p>)}
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
+                      {/* Right columns */}
+                      <div className="flex-1 grid grid-cols-4 gap-8">
+                        {platformColumns.slice(0, 4).map((doc, i) => (
+                          <div key={i}>
+                            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                              {doc.category}
+                            </h4>
+                            <ul className="space-y-3">
+                              {doc.items?.map((item, idx) => (
+                                <li key={idx} className="flex items-start space-x-3">
+                                  {item.icon && (
+                                    <Image
+                                      src={mediaUrl(item.icon)}
+                                      alt=""
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5 mt-0.5 flex-shrink-0"
+                                    />
+                                  )}
+                                  <div>
+                                    <Link
+                                      href={item.link || "#"}
+                                      className="text-sm font-semibold text-gray-900 hover:text-blue-600 block"
+                                    >
+                                      {item.title}
+                                    </Link>
+                                    {item.description && (
+                                      <p className="text-xs text-gray-500 mt-1">
+                                        {item.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Solutions mega with highlight card */}
-                <div className="relative group">
-                  <span className="cursor-pointer text-gray-700 hover:text-blue-600 px-3 py-2 text-sm lg:text-base font-medium rounded-md">Solutions</span>
-                  <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition duration-200 fixed left-1/2 -translate-x-1/2 top-16 bg-white shadow-lg rounded-xl p-5 border border-gray-100 w-[calc(100vw-48px)] max-w-[1600px] pointer-events-none z-50">
-                    <div className={`pointer-events-auto grid gap-12 ${solutionsHighlight
-                        ? 'grid-cols-[300px,repeat(2,minmax(200px,1fr))] lg:grid-cols-[300px,repeat(4,minmax(220px,1fr))] xl:grid-cols-[300px,repeat(5,minmax(220px,1fr))]'
-                        : 'grid-cols-[repeat(2,minmax(200px,1fr))] lg:grid-cols-[repeat(4,minmax(220px,1fr))] xl:grid-cols-[repeat(5,minmax(220px,1fr))]'
-                      }`}>
-                      {/* Highlight (fixed first column) */}
+              {/* Solutions */}
+              <div className="relative group">
+                <button className="text-gray-600 hover:text-blue-600 text-sm font-medium py-4 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-200">
+                  Solutions
+                </button>
+                <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 fixed left-0 right-0 top-16 bg-white w-screen pointer-events-none z-50">
+                  <div className="pointer-events-auto p-8">
+                    <div className="flex gap-8">
+                      {/* Left highlight section */}
                       {solutionsHighlight?.highlight && (
-                        <div className="bg-gray-50 rounded-xl p-5">
-                          {(() => {
-                            const hl = solutionsHighlight.highlight;
-                            const img = mediaUrl(hl?.image as Media | number | undefined);
-                            return (
-                              <div>
-                                {img && (
-                                  <Image src={img} alt={hl?.title || "Highlight"} width={280} height={180} className="rounded-xl object-cover mb-4" />
-                                )}
-                                <h4 className="text-lg font-semibold mb-2">{hl?.title}</h4>
-                                <p className="text-sm text-gray-600 mb-3">{hl?.description}</p>
-                                {hl?.link && (
-                                  <Link href={hl.link} className="text-blue-600 text-sm font-medium">
-                                    Contact Sales &gt;
-                                  </Link>
-                                )}
-                              </div>
-                            );
-                          })()}
+                        <div className="w-80 flex-shrink-0">
+                          <div className="bg-gray-50 rounded-lg p-6">
+                            {(() => {
+                              const hl = solutionsHighlight.highlight;
+                              const img = mediaUrl(hl?.image as Media | number | undefined);
+                              return (
+                                <>
+                                  {img && (
+                                    <div className="mb-4">
+                                      <Image
+                                        src={img}
+                                        alt={hl?.title || ""}
+                                        width={320}
+                                        height={180}
+                                        className="rounded-lg w-full h-40 object-cover"
+                                      />
+                                    </div>
+                                  )}
+                                  <h3 className="text-lg font-bold text-gray-900 mb-2">
+                                    {hl?.title}
+                                  </h3>
+                                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                                    {hl?.description}
+                                  </p>
+                                  {hl?.link && (
+                                    <Link
+                                      href={hl.link}
+                                      className="text-blue-600 text-sm font-medium hover:text-blue-700"
+                                    >
+                                      Contact Sales &gt;
+                                    </Link>
+                                  )}
+                                </>
+                              );
+                            })()}
+                          </div>
                         </div>
                       )}
 
-                      {/* Dynamic columns */}
-                      {solutionsColumns.map((doc, i) => (
-                        <div key={i} className="md:col-span-1">
-                          <p className="uppercase text-xs tracking-wider text-gray-500 font-semibold mb-3">{doc.category}</p>
-                          <ul className="space-y-4">
+                      {/* Right columns - 4 columns for solutions */}
+                      <div className="flex-1 grid grid-cols-4 gap-8">
+                        {solutionsColumns.slice(0, 4).map((doc, i) => (
+                          <div key={i}>
+                            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                              {doc.category}
+                            </h4>
+                            <ul className="space-y-3">
+                              {doc.items?.map((item, idx) => (
+                                <li key={idx} className="flex items-start space-x-3">
+                                  {item.icon && (
+                                    <Image
+                                      src={mediaUrl(item.icon)}
+                                      alt=""
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5 mt-0.5 flex-shrink-0"
+                                    />
+                                  )}
+                                  <div>
+                                    <Link
+                                      href={item.link || "#"}
+                                      className="text-sm font-semibold text-gray-900 hover:text-blue-600 block"
+                                    >
+                                      {item.title}
+                                    </Link>
+                                    {item.description && (
+                                      <p className="text-xs text-gray-500 mt-1">
+                                        {item.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Resources */}
+              <div className="relative group">
+                <button className="text-gray-600 hover:text-blue-600 text-sm font-medium py-4 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-200">
+                  Resources
+                </button>
+                <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 fixed left-0 right-0 top-16 bg-white shadow-2xl rounded-lg w-screen pointer-events-none z-50">
+                  <div className="pointer-events-auto p-8">
+                    <div className="grid grid-cols-2 gap-8">
+                      {resourcesDocs.map((doc, i) => (
+                        <div key={i}>
+                          <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                            {doc.category}
+                          </h4>
+                          <ul className="space-y-3">
                             {doc.items?.map((item, idx) => (
-                              <li key={idx} className="flex gap-3">
+                              <li key={idx} className="flex items-start space-x-3">
                                 {item.icon && (
-                                  <Image src={mediaUrl(item.icon)} alt={item.title} width={24} height={24} className="mt-1" />
+                                  <Image
+                                    src={mediaUrl(item.icon)}
+                                    alt=""
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5 mt-0.5 flex-shrink-0"
+                                  />
                                 )}
                                 <div>
-                                  <Link href={item.link || "#"} className="text-sm font-semibold text-gray-900 hover:text-blue-600">
+                                  <Link
+                                    href={item.link || "#"}
+                                    className="text-sm font-semibold text-gray-900 hover:text-blue-600 block"
+                                  >
                                     {item.title}
                                   </Link>
                                   {item.description && (
-                                    <p className="text-xs text-gray-500 mt-1 max-w-xs">{item.description}</p>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                      {item.description}
+                                    </p>
                                   )}
                                 </div>
                               </li>
@@ -229,45 +353,28 @@ export default async function Navbar() {
                     </div>
                   </div>
                 </div>
-
-                {/* Resources mega */}
-                <div className="relative group">
-                  <span className="cursor-pointer text-gray-700 hover:text-blue-600 px-3 py-2 text-sm lg:text-base font-medium rounded-md">Resources</span>
-                  <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition duration-200 absolute left-1/2 -translate-x-1/2 top-full bg-white shadow-xl rounded-xl p-6 border border-gray-100 w-[900px] pointer-events-none z-50">
-                    <div className="pointer-events-auto grid gap-16 grid-cols-[repeat(2,minmax(380px,1fr))]">
-                      {resourcesDocs.map((doc, i) => (
-                        <div key={i}>
-                          <p className="uppercase text-xs tracking-wider text-gray-500 font-semibold mb-3">{doc.category}</p>
-                          <ul className="space-y-4">
-                            {doc.items?.map((item, idx) => (
-                              <li key={idx} className="flex gap-3">
-                                {item.icon && (<Image src={mediaUrl(item.icon)} alt={item.title} width={28} height={28} className="mt-1" />)}
-                                <div>
-                                  <Link href={item.link || "#"} className="text-sm font-semibold text-gray-900 hover:text-blue-600">{item.title}</Link>
-                                  {item.description && (<p className="text-xs text-gray-500 mt-1 max-w-xs">{item.description}</p>)}
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Remaining links */}
-                {navbar?.links?.filter(l => !["Platform", "Solutions", "Resources"].includes(l.label)).map((link, index) => (
-                  <Link key={link.id || index} href={link.url} className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm lg:text-base font-medium transition-colors duration-200 hover:bg-gray-50 rounded-md">{link.label}</Link>
-                ))}
               </div>
+
+              {/* Other navbar links */}
+              {navbar?.links
+                ?.filter((l) => !["Platform", "Solutions", "Resources"].includes(l.label))
+                .map((link, index) => (
+                  <Link
+                    key={link.id || index}
+                    href={link.url}
+                    className="text-gray-600 hover:text-gray-900 text-sm font-medium py-4 border-b-2 border-transparent hover:border-blue-600 transition-all duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
             </div>
 
-            {/* Desktop CTA */}
+            {/* CTA Button */}
             {navbar?.ctaLabel && (
-              <div className="hidden md:block">
+              <div>
                 <Link
                   href={navbar.ctaUrl || "#"}
-                  className="px-4 py-6 lg:px-6 lg:py-2 border border-blue-600 text-blue-600 text-sm lg:text-base rounded-full hover:bg-blue-600 hover:text-white transition-all duration-200 font-medium"
+                  className="inline-flex items-center px-4 py-2 border border-blue-600 text-blue-600 text-sm font-medium rounded-full hover:bg-blue-600 hover:text-white transition-all duration-200"
                 >
                   {navbar.ctaLabel}
                 </Link>
