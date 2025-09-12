@@ -1,39 +1,8 @@
 import Image from "next/image";
-import { getPayload } from "payload";
-import config from "@/payload.config";
+import { GetstartedBlockData, Media } from "../types";
 
-interface Media {
-  id: string | number;
-  url?: string;
-  thumbnailURL?: string;
-  alt?: string;
-  cloudinary?: {
-    secure_url?: string;
-    width?: number;
-    height?: number;
-  };
-}
-
-interface GetstartedProps {
-  sectionLabel: string;
-  heading: string;
-  description: string;
-  buttonText: string;
-  buttonLink: string;
-  backgroundImage?: number | Media; // ✅ fixed
-}
-
-export default async function Getstarted() {
-  const payload = await getPayload({ config });
-
-  const getStartedRes = await payload.find({
-    collection: "getstarted",
-    limit: 1,
-    depth: 1, // ensures backgroundImage resolves into Media
-  });
-
-  const data = getStartedRes.docs?.[0] as GetstartedProps | undefined;
-  if (!data) return null;
+export default function GetstartedBlock(props: GetstartedBlockData) {
+  const { sectionLabel, heading, description, buttonText, buttonLink, backgroundImage } = props;
 
   const getImageUrl = (img?: number | Media) => {
     if (!img || typeof img === "number") return "";
@@ -45,7 +14,7 @@ export default async function Getstarted() {
     return img.alt || fallback;
   };
 
-  const imageUrl = getImageUrl(data.backgroundImage);
+  const imageUrl = getImageUrl(backgroundImage);
 
   return (
     <section className="py-20">
@@ -54,7 +23,7 @@ export default async function Getstarted() {
         {imageUrl && (
           <Image
             src={imageUrl}
-            alt={getAlt(data.backgroundImage, data.heading)}
+            alt={getAlt(backgroundImage, heading)}
             fill
             className="object-cover"
             priority
@@ -62,27 +31,23 @@ export default async function Getstarted() {
           />
         )}
 
-        {/* Content aligned left */}
-        <div className="relative z-10 max-w-3xl px-8 md:px-16 text-left text-white">
-          {data.sectionLabel && (
-            <p className="text-sm font-semibold mb-2">{data.sectionLabel}</p>
+        {/* Content */}
+        <div className="relative z-10 max-w-full md:max-w-3xl px-6 md:px-16 text-left text-white">
+          {sectionLabel && (
+            <p className="text-sm font-semibold mb-2">{sectionLabel}</p>
           )}
-          {data.heading && (
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-              {data.heading}
-            </h2>
+          {heading && (
+            <h2 className="text-3xl sm:text-5xl font-bold mb-4">{heading}</h2>
           )}
-          {data.description && (
-            <p className="text-base sm:text-lg mb-6 max-w-xl">
-              {data.description}
-            </p>
+          {description && (
+            <p className="text-base sm:text-lg mb-6 max-w-xl">{description}</p>
           )}
-          {data.buttonText && data.buttonLink && (
+          {buttonText && buttonLink && (
             <a
-              href={data.buttonLink}
+              href={buttonLink}
               className="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full text-white font-medium transition"
             >
-              {data.buttonText}
+              {buttonText}
             </a>
           )}
         </div>

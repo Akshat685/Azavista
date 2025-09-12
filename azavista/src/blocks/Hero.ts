@@ -1,6 +1,6 @@
-import type { CollectionConfig } from "payload";
+import type { Block } from "payload";
 
-export const Hero: CollectionConfig = {
+export const Hero: Block = {
   slug: "hero",
   labels: {
     singular: "Hero Section",

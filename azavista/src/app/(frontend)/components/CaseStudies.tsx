@@ -1,67 +1,40 @@
-import { getPayload } from "payload";
-import config from "@/payload.config";
 import Image from "next/image";
-import { JSX } from "react";
+import { CaseStudiesBlockData } from "../types";
 
-interface CaseStudyImage {
-  cloudinary?: {
-    secure_url?: string;
-  };
-  url?: string;
-  alt?: string;
-}
-
-interface CaseStudyCard {
-  title?: string;
-  description?: string;
-  link?: string;
-  category?: string;
-  image?: CaseStudyImage;
-}
-
-interface CaseStudiesBlock {
-  badge?: string;
-  title?: string;
-  subtitle?: string;
-  cards?: CaseStudyCard[];
-}
-
-export default async function CaseStudies(): Promise<JSX.Element | null> {
-  const payload = await getPayload({ config });
-
-  const caseStudiesRes = await payload.find({
-    collection: "caseStudiesBlock",
-    limit: 1,
-  });
-
-  const data = caseStudiesRes.docs[0] as CaseStudiesBlock | undefined;
-  if (!data) return null;
+export default function CaseStudiesBlock(props: CaseStudiesBlockData) {
+  const { badge, title, subtitle, cards } = props;
 
   return (
     <section className="py-20 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 text-center">
         {/* Top Section */}
-        {data.badge && (
+        {badge && (
           <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium mb-4">
-            {data.badge}
+            {badge}
           </span>
         )}
-        {data.title && (
+        {title && (
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {data.title}
+            {title}
           </h2>
         )}
-        {data.subtitle && (
+        {subtitle && (
           <p className="text-gray-600 text-base sm:text-lg mb-12 max-w-3xl mx-auto">
-            {data.subtitle}
+            {subtitle}
           </p>
         )}
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {data.cards?.map((card, i) => {
+          {cards?.map((card, i) => {
             const imageUrl =
-              card.image?.cloudinary?.secure_url || card.image?.url || "";
+              card.image?.cloudinary?.secure_url ||
+              card.image?.url ||
+              card.image?.thumbnailURL ||
+              "";
+
+            const width = card.image?.cloudinary?.width || 400;
+            const height = card.image?.cloudinary?.height || 250;
 
             return (
               <div
@@ -72,8 +45,8 @@ export default async function CaseStudies(): Promise<JSX.Element | null> {
                   <Image
                     src={imageUrl}
                     alt={card.image?.alt || card.title || "Case Study"}
-                    width={400}
-                    height={250}
+                    width={width}
+                    height={height}
                     className="w-full h-48 object-cover"
                   />
                 )}

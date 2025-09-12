@@ -1,14 +1,11 @@
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { CollectionConfig } from "payload";
+import { Block } from "payload";
 
-export const EventFeatures: CollectionConfig = {
-  slug: "event-features",
+export const TabSections: Block = {
+  slug: "tabSection",
   labels: {
     singular: "Tabs Section",
     plural: "Tabs Sections",
-  },
-  access: {
-    read: () => true, 
   },
  
   fields: [
@@ -64,4 +61,3 @@ export const EventFeatures: CollectionConfig = {
   ],
 };
 
-export default EventFeatures;

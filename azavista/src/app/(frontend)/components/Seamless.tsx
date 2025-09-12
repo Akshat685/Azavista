@@ -1,42 +1,11 @@
 import Image from "next/image";
-import { getPayload } from "payload";
-import config from "@/payload.config";
+import { SeamlessBlockData } from "../types";
 
-interface LogoItem {
-  logo?: {
-    cloudinary?: { secure_url?: string };
-    url?: string;
-  };
-  alt?: string;
-}
 
-interface IntegrationsData {
-  title?: string;
-  description?: string;
-  buttonLabel?: string;
-  buttonUrl?: string;
-  mainLogo?: {
-    cloudinary?: { secure_url?: string };
-    url?: string;
-  };
-  logos?: LogoItem[];
-}
+export default function SeamlessBlock(props: SeamlessBlockData) {
+  const { title, description, buttonLabel, buttonUrl, mainLogo, logos } = props;
 
-export default async function Seamless() {
-  const payload = await getPayload({ config });
-
-  const res = await payload.find({
-    collection: "Seamless",
-    limit: 1,
-  });
-
-  const data = res.docs[0] as IntegrationsData | undefined;
-  if (!data) return null;
-
-  const { title, description, buttonLabel, buttonUrl, mainLogo, logos } = data;
-
-  const mainLogoUrl =
-    mainLogo?.cloudinary?.secure_url || mainLogo?.url || "";
+  const mainLogoUrl = mainLogo?.cloudinary?.secure_url || mainLogo?.url || "";
 
   return (
     <section className="bg-gray-100 py-16">
@@ -51,7 +20,6 @@ export default async function Seamless() {
           {description && (
             <p className="text-gray-600 mb-8 leading-relaxed">{description}</p>
           )}
-
           {buttonLabel && buttonUrl && (
             <a
               href={buttonUrl}
@@ -70,22 +38,18 @@ export default async function Seamless() {
               alt="Main logo"
               width={600}
               height={500}
-              className=""
             />
           )}
 
-          {/* Small logos arranged in a circle */}
           {logos?.map((item, i) => {
-            const logoUrl =
-              item.logo?.cloudinary?.secure_url || item.logo?.url || "";
-
+            const logoUrl = item.logo?.cloudinary?.secure_url || item.logo?.url || "";
             return (
               <div
                 key={i}
                 className="absolute bg-white rounded-full p-2 shadow-md"
                 style={{
-                  top: `${40 + 30 * Math.sin((i / logos.length) * 2 * Math.PI)}%`,
-                  left: `${40 + 30 * Math.cos((i / logos.length) * 2 * Math.PI)}%`,
+                  top: `${40 + 30 * Math.sin((i / (logos?.length || 1)) * 2 * Math.PI)}%`,
+                  left: `${40 + 30 * Math.cos((i / (logos?.length || 1)) * 2 * Math.PI)}%`,
                 }}
               >
                 {logoUrl && (

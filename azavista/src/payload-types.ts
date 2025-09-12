@@ -70,19 +70,11 @@ export interface Config {
     users: User;
     media: Media;
     navbar: Navbar;
+    footer: Footer;
     platformMenu: PlatformMenu;
     solutionsMenu: SolutionsMenu;
     resourcesMenu: ResourcesMenu;
-    hero: Hero;
-    smarterEvents: SmarterEvent;
-    'event-features': EventFeature;
-    'custom-feature': CustomFeature;
-    'why-azavista': WhyAzavista;
-    caseStudiesBlock: CaseStudiesBlock;
-    testimonialsBlock: TestimonialsBlock;
-    Seamless: Seamless;
-    getstarted: Getstarted;
-    footer: Footer;
+    pages: Page;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -92,19 +84,11 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     navbar: NavbarSelect<false> | NavbarSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
     platformMenu: PlatformMenuSelect<false> | PlatformMenuSelect<true>;
     solutionsMenu: SolutionsMenuSelect<false> | SolutionsMenuSelect<true>;
     resourcesMenu: ResourcesMenuSelect<false> | ResourcesMenuSelect<true>;
-    hero: HeroSelect<false> | HeroSelect<true>;
-    smarterEvents: SmarterEventsSelect<false> | SmarterEventsSelect<true>;
-    'event-features': EventFeaturesSelect<false> | EventFeaturesSelect<true>;
-    'custom-feature': CustomFeatureSelect<false> | CustomFeatureSelect<true>;
-    'why-azavista': WhyAzavistaSelect<false> | WhyAzavistaSelect<true>;
-    caseStudiesBlock: CaseStudiesBlockSelect<false> | CaseStudiesBlockSelect<true>;
-    testimonialsBlock: TestimonialsBlockSelect<false> | TestimonialsBlockSelect<true>;
-    Seamless: SeamlessSelect<false> | SeamlessSelect<true>;
-    getstarted: GetstartedSelect<false> | GetstartedSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -269,6 +253,94 @@ export interface Navbar {
     | null;
   ctaLabel?: string | null;
   ctaUrl?: string | null;
+  /**
+   * Add menu items for the navbar. Choose Link or Mega Menu.
+   */
+  menuItems?:
+    | (
+        | {
+            label: string;
+            url: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'link';
+          }
+        | {
+            label: string;
+            order?: number | null;
+            /**
+             * Optional left highlight card
+             */
+            highlight?: {
+              title?: string | null;
+              description?: string | null;
+              link?: string | null;
+              image?: (number | null) | Media;
+            };
+            /**
+             * Add one or more columns with items
+             */
+            columns?:
+              | {
+                  order?: number | null;
+                  category: string;
+                  items?:
+                    | {
+                        title: string;
+                        description?: string | null;
+                        link?: string | null;
+                        icon?: (number | null) | Media;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'megaMenu';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  logo: number | Media;
+  headquarters?:
+    | {
+        title: string;
+        address: string;
+        id?: string | null;
+      }[]
+    | null;
+  links?:
+    | {
+        groupTitle: string;
+        items?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform: string;
+        url: string;
+        icon: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  copyright: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -344,222 +416,217 @@ export interface ResourcesMenu {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hero".
+ * via the `definition` "pages".
  */
-export interface Hero {
-  id: number;
-  heading: string;
-  subheading?: string | null;
-  buttons?:
-    | {
-        label: string;
-        url: string;
-        variant?: ('primary' | 'secondary') | null;
-        id?: string | null;
-      }[]
-    | null;
-  logos?:
-    | {
-        logo: number | Media;
-        alt?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "smarterEvents".
- */
-export interface SmarterEvent {
-  id: number;
-  heading: string;
-  image: number | Media;
-  categoryLabel: string;
-  title: string;
-  description: string;
-  primaryButtonLabel?: string | null;
-  primaryButtonUrl?: string | null;
-  secondaryButtonLabel?: string | null;
-  secondaryButtonUrl?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "event-features".
- */
-export interface EventFeature {
-  id: number;
-  tabs: {
-    tabLabel: string;
-    heading: string;
-    description: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    image: number | Media;
-    id?: string | null;
-  }[];
-  buttonLabel?: string | null;
-  buttonUrl?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "custom-feature".
- */
-export interface CustomFeature {
-  id: number;
-  subheading: string;
-  heading: string;
-  buttonLabel: string;
-  buttonUrl: string;
-  image: number | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "why-azavista".
- */
-export interface WhyAzavista {
-  id: number;
-  badge: string;
-  title: string;
-  subtitle: string;
-  features?:
-    | {
-        icon: number | Media;
-        headingBlue: string;
-        headingBlack: string;
-        description: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "caseStudiesBlock".
- */
-export interface CaseStudiesBlock {
-  id: number;
-  badge: string;
-  title: string;
-  subtitle?: string | null;
-  cards?:
-    | {
-        category?: string | null;
-        title?: string | null;
-        description?: string | null;
-        image?: (number | null) | Media;
-        link?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonialsBlock".
- */
-export interface TestimonialsBlock {
-  id: number;
-  badge?: string | null;
-  title: string;
-  subtitle?: string | null;
-  items?:
-    | {
-        quote: string;
-        author: string;
-        role?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Seamless".
- */
-export interface Seamless {
+export interface Page {
   id: number;
   title: string;
-  description?: string | null;
-  buttonLabel?: string | null;
-  buttonUrl?: string | null;
-  mainLogo?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "getstarted".
- */
-export interface Getstarted {
-  id: number;
-  sectionLabel: string;
-  heading: string;
-  description: string;
-  buttonText: string;
-  buttonLink: string;
-  backgroundImage: number | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
- */
-export interface Footer {
-  id: number;
-  logo: number | Media;
-  headquarters?:
-    | {
-        title: string;
-        address: string;
-        id?: string | null;
-      }[]
-    | null;
-  links?:
-    | {
-        groupTitle: string;
-        items?:
-          | {
-              label: string;
-              url: string;
+  /**
+   * URL-friendly slug automatically generated from the title
+   */
+  slug: string;
+  pagebuilder?:
+    | (
+        | {
+            heading: string;
+            subheading?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  url: string;
+                  variant?: ('primary' | 'secondary') | null;
+                  id?: string | null;
+                }[]
+              | null;
+            logos?:
+              | {
+                  logo: number | Media;
+                  alt?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            heading: string;
+            image: number | Media;
+            categoryLabel: string;
+            title: string;
+            description: string;
+            primaryButtonLabel?: string | null;
+            primaryButtonUrl?: string | null;
+            secondaryButtonLabel?: string | null;
+            secondaryButtonUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'smarterEvents';
+          }
+        | {
+            tabs: {
+              tabLabel: string;
+              heading: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              image: number | Media;
               id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
+            }[];
+            buttonLabel?: string | null;
+            buttonUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'tabSection';
+          }
+        | {
+            subheading: string;
+            heading: string;
+            buttonLabel: string;
+            buttonUrl: string;
+            image: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'custom-feature';
+          }
+        | {
+            badge: string;
+            title: string;
+            subtitle: string;
+            features?:
+              | {
+                  icon: number | Media;
+                  headingBlue: string;
+                  headingBlack: string;
+                  description: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'whyAzavista';
+          }
+        | {
+            badge: string;
+            title: string;
+            subtitle?: string | null;
+            cards?:
+              | {
+                  category?: string | null;
+                  title?: string | null;
+                  description?: string | null;
+                  image?: (number | null) | Media;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'caseStudies';
+          }
+        | {
+            badge?: string | null;
+            title: string;
+            subtitle?: string | null;
+            items?:
+              | {
+                  quote: string;
+                  author: string;
+                  role?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            title: string;
+            description?: string | null;
+            buttonLabel?: string | null;
+            buttonUrl?: string | null;
+            mainLogo?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'seamless';
+          }
+        | {
+            sectionLabel: string;
+            heading: string;
+            description: string;
+            buttonText: string;
+            buttonLink: string;
+            backgroundImage: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'getstarted';
+          }
+        | {
+            leftTitle: string;
+            leftDescription: string;
+            submitLabel: string;
+            emailPlaceholder: string;
+            firstNamePlaceholder: string;
+            lastNamePlaceholder: string;
+            companyPlaceholder: string;
+            countryLabel: string;
+            topicLabel: string;
+            planningLabel: string;
+            consentNewsText: string;
+            consentPrivacyText: string;
+            privacyUrl: string;
+            countryOptions?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            topicOptions?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            planningOptions?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            rightHeading: string;
+            features?:
+              | {
+                  title: string;
+                  description: string;
+                  id?: string | null;
+                }[]
+              | null;
+            trustHeading: string;
+            logos?:
+              | {
+                  logo: number | Media;
+                  alt: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact';
+          }
+      )[]
     | null;
-  socialLinks?:
-    | {
-        platform: string;
-        url: string;
-        icon: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  copyright: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -583,6 +650,10 @@ export interface PayloadLockedDocument {
         value: number | Navbar;
       } | null)
     | ({
+        relationTo: 'footer';
+        value: number | Footer;
+      } | null)
+    | ({
         relationTo: 'platformMenu';
         value: number | PlatformMenu;
       } | null)
@@ -595,44 +666,8 @@ export interface PayloadLockedDocument {
         value: number | ResourcesMenu;
       } | null)
     | ({
-        relationTo: 'hero';
-        value: number | Hero;
-      } | null)
-    | ({
-        relationTo: 'smarterEvents';
-        value: number | SmarterEvent;
-      } | null)
-    | ({
-        relationTo: 'event-features';
-        value: number | EventFeature;
-      } | null)
-    | ({
-        relationTo: 'custom-feature';
-        value: number | CustomFeature;
-      } | null)
-    | ({
-        relationTo: 'why-azavista';
-        value: number | WhyAzavista;
-      } | null)
-    | ({
-        relationTo: 'caseStudiesBlock';
-        value: number | CaseStudiesBlock;
-      } | null)
-    | ({
-        relationTo: 'testimonialsBlock';
-        value: number | TestimonialsBlock;
-      } | null)
-    | ({
-        relationTo: 'Seamless';
-        value: number | Seamless;
-      } | null)
-    | ({
-        relationTo: 'getstarted';
-        value: number | Getstarted;
-      } | null)
-    | ({
-        relationTo: 'footer';
-        value: number | Footer;
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -751,6 +786,88 @@ export interface NavbarSelect<T extends boolean = true> {
       };
   ctaLabel?: T;
   ctaUrl?: T;
+  menuItems?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+              blockName?: T;
+            };
+        megaMenu?:
+          | T
+          | {
+              label?: T;
+              order?: T;
+              highlight?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    link?: T;
+                    image?: T;
+                  };
+              columns?:
+                | T
+                | {
+                    order?: T;
+                    category?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          link?: T;
+                          icon?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  headquarters?:
+    | T
+    | {
+        title?: T;
+        address?: T;
+        id?: T;
+      };
+  links?:
+    | T
+    | {
+        groupTitle?: T;
+        items?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        icon?: T;
+        id?: T;
+      };
+  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -829,200 +946,211 @@ export interface ResourcesMenuSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hero_select".
+ * via the `definition` "pages_select".
  */
-export interface HeroSelect<T extends boolean = true> {
-  heading?: T;
-  subheading?: T;
-  buttons?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        variant?: T;
-        id?: T;
-      };
-  logos?:
-    | T
-    | {
-        logo?: T;
-        alt?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "smarterEvents_select".
- */
-export interface SmarterEventsSelect<T extends boolean = true> {
-  heading?: T;
-  image?: T;
-  categoryLabel?: T;
+export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
-  primaryButtonLabel?: T;
-  primaryButtonUrl?: T;
-  secondaryButtonLabel?: T;
-  secondaryButtonUrl?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "event-features_select".
- */
-export interface EventFeaturesSelect<T extends boolean = true> {
-  tabs?:
+  slug?: T;
+  pagebuilder?:
     | T
     | {
-        tabLabel?: T;
-        heading?: T;
-        description?: T;
-        image?: T;
-        id?: T;
-      };
-  buttonLabel?: T;
-  buttonUrl?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "custom-feature_select".
- */
-export interface CustomFeatureSelect<T extends boolean = true> {
-  subheading?: T;
-  heading?: T;
-  buttonLabel?: T;
-  buttonUrl?: T;
-  image?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "why-azavista_select".
- */
-export interface WhyAzavistaSelect<T extends boolean = true> {
-  badge?: T;
-  title?: T;
-  subtitle?: T;
-  features?:
-    | T
-    | {
-        icon?: T;
-        headingBlue?: T;
-        headingBlack?: T;
-        description?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "caseStudiesBlock_select".
- */
-export interface CaseStudiesBlockSelect<T extends boolean = true> {
-  badge?: T;
-  title?: T;
-  subtitle?: T;
-  cards?:
-    | T
-    | {
-        category?: T;
-        title?: T;
-        description?: T;
-        image?: T;
-        link?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonialsBlock_select".
- */
-export interface TestimonialsBlockSelect<T extends boolean = true> {
-  badge?: T;
-  title?: T;
-  subtitle?: T;
-  items?:
-    | T
-    | {
-        quote?: T;
-        author?: T;
-        role?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Seamless_select".
- */
-export interface SeamlessSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  buttonLabel?: T;
-  buttonUrl?: T;
-  mainLogo?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "getstarted_select".
- */
-export interface GetstartedSelect<T extends boolean = true> {
-  sectionLabel?: T;
-  heading?: T;
-  description?: T;
-  buttonText?: T;
-  buttonLink?: T;
-  backgroundImage?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  logo?: T;
-  headquarters?:
-    | T
-    | {
-        title?: T;
-        address?: T;
-        id?: T;
-      };
-  links?:
-    | T
-    | {
-        groupTitle?: T;
-        items?:
+        hero?:
           | T
           | {
-              label?: T;
-              url?: T;
+              heading?: T;
+              subheading?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    variant?: T;
+                    id?: T;
+                  };
+              logos?:
+                | T
+                | {
+                    logo?: T;
+                    alt?: T;
+                    id?: T;
+                  };
               id?: T;
+              blockName?: T;
             };
-        id?: T;
+        smarterEvents?:
+          | T
+          | {
+              heading?: T;
+              image?: T;
+              categoryLabel?: T;
+              title?: T;
+              description?: T;
+              primaryButtonLabel?: T;
+              primaryButtonUrl?: T;
+              secondaryButtonLabel?: T;
+              secondaryButtonUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        tabSection?:
+          | T
+          | {
+              tabs?:
+                | T
+                | {
+                    tabLabel?: T;
+                    heading?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              buttonLabel?: T;
+              buttonUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'custom-feature'?:
+          | T
+          | {
+              subheading?: T;
+              heading?: T;
+              buttonLabel?: T;
+              buttonUrl?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        whyAzavista?:
+          | T
+          | {
+              badge?: T;
+              title?: T;
+              subtitle?: T;
+              features?:
+                | T
+                | {
+                    icon?: T;
+                    headingBlue?: T;
+                    headingBlack?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        caseStudies?:
+          | T
+          | {
+              badge?: T;
+              title?: T;
+              subtitle?: T;
+              cards?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              badge?: T;
+              title?: T;
+              subtitle?: T;
+              items?:
+                | T
+                | {
+                    quote?: T;
+                    author?: T;
+                    role?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        seamless?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              buttonLabel?: T;
+              buttonUrl?: T;
+              mainLogo?: T;
+              id?: T;
+              blockName?: T;
+            };
+        getstarted?:
+          | T
+          | {
+              sectionLabel?: T;
+              heading?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        contact?:
+          | T
+          | {
+              leftTitle?: T;
+              leftDescription?: T;
+              submitLabel?: T;
+              emailPlaceholder?: T;
+              firstNamePlaceholder?: T;
+              lastNamePlaceholder?: T;
+              companyPlaceholder?: T;
+              countryLabel?: T;
+              topicLabel?: T;
+              planningLabel?: T;
+              consentNewsText?: T;
+              consentPrivacyText?: T;
+              privacyUrl?: T;
+              countryOptions?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              topicOptions?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              planningOptions?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              rightHeading?: T;
+              features?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              trustHeading?: T;
+              logos?:
+                | T
+                | {
+                    logo?: T;
+                    alt?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
-  socialLinks?:
-    | T
-    | {
-        platform?: T;
-        url?: T;
-        icon?: T;
-        id?: T;
-      };
-  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
 }

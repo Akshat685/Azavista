@@ -1,33 +1,27 @@
-import React from 'react';
+import { getPayload } from "payload";
+import config from "@/payload.config";
 import './globals.css';
+import PageBuilder from "./components/PageBuilder";
+import { BlockData } from "@/app/(frontend)/types/index";
 
-
-import HeroBlock from './components/HeroBlock';
-import SmarterEvents from './components/SmarterEvents';
-import TabsSection from './components/TabsSection';
-import CustomFeature from './components/CustomFeature';
-import WhyAzavista from './components/WhyAzavista';
-import CaseStudies from './components/CaseStudies';
-import Testimonials from './components/Testimonials';
-import Seamless from './components/Seamless';
-import Getstarted from './components/Getstarted';
-
-export const revalidate = 60; //60secs
+export const revalidate = 60;
 
 export default async function HomePage() {
+  const payload = await getPayload({ config });
+
+  const pagesRes = await payload.find({
+    collection: "pages",
+    limit: 1,
+    where: {
+      slug: { equals: "home" },
+    },
+    depth: 2,
+  });
+
+  const page = pagesRes.docs[0];
+  if (!page) return <div>Page not found</div>;
 
   return (
-    <>
-      <HeroBlock />
-      <SmarterEvents />
-      <TabsSection />
-      <CustomFeature />
-      <WhyAzavista />
-      <CaseStudies />
-      <Testimonials />
-      <Seamless />
-      <Getstarted />
-
-    </>
+    <PageBuilder blocks={page.pagebuilder as BlockData[] ?? []} />
   );
 }

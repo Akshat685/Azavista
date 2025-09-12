@@ -1,51 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import type { SerializedEditorState } from "lexical";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { TabsSectionData } from "../types";
 
 
-interface CloudinaryImage {
-  cloudinary?: {
-    secure_url?: string;
-    width?: number;
-    height?: number;
-  };
-  url?: string;
-  thumbnailURL?: string;
-  alt?: string;
-}
-
-interface Tab {
-  tabLabel: string;
-  heading: string;
-  description: SerializedEditorState; 
-  image: CloudinaryImage;
-}
-
-interface TabsData {
-  tabs: Tab[];
-  buttonLabel?: string;
-  buttonUrl?: string;
-}
-
-export default function TabsSection() {
-  const [data, setData] = useState<TabsData | null>(null);
+export default function TabsSection(props: TabsSectionData) {
+  const { tabs, buttonLabel, buttonUrl } = props;
   const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
-    async function fetchTabs() {
-      const res = await fetch("/api/event-features");
-      const json = await res.json();
-      setData(json.docs?.[0] as TabsData);
-    }
-    fetchTabs();
-  }, []);
+  if (!tabs || tabs.length === 0) return null;
 
-  if (!data || !data.tabs || data.tabs.length === 0) return null;
-
-  const activeTab = data.tabs[activeIndex];
+  const activeTab = tabs[activeIndex];
   const imageUrl =
     activeTab.image?.cloudinary?.secure_url ||
     activeTab.image?.url ||
@@ -59,7 +26,7 @@ export default function TabsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Tab Buttons */}
         <div className="flex flex-wrap justify-center gap-15 border-b border-gray-200 pb-4 mb-10">
-          {data.tabs.map((tab, index) => (
+          {tabs.map((tab, index) => (
             <button
               key={index}
               onClick={() => setActiveIndex(index)}
@@ -90,12 +57,12 @@ export default function TabsSection() {
               </div>
             )}
 
-            {data.buttonLabel && data.buttonUrl && (
+            {buttonLabel && buttonUrl && (
               <a
-                href={data.buttonUrl}
+                href={buttonUrl}
                 className="px-8 py-4 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300 shadow-lg"
               >
-                {data.buttonLabel}
+                {buttonLabel}
               </a>
             )}
           </div>

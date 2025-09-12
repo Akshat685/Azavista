@@ -1,7 +1,7 @@
-import { CollectionConfig } from "payload";
+import { Block } from "payload";
 
-export const Seamless: CollectionConfig = {
-  slug: "Seamless",
+export const Seamless: Block = {
+  slug: "seamless",
   labels: {
     singular: "Seamless Block",
     plural: "Seamless Blocks",

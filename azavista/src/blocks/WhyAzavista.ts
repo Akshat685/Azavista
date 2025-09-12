@@ -1,15 +1,12 @@
-import { CollectionConfig } from "payload";
+import { Block } from "payload";
 
-export const WhyAzavista: CollectionConfig = {
-  slug: "why-azavista",
+export const WhyAzavista: Block = {
+  slug: "whyAzavista",
   labels: {
     singular: "Why Azavista",
     plural: "Why Azavista",
   },
-  access: {
-    read: () => true, // Public access for frontend
-  },
-  
+
   fields: [
     {
       name: "badge",

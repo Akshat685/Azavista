@@ -1,34 +1,8 @@
 import Image from "next/image";
 import { FaChartBar } from "react-icons/fa";
-import { getPayload } from "payload";
-import config from "@/payload.config";
+import { SmarterEventsBlockData, CloudinaryImage } from "../types";
 
-interface CloudinaryImage {
-    cloudinary?: {
-        secure_url?: string;
-        width?: number;
-        height?: number;
-    };
-    url?: string;
-    thumbnailURL?: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-}
-
-
-export default async function SmarterEvents() {
-    const payload = await getPayload({ config });
-
-    const smartEventRes = await payload.find({
-        collection: "smarterEvents",
-        limit: 1,
-        depth: 1,
-    });
-
-    const data = smartEventRes.docs[0];
-    if (!data) return null;
-
+export default function SmarterEvents(props: SmarterEventsBlockData) {
     const {
         heading,
         image,
@@ -39,7 +13,7 @@ export default async function SmarterEvents() {
         primaryButtonUrl,
         secondaryButtonLabel,
         secondaryButtonUrl,
-    } = data;
+    } = props;
 
     const media = image as CloudinaryImage | undefined;
 

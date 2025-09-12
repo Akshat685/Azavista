@@ -19,7 +19,7 @@ export const PlatformMenu: CollectionConfig = {
           type: "upload",
           relationTo: "media",
         },
-      ],
+        ],
     },
     {
       name: "order",

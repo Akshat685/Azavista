@@ -1,7 +1,7 @@
-import { CollectionConfig } from "payload";
+import { Block } from "payload";
 
-export const CaseStudies: CollectionConfig = {
-  slug: "caseStudiesBlock",
+export const CaseStudies: Block = {
+  slug: "caseStudies",
   labels: {
     singular: "Case Studies ",
     plural: "Case Studies",

@@ -1,6 +1,6 @@
-import { CollectionConfig } from "payload";
+import { Block } from "payload";
 
-export const Getstarted: CollectionConfig = {
+export const Getstarted: Block = {
   slug: "getstarted",
   labels: {
     singular: "Getstarted",

@@ -1,7 +1,7 @@
-import { CollectionConfig } from "payload";
+import { Block } from "payload";
 
-export const Testimonials: CollectionConfig = {
-  slug: "testimonialsBlock",
+export const Testimonials: Block = {
+  slug: "testimonials",
   labels: {
     singular: "Testimonials ",
     plural: "Testimonials ",

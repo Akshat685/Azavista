@@ -1,13 +1,10 @@
-import { CollectionConfig } from "payload";
+import { Block } from "payload";
 
-export const CustomFeature: CollectionConfig = {
+export const CustomFeature: Block = {
   slug: "custom-feature",
   labels: {
     singular: "Custom Feature",
     plural: "Custom Features",
-  },
-  admin: {
-    useAsTitle: "heading",
   },
   fields: [
     {
@@ -44,4 +41,3 @@ export const CustomFeature: CollectionConfig = {
   ],
 };
 
-export default CustomFeature;

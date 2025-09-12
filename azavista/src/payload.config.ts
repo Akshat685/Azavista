@@ -11,19 +11,11 @@ import { cloudinaryStorage } from 'payload-cloudinary'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Navbar } from './collections/Navbar'
-import { Hero } from './collections/Hero'
-import { SmarterEvents } from './collections/SmarterEvents'
-import { EventFeatures } from './collections/EventFeatures'
-import { CustomFeature } from './collections/CustomFeature'
-import { WhyAzavista } from './collections/WhyAzavista'
-import { CaseStudies } from './collections/CaseStudies'
-import { Testimonials } from './collections/Testimonials'
-import { Seamless } from './collections/Seamless'
-import { Getstarted } from './collections/GetStarted'
 import { Footer } from './collections/Footer'
 import { PlatformMenu } from './collections/PlatformMenu'
 import { ResourcesMenu } from './collections/ResourcesMenu'
 import { SolutionsMenu } from './collections/SolutionsMenu'
+import { Pages } from './collections/Pages'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -40,19 +32,11 @@ export default buildConfig({
     Users,
     Media,
     Navbar,
+    Footer,
     PlatformMenu,
     SolutionsMenu,
-    ResourcesMenu,
-    Hero,
-    SmarterEvents,
-    EventFeatures,
-    CustomFeature,
-    WhyAzavista,
-    CaseStudies,
-    Testimonials,
-    Seamless,
-    Getstarted,
-    Footer,
+    ResourcesMenu,    
+    Pages,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
