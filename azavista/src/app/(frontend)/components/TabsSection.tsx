@@ -52,7 +52,7 @@ export default function TabsSection(props: TabsSectionData) {
             )}
 
             {activeTab.description && (
-              <div className="prose prose-lg text-lg prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-gray-600 text-gray-600 mb-10 leading-relaxed max-w-none">
+              <div className="text-lg text-gray-600 mb-10 leading-relaxed max-w-none [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-1 [&_li::marker]:text-[#1e61f0]">
                 <RichText data={activeTab.description} />
               </div>
             )}

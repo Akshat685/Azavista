@@ -3,17 +3,16 @@ import type { CollectionConfig } from "payload";
 export const Navbar: CollectionConfig = {
   slug: "navbar",
   admin: {
-    useAsTitle: "label", // now this exists ✅
+    useAsTitle: "label",
   },
   access: {
-    read: () => true, // 👈 makes navbar public
+    read: () => true,
   },
   fields: [
     {
       name: "label",
       type: "text",
-      required: true,
-      label: "Navbar Label", // e.g. "Main Navbar" / "Footer Navbar"
+      required: true
     },
     {
       name: "logo",
@@ -22,22 +21,32 @@ export const Navbar: CollectionConfig = {
       required: true,
     },
     {
-      name: "links",
-      type: "array",
-      label: "Navigation Links",
-      fields: [
-        {
-          name: "label",
-          type: "text",
-          required: true,
-        },
-        {
-          name: "url",
-          type: "text",
-          required: true,
-        },
-      ],
+      name: "logoUrl",
+      type: "text",
+      required: false,
+      label: "Logo URL",
+      admin: {
+        description: "URL for the logo to redirect to (e.g., / for home page)",
+      },
+      defaultValue: "/",
     },
+    // {
+    //   name: "links",
+    //   type: "array",
+    //   label: "Navigation Links",
+    //   fields: [
+    //     {
+    //       name: "label",
+    //       type: "text",
+    //       required: true,
+    //     },
+    //     {
+    //       name: "url",
+    //       type: "text",
+    //       required: true,
+    //     },
+    //   ],
+    // },
     {
       name: "ctaLabel",
       type: "text",
@@ -50,25 +59,24 @@ export const Navbar: CollectionConfig = {
       required: false,
       label: "CTA Button URL",
     },
-    // Legacy embedded menus removed in favor of flexible menuItems
-    // Flexible menu builder allowing unlimited menu items from admin
+
     {
       name: "menuItems",
       type: "blocks",
       label: "Menus",
       labels: { singular: "Menu", plural: "Menus" },
       admin: {
-        description: "Add menu items for the navbar. Choose Link or Mega Menu.",
+        description: "Make menu items for the navbar.",
       },
       blocks: [
-        {
-          slug: "link",
-          labels: { singular: "Link", plural: "Links" },
-          fields: [
-            { name: "label", type: "text", required: true },
-            { name: "url", type: "text", required: true },
-          ],
-        },
+        // {
+        //   slug: "link",
+        //   labels: { singular: "Link", plural: "Links" },
+        //   fields: [
+        //     { name: "label", type: "text", required: true },
+        //     { name: "url", type: "text", required: true },
+        //   ],
+        // },
         {
           slug: "megaMenu",
           labels: { singular: "Mega Menu", plural: "Mega Menus" },
@@ -82,6 +90,7 @@ export const Navbar: CollectionConfig = {
               fields: [
                 { name: "title", type: "text" },
                 { name: "description", type: "textarea" },
+                { name: "linkText", type: "text", label: "Link Text" },
                 { name: "link", type: "text" },
                 { name: "image", type: "upload", relationTo: "media" },
               ],

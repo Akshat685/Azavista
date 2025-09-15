@@ -202,6 +202,35 @@ export interface ContactBlockData {
 
 
 
+// Feature Section Block interfaces
+export interface FeatureSectionBullet {
+  text: string;
+}
+
+export interface FeatureSectionCTA {
+  label?: string;
+  url?: string;
+  variant?: "primary" | "secondary";
+}
+
+export interface FeatureSection {
+  blockType: "featureSection";
+  title?: string;
+  heading: string;
+  backgroundVariant?: "none" | "light";
+  description?: SerializedEditorState;
+  cta?: FeatureSectionCTA;
+  image: Media | number;
+  imageOnRight?: boolean;
+}
+
+export interface PlatformFeature {
+  blockType: "platformFeature";
+  title: string;
+  heading: string;
+  description?: SerializedEditorState;
+}
+
 export type BlockData =
   | HeroBlockData
   | SmarterEventsBlockData
@@ -213,3 +242,5 @@ export type BlockData =
   | SeamlessBlockData
   | GetstartedBlockData
   | ContactBlockData
+  | FeatureSection
+  | PlatformFeature

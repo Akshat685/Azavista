@@ -9,6 +9,8 @@ import { Testimonials } from "@/blocks/Testimonials";
 import { Seamless } from "@/blocks/Seamless";
 import { Getstarted } from "@/blocks/GetStarted";
 import { Contact as ContactBlock } from "@/blocks/Contact";
+import { FeatureSection } from "@/blocks/FeatureSection";
+import { PlatformFeatures } from "@/blocks/PlatformFeatures";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -44,6 +46,8 @@ export const Pages: CollectionConfig = {
         Seamless,
         Getstarted,
         ContactBlock,
+        FeatureSection,
+        PlatformFeatures,
       ]
     }
   ],

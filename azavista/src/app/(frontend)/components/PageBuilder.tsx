@@ -10,7 +10,8 @@ import Testimonials from "./Testimonials";
 import Seamless from "./Seamless";
 import Getstarted from "./Getstarted";
 import ContactBlock from "./Contact";
-
+import FeatureSection from "./FeatureSection";
+import PlatformFeature from "./PlatformFeature";
 import type { BlockData } from "../types";
 
 interface PageBuilderProps {
@@ -44,6 +45,10 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <Getstarted key={i} {...block} />;
           case "contact":
             return <ContactBlock key={i} {...block} />;
+          case "featureSection":
+            return <FeatureSection key={i} {...(block as any)} />;
+          case "platformFeature":
+            return <PlatformFeature key={i} {...(block as any)} />;
           default:
             return null;
         }

@@ -12,9 +12,6 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Navbar } from './collections/Navbar'
 import { Footer } from './collections/Footer'
-import { PlatformMenu } from './collections/PlatformMenu'
-import { ResourcesMenu } from './collections/ResourcesMenu'
-import { SolutionsMenu } from './collections/SolutionsMenu'
 import { Pages } from './collections/Pages'
 
 
@@ -33,9 +30,6 @@ export default buildConfig({
     Media,
     Navbar,
     Footer,
-    PlatformMenu,
-    SolutionsMenu,
-    ResourcesMenu,    
     Pages,
   ],
   editor: lexicalEditor(),

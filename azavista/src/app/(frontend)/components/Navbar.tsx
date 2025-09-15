@@ -12,31 +12,6 @@ type MenuItem = {
   icon?: Media | number;
 };
 
-type PlatformDoc = {
-  category: string;
-  items: MenuItem[];
-  highlight?: {
-    title?: string;
-    description?: string;
-    link?: string;
-    image?: Media | number;
-  };
-  order?: number;
-  createdAt?: string;
-};
-type ResourcesDoc = { category: string; items: MenuItem[]; order?: number; createdAt?: string };
-type SolutionsDoc = {
-  category: string;
-  items: MenuItem[];
-  highlight?: {
-    title?: string;
-    description?: string;
-    link?: string;
-    image?: Media | number;
-  };
-  order?: number;
-  createdAt?: string;
-};
 
 const mediaUrl = (img?: Media | number | null) => {
   if (!img || typeof img === "number") return "";
@@ -46,10 +21,8 @@ const mediaUrl = (img?: Media | number | null) => {
 export default async function Navbar() {
   try {
     const payload = await getPayload({ config: configPromise });
-    // Fetch single navbar with embedded menus
     const data = await payload.find({ collection: "navbar", depth: 2, limit: 1 });
     const navbar: NavbarType | undefined = data.docs?.[0];
-    // Sort by optional custom order, then createdAt for stability
     const sortByOrder = <T extends { order?: number; createdAt?: string }>(arr: T[]): T[] => {
       return [...arr].sort((a, b) => {
         const byOrder = (a.order ?? 0) - (b.order ?? 0);
@@ -58,7 +31,6 @@ export default async function Navbar() {
       });
     };
 
-    // Flexible menu items from admin (authoritative)
     const menuItems = ((navbar as unknown as any)?.menuItems as any[]) || [];
     const logo = navbar?.logo as Media | number | undefined;
 
@@ -68,7 +40,6 @@ export default async function Navbar() {
     let logoHeight = 40;
 
     if (logo && typeof logo === "object") {
-      // Cloudinary plugin typically adds `cloudinary.secure_url`
       if (logo.cloudinary?.secure_url) {
         logoUrl = logo.cloudinary.secure_url || null;
         logoWidth = logo.cloudinary.width || logo.width || 120;
@@ -84,41 +55,36 @@ export default async function Navbar() {
     return (
       <nav className="sticky top-0 bg-[#f1f4f9] z-50 ">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              {logoUrl ? (
-                <Image
-                  src={logoUrl}
-                  alt={logoAlt}
-                  width={logoWidth}
-                  height={logoHeight}
-                  className="h-8 w-auto"
-                  priority
-                />
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-blue-600 rounded"></div>
-                  <span className="text-gray-900 font-bold text-lg">AZAVISTA</span>
-                  <span className="text-xs text-gray-500 font-medium">EVENT TECHNOLOGY</span>
-                </div>
-              )}
+            <div className="flex-shrink-0 mr-8">
+              <Link href={navbar?.logoUrl || "/"}>
+                {logoUrl ? (
+                  <Image
+                    src={logoUrl}
+                    alt={logoAlt}
+                    width={logoWidth}
+                    height={logoHeight}
+                    className="h-8 w-auto"
+                    priority
+                  />
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-blue-600 rounded"></div>
+                    <span className="text-gray-900 font-bold text-lg">AZAVISTA</span>
+                    <span className="text-xs text-gray-500 font-medium">EVENT TECHNOLOGY</span>
+                  </div>
+                )}
+              </Link>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            {/* Menu Items - starts from left after logo */}
+            <div className="hidden md:flex items-center space-x-8 flex-1">
               {/* Dynamic menu items from Admin if present */}
               {menuItems.length > 0 ? (
                 <>
                   {menuItems.map((mi, i) => {
                     const blockType = mi?.blockType || mi?.blockType_ || mi?._blockType || mi?.blockTypeSlug;
-                    if (blockType === 'link') {
-                      return (
-                        <Link key={mi.id || i} href={mi.url || '#'} className="text-gray-600 hover:text-gray-900 text-sm font-medium py-4 border-b-2 border-transparent hover:border-blue-600 transition-all duration-200">
-                          {mi.label}
-                        </Link>
-                      );
-                    }
                     if (blockType === 'megaMenu') {
                       const cols = sortByOrder((mi.columns || []) as any[]);
                       const hl = mi.highlight;
@@ -133,7 +99,7 @@ export default async function Navbar() {
                                 {/* Left highlight section */}
                                 {hl && (hl.title || hl.description || hl.image) && (
                                   <div className="w-80 flex-shrink-0">
-                                    <div className="bg-gray-50 rounded-lg p-6">
+                                    <div className="bg-gray-100 rounded-lg p-6">
                                       {(() => {
                                         const img = mediaUrl(hl.image as any);
                                         return (
@@ -146,7 +112,7 @@ export default async function Navbar() {
                                             <h3 className="text-lg font-bold text-gray-900 mb-2">{hl.title}</h3>
                                             <p className="text-sm text-gray-600 mb-4 leading-relaxed">{hl.description}</p>
                                             {hl.link && (
-                                              <Link href={hl.link} className="text-blue-600 text-sm font-medium hover:text-blue-700">Contact Sales &gt;</Link>
+                                              <Link href={hl.link} className="text-blue-600 text-sm font-medium hover:text-blue-700">{hl.linkText || "Contact Sales"} &gt;</Link>
                                             )}
                                           </>
                                         );
@@ -159,7 +125,7 @@ export default async function Navbar() {
                                   {cols.slice(0, 4).map((doc: any, j: number) => (
                                     <div key={j}>
                                       <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">{doc.category}</h4>
-                                      <ul className="space-y-3">
+                                      <ul className="space-y-5">
                                         {(doc.items || []).map((item: any, k: number) => (
                                           <li key={k} className="flex items-start space-x-3">
                                             {item.icon && (
@@ -187,12 +153,11 @@ export default async function Navbar() {
               ) : (
                 <></>
               )}
-              {/* Legacy fallback removed: menus are 100% driven by menuItems */}
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Button - pushed to the right */}
             {navbar?.ctaLabel && (
-              <div>
+              <div className="ml-auto">
                 <Link
                   href={navbar.ctaUrl || "#"}
                   className="inline-flex items-center px-4 py-2 border border-blue-600 text-blue-600 text-sm font-medium rounded-full hover:bg-blue-600 hover:text-white transition-all duration-200"
