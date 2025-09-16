@@ -82,7 +82,7 @@ export interface CustomFeatureBlockData {
   heading?: string;
   buttonLabel?: string;
   buttonUrl?: string;
-  image?: Media;
+  image?: CloudinaryImage;
 }   
 
 
@@ -173,7 +173,7 @@ export interface GetstartedBlockData {
   description: string;
   buttonText: string;
   buttonLink: string;
-  backgroundImage?: number | Media;
+  backgroundImage?: number | CloudinaryImage;
 }
 
 export interface ContactBlockData {
@@ -220,7 +220,7 @@ export interface FeatureSection {
   backgroundVariant?: "none" | "light";
   description?: SerializedEditorState;
   cta?: FeatureSectionCTA;
-  image: Media | number;
+  image: CloudinaryImage | number;
   imageOnRight?: boolean;
 }
 
@@ -229,6 +229,62 @@ export interface PlatformFeature {
   title: string;
   heading: string;
   description?: SerializedEditorState;
+}
+
+// Blue Section interfaces
+export interface BlueSection {
+  blockType: "blueSection";
+  heading: string;
+  description: string;
+  buttonText: string;
+  buttonUrl: string;
+  backgroundColor?: string;
+}
+
+// Integrated Tool block
+export interface IntegratedToolItem {
+  title: string;
+  description: string;
+  image?: CloudinaryImage; // Cloudinary media from Payload
+  iconBg?: string; // Tailwind class or raw color for the tile background
+}
+
+export interface IntegratedTool {
+  blockType: "integratedTool";
+  heading?: string;
+  items?: IntegratedToolItem[];
+}
+
+// FAQ block
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface FAQBlockData {
+  blockType: "faq";
+  title?: string;
+  items?: FAQItem[];
+}
+
+// Generic Split Feature block (used by Registration Analytics)
+export interface SplitFeatureCTA {
+  label?: string;
+  url?: string;
+}
+
+export interface SplitFeature {
+  blockType: "splitFeature";
+  title?: string;
+  badge?: string;
+  heading: string;
+  subheading?: string;
+  description?: SerializedEditorState;
+  backgroundVariant?: "none" | "light";
+  primaryCta?: SplitFeatureCTA;
+  secondaryCta?: SplitFeatureCTA;
+  image: CloudinaryImage | number;
+  imageOnRight?: boolean;
 }
 
 export type BlockData =
@@ -244,3 +300,7 @@ export type BlockData =
   | ContactBlockData
   | FeatureSection
   | PlatformFeature
+  | BlueSection
+  | IntegratedTool
+  | FAQBlockData
+  | SplitFeature

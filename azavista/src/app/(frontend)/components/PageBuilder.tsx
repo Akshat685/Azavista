@@ -12,6 +12,10 @@ import Getstarted from "./Getstarted";
 import ContactBlock from "./Contact";
 import FeatureSection from "./FeatureSection";
 import PlatformFeature from "./PlatformFeature";
+import BlueSection from "./BlueSection";
+import IntegratedTool from "./IntegratedTool";
+import FAQ from "./FAQ";
+import SplitFeature from "./SplitFeature";
 import type { BlockData } from "../types";
 
 interface PageBuilderProps {
@@ -49,6 +53,14 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <FeatureSection key={i} {...(block as any)} />;
           case "platformFeature":
             return <PlatformFeature key={i} {...(block as any)} />;
+          case "blueSection":
+            return <BlueSection key={i} {...(block as any)} />;
+          case "integratedTool":
+            return <IntegratedTool key={i} {...(block as any)} />;
+          case "faq":
+            return <FAQ key={i} {...(block as any)} />;
+          case "splitFeature":
+            return <SplitFeature key={i} {...(block as any)} />;
           default:
             return null;
         }

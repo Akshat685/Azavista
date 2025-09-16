@@ -1,20 +1,13 @@
 import Image from "next/image";
-import { GetstartedBlockData, Media } from "../types";
+import { GetstartedBlockData, CloudinaryImage } from "../types";
 
 export default function GetstartedBlock(props: GetstartedBlockData) {
   const { sectionLabel, heading, description, buttonText, buttonLink, backgroundImage } = props;
 
-  const getImageUrl = (img?: number | Media) => {
-    if (!img || typeof img === "number") return "";
-    return img.cloudinary?.secure_url || img.url || img.thumbnailURL || "";
-  };
+  const media = backgroundImage as CloudinaryImage | undefined;
 
-  const getAlt = (img?: number | Media, fallback = "Background") => {
-    if (!img || typeof img === "number") return fallback;
-    return img.alt || fallback;
-  };
-
-  const imageUrl = getImageUrl(backgroundImage);
+  const imageUrl =
+    media?.cloudinary?.secure_url || media?.url || media?.thumbnailURL || "";
 
   return (
     <section className="py-20">
@@ -23,7 +16,7 @@ export default function GetstartedBlock(props: GetstartedBlockData) {
         {imageUrl && (
           <Image
             src={imageUrl}
-            alt={getAlt(backgroundImage, heading)}
+            alt={media?.alt || heading || "Background"}
             fill
             className="object-cover"
             priority

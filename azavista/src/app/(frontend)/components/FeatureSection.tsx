@@ -1,17 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Media } from "@/payload-types";
 import { RichText } from "@payloadcms/richtext-lexical/react";
-import type { FeatureSection } from "../types";
+import type { FeatureSection, CloudinaryImage } from "../types";
 
-type Props = FeatureSection & { image: Media | number };
-
-const getImageUrl = (img?: Media | number | null) => {
-  if (!img || typeof img === 'number') return '';
-  return img.cloudinary?.secure_url || img.thumbnailURL || img.url || '';
-}
-
-export default function FeatureSection(props: Props) {
+export default function FeatureSection(props: FeatureSection) {
   const {
     title,
     heading,
@@ -22,11 +14,17 @@ export default function FeatureSection(props: Props) {
     backgroundVariant = 'none',
   } = props;
 
-  const imgUrl = getImageUrl(image as any);
+  const media = image as CloudinaryImage | undefined;
+
+  const imageUrl =
+    media?.cloudinary?.secure_url || media?.url || media?.thumbnailURL || "";
+
+  const width = media?.cloudinary?.width || 600;
+  const height = media?.cloudinary?.height || 400;
 
   const Text = (
     <div className="flex-1 py-16">
-      {title && <div className="text-gray-600 font-semibold mb-4">{title}</div>}
+      {title && <div className="text-gray-600 text-xl font-semibold mb-4">{title}</div>}
       <h2 className="text-4xl md:text-5xl tracking-tight text-gray-900 mb-6">{heading}</h2>
       {description && (
         <div className="text-lg text-gray-600 mb-10 leading-relaxed max-w-none [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-1 [&_li::marker]:text-[#1e61f0]">
@@ -50,8 +48,14 @@ export default function FeatureSection(props: Props) {
 
   const Visual = (
     <div className="flex-1">
-      {imgUrl && (
-        <Image src={imgUrl} alt={heading} width={1200} height={900} className="w-full h-auto rounded-xl shadow-sm" />
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          alt={media?.alt || heading || "Feature image"}
+          width={width}
+          height={height}
+          className="w-full h-auto rounded-xl shadow-sm object-cover"
+        />
       )}
     </div>
   );

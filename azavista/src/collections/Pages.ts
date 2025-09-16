@@ -11,6 +11,10 @@ import { Getstarted } from "@/blocks/GetStarted";
 import { Contact as ContactBlock } from "@/blocks/Contact";
 import { FeatureSection } from "@/blocks/FeatureSection";
 import { PlatformFeatures } from "@/blocks/PlatformFeatures";
+import { BlueSection } from "@/blocks/BlueSection";
+import { IntegratedTool } from "@/blocks/IntegratedTool";
+import { FAQ } from "@/blocks/FAQ";
+import { SplitFeature } from "@/blocks/SplitFeature";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -48,6 +52,10 @@ export const Pages: CollectionConfig = {
         ContactBlock,
         FeatureSection,
         PlatformFeatures,
+        BlueSection,
+        IntegratedTool,
+        FAQ,
+        SplitFeature,
       ]
     }
   ],

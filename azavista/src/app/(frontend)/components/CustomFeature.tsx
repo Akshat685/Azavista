@@ -1,14 +1,16 @@
 import Image from "next/image";
-import { CustomFeatureBlockData } from "../types";
+import { CustomFeatureBlockData, CloudinaryImage } from "../types";
 
 export default function CustomFeatureBlock(props: CustomFeatureBlockData) {
   const { subheading, heading, buttonLabel, buttonUrl, image } = props;
 
-  const imageUrl =
-    image?.cloudinary?.secure_url || image?.url || image?.thumbnailURL || "";
+  const media = image as CloudinaryImage | undefined;
 
-  const imgWidth = image?.cloudinary?.width || 650;
-  const imgHeight = image?.cloudinary?.height || 400;
+  const imageUrl =
+    media?.cloudinary?.secure_url || media?.url || media?.thumbnailURL || "";
+
+  const imgWidth = media?.cloudinary?.width || 650;
+  const imgHeight = media?.cloudinary?.height || 400;
 
   return (
     <section className="bg-gray-100 py-18">
@@ -38,7 +40,7 @@ export default function CustomFeatureBlock(props: CustomFeatureBlockData) {
           {imageUrl && (
             <Image
               src={imageUrl}
-              alt={image?.alt || heading || "Feature image"}
+              alt={media?.alt || heading || "Feature image"}
               width={imgWidth}
               height={imgHeight}
               className="object-cover shadow-lg w-full max-w-md"

@@ -590,6 +590,78 @@ export interface Page {
             blockName?: string | null;
             blockType: 'platformFeature';
           }
+        | {
+            heading: string;
+            description: string;
+            buttonText: string;
+            buttonUrl: string;
+            backgroundColor?: ('bg-blue-600' | 'bg-gray-600') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blueSection';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  title: string;
+                  description: string;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'integratedTool';
+          }
+        | {
+            title?: string | null;
+            items?:
+              | {
+                  question: string;
+                  answer: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            title?: string | null;
+            badge?: string | null;
+            heading: string;
+            subheading?: string | null;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            backgroundVariant?: ('none' | 'light') | null;
+            primaryCta?: {
+              label?: string | null;
+              url?: string | null;
+            };
+            secondaryCta?: {
+              label?: string | null;
+              url?: string | null;
+            };
+            image: number | Media;
+            imageOnRight?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'splitFeature';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1042,6 +1114,72 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               heading?: T;
               description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        blueSection?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              buttonText?: T;
+              buttonUrl?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        integratedTool?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        splitFeature?:
+          | T
+          | {
+              title?: T;
+              badge?: T;
+              heading?: T;
+              subheading?: T;
+              description?: T;
+              backgroundVariant?: T;
+              primaryCta?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                  };
+              secondaryCta?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                  };
+              image?: T;
+              imageOnRight?: T;
               id?: T;
               blockName?: T;
             };
