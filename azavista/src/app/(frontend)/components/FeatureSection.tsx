@@ -47,7 +47,7 @@ export default function FeatureSection(props: FeatureSection) {
   );
 
   const Visual = (
-    <div className="flex-1">
+    <div className="">
       {imageUrl && (
         <Image
           src={imageUrl}
