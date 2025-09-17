@@ -36,7 +36,7 @@ export default function FeatureSection(props: FeatureSection) {
           href={cta.url}
           className={
             cta.variant === 'secondary'
-              ? 'inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-100'
+              ? 'inline-flex items-center px-6 py-3 border border-blue-300 text-blue-700 rounded-full hover:bg-gray-100'
               : 'inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700'
           }
         >
@@ -54,7 +54,7 @@ export default function FeatureSection(props: FeatureSection) {
           alt={media?.alt || heading || "Feature image"}
           width={width}
           height={height}
-          className="w-full h-auto rounded-xl shadow-sm object-cover"
+          className="w-full h-auto"
         />
       )}
     </div>

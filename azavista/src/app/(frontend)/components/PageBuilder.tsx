@@ -50,17 +50,17 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
           case "contact":
             return <ContactBlock key={i} {...block} />;
           case "featureSection":
-            return <FeatureSection key={i} {...(block as any)} />;
+            return <FeatureSection key={i} {...(block)} />;
           case "platformFeature":
-            return <PlatformFeature key={i} {...(block as any)} />;
+            return <PlatformFeature key={i} {...(block)} />;
           case "blueSection":
-            return <BlueSection key={i} {...(block as any)} />;
+            return <BlueSection key={i} {...(block)} />;
           case "integratedTool":
-            return <IntegratedTool key={i} {...(block as any)} />;
+            return <IntegratedTool key={i} {...(block)} />;
           case "faq":
-            return <FAQ key={i} {...(block as any)} />;
+            return <FAQ key={i} {...(block)} />;
           case "splitFeature":
-            return <SplitFeature key={i} {...(block as any)} />;
+            return <SplitFeature key={i} {...(block)} />;
           default:
             return null;
         }

@@ -1,18 +1,16 @@
 import type { IntegratedTool } from "../types";
 import Image from "next/image";
 
-export default function IntegratedTool({ heading, items = [] }: IntegratedTool) {
-  if (!items || items.length === 0) return null;
+export default function IntegratedTool({ heading, description, items = [] }: IntegratedTool) {
+  if (!heading && !description && (!items || items.length === 0)) return null;
 
-  // Function to create rows with proper distribution
-  const createRows = (items: any[]) => {
+  const createRows = (items: { title: string; description: string; image?: { cloudinary?: { secure_url?: string; width?: number; height?: number }; url?: string; thumbnailURL?: string; alt?: string } }[]) => {
     if (items.length <= 3) {
-      return [items]; // Single row for 3 or fewer items
+      return [items]; 
     }
     
     const rows = [];
     
-    // If total items is divisible by 3, use 3 items per row
     if (items.length % 3 === 0) {
       for (let i = 0; i < items.length; i += 3) {
         rows.push(items.slice(i, i + 3));
@@ -20,9 +18,8 @@ export default function IntegratedTool({ heading, items = [] }: IntegratedTool) 
       return rows;
     }
     
-    // For 4-5 items: 3 in first row, remaining in second row (centered)
     if (items.length <= 5) {
-      const firstRow = items.slice(0, 3); // First 3 items
+      const firstRow = items.slice(0, 3); 
       const remainingItems = items.slice(3);
       
       rows.push(firstRow);
@@ -32,13 +29,11 @@ export default function IntegratedTool({ heading, items = [] }: IntegratedTool) 
       return rows;
     }
     
-    // For more complex cases, try to balance rows
-    const firstRow = items.slice(0, 3); // First 3 items
+    const firstRow = items.slice(0, 3); 
     const remainingItems = items.slice(3);
     
     rows.push(firstRow);
     
-    // Split remaining items into rows of 2
     for (let i = 0; i < remainingItems.length; i += 2) {
       rows.push(remainingItems.slice(i, i + 2));
     }
@@ -51,12 +46,22 @@ export default function IntegratedTool({ heading, items = [] }: IntegratedTool) 
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-6">
-        {heading && (
-          <h2 className="max-w-4xl mx-auto text-center text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-14">
-            {heading}
-          </h2>
+        {(heading || description) && (
+          <div className="max-w-4xl mx-auto text-center mb-14">
+            {heading && (
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl text-gray-900">
+                {heading}
+              </h2>
+            )}
+            {description && (
+              <p className="mt-4 text-base md:text-lg text-[#565656] leading-relaxed">
+                {description}
+              </p>
+            )}
+          </div>
         )}
 
+        {items && items.length > 0 && (
         <div className="max-w-7xl mx-auto">
           {rows.map((row, rowIndex) => (
             <div 
@@ -111,6 +116,7 @@ export default function IntegratedTool({ heading, items = [] }: IntegratedTool) 
             </div>
           ))}
         </div>
+        )}
       </div>
     </section>
   );

@@ -252,6 +252,7 @@ export interface IntegratedToolItem {
 export interface IntegratedTool {
   blockType: "integratedTool";
   heading?: string;
+  description?: string;
   items?: IntegratedToolItem[];
 }
 
@@ -268,23 +269,91 @@ export interface FAQBlockData {
 }
 
 // Generic Split Feature block (used by Registration Analytics)
-export interface SplitFeatureCTA {
-  label?: string;
-  url?: string;
+export interface SplitFeatureButton {
+  label: string;
+  url: string;
+  variant: "primary" | "secondary";
+}
+
+export interface SplitFeatureBadge {
+  text?: string;
+  icon?: CloudinaryImage | number;
 }
 
 export interface SplitFeature {
   blockType: "splitFeature";
   title?: string;
-  badge?: string;
+  badge?: SplitFeatureBadge;
   heading: string;
-  subheading?: string;
   description?: SerializedEditorState;
   backgroundVariant?: "none" | "light";
-  primaryCta?: SplitFeatureCTA;
-  secondaryCta?: SplitFeatureCTA;
+  buttons?: SplitFeatureButton[];
   image: CloudinaryImage | number;
   imageOnRight?: boolean;
+}
+
+// Footer types
+export interface FooterHeadquarter {
+  title: string;
+  address: string;
+}
+
+export interface FooterLinkItem {
+  label: string;
+  url: string;
+}
+
+export interface FooterLinkGroup {
+  groupTitle: string;
+  items: FooterLinkItem[];
+}
+
+export interface FooterSocialLink {
+  platform: string;
+  url: string;
+  icon?: number | Media;
+}
+
+export interface FooterData {
+  logo?: number | Media;
+  headquarters: FooterHeadquarter[];
+  links: FooterLinkGroup[];
+  socialLinks: FooterSocialLink[];
+  copyright: string;
+}
+
+// Navbar (Mega Menu) types
+export interface MegaMenuItem {
+  title?: string;
+  description?: string;
+  link?: string;
+  icon?: Media | number;
+}
+
+export interface MegaMenuColumn {
+  category?: string;
+  items?: MegaMenuItem[];
+  order?: number;
+  createdAt?: string;
+}
+
+export interface MegaMenuHighlight {
+  title?: string;
+  description?: string;
+  link?: string;
+  linkText?: string;
+  image?: Media | number | null;
+}
+
+export interface MegaMenuBlock {
+  id?: string | number;
+  blockType?: string;
+  blockType_?: string;
+  _blockType?: string;
+  blockTypeSlug?: string;
+  label?: string;
+  columns?: MegaMenuColumn[];
+  highlight?: MegaMenuHighlight;
 }
 
 export type BlockData =

@@ -1,26 +1,7 @@
 import Image from "next/image";
 import { getPayload } from "payload";
 import config from "@/payload.config";
-
-interface Media {
-  id: string | number;
-  url?: string;
-  alt?: string;
-  cloudinary?: {
-    secure_url?: string;
-    width?: number;
-    height?: number;
-  };
-  thumbnailURL?: string;
-}
-
-interface FooterProps {
-  logo?: number | Media; // upload field -> ID or Media
-  headquarters: { title: string; address: string }[];
-  links: { groupTitle: string; items: { label: string; url: string }[] }[];
-  socialLinks: { platform: string; url: string; icon?: number | Media }[];
-  copyright: string;
-}
+import type { FooterData, Media } from "../types";
 
 export default async function Footer() {
   const payload = await getPayload({ config });
@@ -28,14 +9,13 @@ export default async function Footer() {
   const footerRes = await payload.find({
     collection: "footer",
     limit: 1,
-    depth: 1, // ensures we get full media object
+    depth: 1,
   });
 
-  const data = footerRes.docs?.[0] as FooterProps | undefined;
+  const data = footerRes.docs?.[0] as FooterData | undefined;
 
   if (!data) return null;
 
-  // helper: type guard + url extractor
   const getImageUrl = (img?: number | Media) => {
     if (!img || typeof img === "number") return "";
     return img.cloudinary?.secure_url || img.url || img.thumbnailURL || "";
@@ -99,7 +79,7 @@ export default async function Footer() {
             <ul className="space-y-2">
               {group.items?.map((link, linkIdx) => (
                 <li key={linkIdx}>
-                  <a href={link.url} className="hover:underline">
+                  <a href={link.url} className="font-semibold">
                     {link.label}
                   </a>
                 </li>

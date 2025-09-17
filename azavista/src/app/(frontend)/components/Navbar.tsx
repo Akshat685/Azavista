@@ -3,17 +3,11 @@ import Link from "next/link";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 
-import type { Navbar as NavbarType, Media } from "@/payload-types";
-
-type MenuItem = {
-  title: string;
-  description?: string;
-  link?: string;
-  icon?: Media | number;
-};
+import type { Navbar as NavbarType, Media as PayloadMedia } from "@/payload-types";
+import type { MegaMenuBlock, MegaMenuColumn, MegaMenuItem, Media as FrontendMedia } from "../types";
 
 
-const mediaUrl = (img?: Media | number | null) => {
+const mediaUrl = (img?: PayloadMedia | FrontendMedia | number | null) => {
   if (!img || typeof img === "number") return "";
   return img.cloudinary?.secure_url || img.thumbnailURL || img.url || "";
 };
@@ -31,8 +25,10 @@ export default async function Navbar() {
       });
     };
 
-    const menuItems = ((navbar as unknown as any)?.menuItems as any[]) || [];
-    const logo = navbar?.logo as Media | number | undefined;
+    const menuItems: MegaMenuBlock[] = (
+      (navbar as unknown as { menuItems?: MegaMenuBlock[] } | undefined)?.menuItems
+    ) || [];
+    const logo = navbar?.logo as PayloadMedia | number | undefined;
 
     let logoUrl: string | null = null;
     let logoAlt = "Logo";
@@ -86,7 +82,7 @@ export default async function Navbar() {
                   {menuItems.map((mi, i) => {
                     const blockType = mi?.blockType || mi?.blockType_ || mi?._blockType || mi?.blockTypeSlug;
                     if (blockType === 'megaMenu') {
-                      const cols = sortByOrder((mi.columns || []) as any[]);
+                      const cols = sortByOrder(mi.columns || []);
                       const hl = mi.highlight;
                       return (
                         <div key={mi.id || i} className="relative group">
@@ -101,7 +97,7 @@ export default async function Navbar() {
                                   <div className="w-80 flex-shrink-0">
                                     <div className="bg-gray-100 rounded-lg p-6">
                                       {(() => {
-                                        const img = mediaUrl(hl.image as any);
+                                        const img = mediaUrl(hl.image);
                                         return (
                                           <>
                                             {img && (
@@ -122,14 +118,14 @@ export default async function Navbar() {
                                 )}
                                 {/* Right columns */}
                                 <div className="flex-1 grid grid-cols-4 gap-8">
-                                  {cols.slice(0, 4).map((doc: any, j: number) => (
+                                  {cols.slice(0, 4).map((doc: MegaMenuColumn, j: number) => (
                                     <div key={j}>
                                       <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">{doc.category}</h4>
                                       <ul className="space-y-5">
-                                        {(doc.items || []).map((item: any, k: number) => (
+                                        {(doc.items || []).map((item: MegaMenuItem, k: number) => (
                                           <li key={k} className="flex items-start space-x-3">
                                             {item.icon && (
-                                              <Image src={mediaUrl(item.icon as any)} alt="" width={20} height={20} className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                                              <Image src={mediaUrl(item.icon)} alt="" width={20} height={20} className="w-5 h-5 mt-0.5 flex-shrink-0" />
                                             )}
                                             <div>
                                               <Link href={item.link || '#'} className="text-sm font-semibold text-gray-900 hover:text-blue-600 block">{item.title}</Link>

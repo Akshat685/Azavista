@@ -17,7 +17,7 @@ export async function getPageBySlug(slug: string) {
 
         const page = pagesRes.docs[0];
         return page || null;
-    } catch (error) {
+    } catch (_error) {
         return null;
     }
 

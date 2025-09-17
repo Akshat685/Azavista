@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ContactBlockData, CloudinaryImage, LogoItem } from "../types";
+import { ContactBlockData, LogoItem } from "../types";
 
 
 export default function ContactBlock(block: ContactBlockData) {

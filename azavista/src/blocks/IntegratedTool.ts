@@ -10,6 +10,11 @@ export const IntegratedTool: Block = {
       label: "Heading",
     },
     {
+      name: "description",
+      type: "textarea",
+      label: "Description",
+    },
+    {
       name: "items",
       type: "array",
       labels: {

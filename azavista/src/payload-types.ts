@@ -602,6 +602,7 @@ export interface Page {
           }
         | {
             heading?: string | null;
+            description?: string | null;
             items?:
               | {
                   title: string;
@@ -628,10 +629,30 @@ export interface Page {
             blockType: 'faq';
           }
         | {
+            /**
+             * Optional section title that appears above the main heading
+             */
             title?: string | null;
-            badge?: string | null;
+            /**
+             * Badge with optional icon and text
+             */
+            badge?: {
+              /**
+               * Badge text (e.g., 'Registration Analytics')
+               */
+              text?: string | null;
+              /**
+               * Small icon to display before the badge text (SVG/PNG recommended)
+               */
+              icon?: (number | null) | Media;
+            };
+            /**
+             * Main headline for the section
+             */
             heading: string;
-            subheading?: string | null;
+            /**
+             * Rich text content with bullet points and detailed information
+             */
             description?: {
               root: {
                 type: string;
@@ -648,15 +669,24 @@ export interface Page {
               [k: string]: unknown;
             } | null;
             backgroundVariant?: ('none' | 'light') | null;
-            primaryCta?: {
-              label?: string | null;
-              url?: string | null;
-            };
-            secondaryCta?: {
-              label?: string | null;
-              url?: string | null;
-            };
+            /**
+             * Add up to 2 call-to-action buttons with customizable styles
+             */
+            buttons?:
+              | {
+                  label: string;
+                  url: string;
+                  variant?: ('primary' | 'secondary') | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Main image for the section (dashboard screenshot, product mockup, etc.)
+             */
             image: number | Media;
+            /**
+             * Toggle to switch the layout between image-left and image-right
+             */
             imageOnRight?: boolean | null;
             id?: string | null;
             blockName?: string | null;
@@ -1132,6 +1162,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               heading?: T;
+              description?: T;
               items?:
                 | T
                 | {
@@ -1161,22 +1192,22 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              badge?: T;
+              badge?:
+                | T
+                | {
+                    text?: T;
+                    icon?: T;
+                  };
               heading?: T;
-              subheading?: T;
               description?: T;
               backgroundVariant?: T;
-              primaryCta?:
+              buttons?:
                 | T
                 | {
                     label?: T;
                     url?: T;
-                  };
-              secondaryCta?:
-                | T
-                | {
-                    label?: T;
-                    url?: T;
+                    variant?: T;
+                    id?: T;
                   };
               image?: T;
               imageOnRight?: T;
