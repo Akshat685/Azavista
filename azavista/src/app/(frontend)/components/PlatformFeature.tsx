@@ -4,7 +4,7 @@ import type { PlatformFeature } from "../types";
 export default function PlatformFeature({ title, heading, description }: PlatformFeature) {
   return (
     <section className="py-16">
-      <div className="max-w-5xl mx-auto px-6 text-center">
+      <div className="max-w-4xl mx-auto px-6 text-center">
         <span className="inline-block px-5 py-3 mb-3 rounded-full bg-blue-50 text-[#195ff6] text-sm font-medium">
           {title}
         </span>

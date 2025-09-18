@@ -74,61 +74,63 @@ export default async function Navbar() {
               </Link>
             </div>
 
-          {/* Mobile menu (hamburger) */}
-          <div className="md:hidden ml-auto">
-            <details className="relative">
-              <summary className="list-none inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer">
-                <span className="sr-only">Open menu</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-              </summary>
-              <div className="fixed inset-x-0 top-16 bottom-0 bg-white border-t border-gray-200 overflow-y-auto px-6 py-6 z-50">
-                <nav className="max-w-3xl mx-auto">
-                  <ul className="space-y-6">
-                    {menuItems.map((mi, i) => {
-                      const blockType = mi?.blockType || mi?.blockType_ || mi?._blockType || mi?.blockTypeSlug;
-                      if (blockType !== 'megaMenu') return null;
-                      const cols = (mi.columns || []);
-                      const hl = mi.highlight;
-                      return (
-                        <li key={mi.id || i} className="border-b last:border-b-0 border-gray-200 py-3">
-                          <input id={`mob-acc-${i}`} type="checkbox" data-acc="mobile" className="peer sr-only" />
-                          <label htmlFor={`mob-acc-${i}`} className="flex items-center justify-between py-2 cursor-pointer select-none">
-                            <span className="text-gray-900 font-semibold text-lg">{mi.label}</span>
-                            <svg className="w-5 h-5 text-gray-500 transition-transform duration-500 ease-in-out peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                          </label>
-                          <div className="max-h-0 overflow-hidden transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]">
-                            {hl && (hl.title) && (
-                              <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                                <div className="text-sm font-bold text-gray-900">{hl.title}</div>
-                              </div>
-                            )}
-                            <div className="grid grid-cols-1 gap-5 pb-3">
-                              {cols.map((doc, j) => (
-                                <div key={j}>
-                                  {doc.category && <div className="text-[11px] uppercase tracking-wider text-gray-500 mb-2">{doc.category}</div>}
-                                  <ul className="space-y-3">
-                                    {(doc.items || []).map((item, k) => (
-                                      <li key={k}>
-                                        <a href={item.link || '#'} className="block text-base text-blue-800 font-medium hover:text-blue-600 focus:text-blue-600 active:text-blue-600 transition-colors duration-150 py-1.5">
-                                          {item.title}
-                                        </a>
-                                      </li>
-                                    ))}
-                                  </ul>
+
+            {/* Mobile menu (hamburger) */}
+            <div className="md:hidden ml-auto">
+              <details className="relative">
+                <summary className="list-none inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer">
+                  <span className="sr-only">Open menu</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  </svg>
+                </summary>
+                <div className="fixed inset-x-0 top-16 bottom-0 bg-white border-t border-gray-200 overflow-y-auto px-6 py-6 z-50">
+                  <nav className="max-w-3xl mx-auto">
+                    <ul className="space-y-6">
+                      {menuItems.map((mi, i) => {
+                        const blockType = mi?.blockType || mi?.blockType_ || mi?._blockType || mi?.blockTypeSlug;
+                        if (blockType !== 'megaMenu') return null;
+                        const cols = (mi.columns || []);
+                        const hl = mi.highlight;
+                        return (
+                          <li key={mi.id || i} className="border-b last:border-b-0 border-gray-200 py-3">
+                            <input id={`mob-acc-${i}`} type="checkbox" data-acc="mobile" className="peer sr-only" />
+                            <label htmlFor={`mob-acc-${i}`} className="flex items-center justify-between py-2 cursor-pointer select-none">
+                              <span className="text-gray-900 font-semibold text-lg">{mi.label}</span>
+                              <svg className="w-5 h-5 text-gray-500 transition-transform duration-500 ease-in-out peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </label>
+                            <div className="max-h-0 overflow-hidden transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]">
+                              {hl && (hl.title) && (
+                                <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                                  <div className="text-sm font-bold text-gray-900">{hl.title}</div>
                                 </div>
-                              ))}
+                              )}
+                              <div className="grid grid-cols-1 gap-5 pb-3">
+                                {cols.map((doc, j) => (
+                                  <div key={j}>
+                                    {doc.category && <div className="text-[11px] uppercase tracking-wider text-gray-500 mb-2">{doc.category}</div>}
+                                    <ul className="space-y-3">
+                                      {(doc.items || []).map((item, k) => (
+                                        <li key={k}>
+                                          <a href={item.link || '#'} className="block text-base text-blue-800 font-medium hover:text-blue-600 focus:text-blue-600 active:text-blue-600 transition-colors duration-150 py-1.5">
+                                            {item.title}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </nav>
-                <script dangerouslySetInnerHTML={{ __html: `
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </nav>
+                  <script dangerouslySetInnerHTML={{
+                    __html: `
                   (function(){
                     try {
                       const items = Array.from(document.querySelectorAll('input[type="checkbox"][data-acc="mobile"]'));
@@ -142,10 +144,9 @@ export default async function Navbar() {
                     } catch (e) {}
                   })();
                 `}} />
-              </div>
-            </details>
-          </div>
-
+                </div>
+              </details>
+            </div>
             {/* Menu Items - starts from left after logo */}
             <div className="hidden md:flex items-center space-x-8 flex-1">
               {/* Dynamic menu items from Admin if present */}

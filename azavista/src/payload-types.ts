@@ -692,6 +692,26 @@ export interface Page {
             blockName?: string | null;
             blockType: 'splitFeature';
           }
+        | {
+            images?:
+              | {
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galleryMarquee';
+          }
+        | {
+            heading?: string | null;
+            description1?: string | null;
+            description2?: string | null;
+            image?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoSection';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1211,6 +1231,28 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               image?: T;
               imageOnRight?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galleryMarquee?:
+          | T
+          | {
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        videoSection?:
+          | T
+          | {
+              heading?: T;
+              description1?: T;
+              description2?: T;
+              image?: T;
               id?: T;
               blockName?: T;
             };

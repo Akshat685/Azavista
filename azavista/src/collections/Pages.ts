@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { Hero } from "../blocks/Hero";
+import { VideoSection } from "../blocks/VideoSection";
 import { SmarterEvents } from "@/blocks/SmarterEvents";
 import { TabSections } from "@/blocks/TabSections"
 import { CustomFeature } from "@/blocks/CustomFeature"
@@ -15,10 +16,11 @@ import { BlueSection } from "@/blocks/BlueSection";
 import { IntegratedTool } from "@/blocks/IntegratedTool";
 import { FAQ } from "@/blocks/FAQ";
 import { SplitFeature } from "@/blocks/SplitFeature";
+import { GalleryMarquee } from "@/blocks/GalleryMarquee";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
-  admin: {
+    admin: {
     useAsTitle: "title",
   },
   fields: [
@@ -56,6 +58,8 @@ export const Pages: CollectionConfig = {
         IntegratedTool,
         FAQ,
         SplitFeature,
+        GalleryMarquee,
+        VideoSection,
       ]
     }
   ],

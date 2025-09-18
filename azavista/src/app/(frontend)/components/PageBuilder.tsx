@@ -17,6 +17,8 @@ import IntegratedTool from "./IntegratedTool";
 import FAQ from "./FAQ";
 import SplitFeature from "./SplitFeature";
 import type { BlockData } from "../types";
+import VideoSection from "./VideoSection";
+import GalleryMarquee from "./GalleryMarquee";
 
 interface PageBuilderProps {
   blocks?: BlockData[];
@@ -61,6 +63,10 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <FAQ key={i} {...(block)} />;
           case "splitFeature":
             return <SplitFeature key={i} {...(block)} />;
+          case "videoSection":
+            return <VideoSection key={i} {...block} />;
+          case "galleryMarquee":
+            return <GalleryMarquee key={i} {...block} />;
           default:
             return null;
         }

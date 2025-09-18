@@ -43,6 +43,8 @@ export interface HeroBlockData {
 }
 
 
+
+
 // SmarterEvents
 export interface SmarterEventsBlockData {
   blockType: "smarterEvents";
@@ -152,6 +154,16 @@ export interface TestimonialsBlockData {
 export interface LogoItem {
   logo?: { cloudinary?: { secure_url?: string }; url?: string };
   alt?: string;
+}
+
+// Gallery Marquee types
+export interface GalleryImageItem {
+  image?: Media | number;
+}
+
+export interface GalleryMarqueeData {
+  blockType: "galleryMarquee";
+  images?: GalleryImageItem[];
 }
 
 export interface SeamlessBlockData {
@@ -356,8 +368,20 @@ export interface MegaMenuBlock {
   highlight?: MegaMenuHighlight;
 }
 
+
+// VideoSection Block interfaces
+export interface VideoSection {
+  blockType: "videoSection";
+  heading: string;
+  description1: string;
+  description2: string;
+  image: Media;
+  // bottomText: string;
+}
+
 export type BlockData =
   | HeroBlockData
+  | VideoSection
   | SmarterEventsBlockData
   | TabsSectionData
   | CustomFeatureBlockData
@@ -373,3 +397,4 @@ export type BlockData =
   | IntegratedTool
   | FAQBlockData
   | SplitFeature
+  | GalleryMarqueeData
