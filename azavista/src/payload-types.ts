@@ -592,7 +592,7 @@ export interface Page {
           }
         | {
             heading: string;
-            description: string;
+            description?: string | null;
             buttonText: string;
             buttonUrl: string;
             backgroundColor?: ('bg-blue-600' | 'bg-gray-600') | null;

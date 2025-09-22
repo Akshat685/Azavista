@@ -8,18 +8,26 @@ export default function BlueSection({
   buttonUrl,
   backgroundColor = "bg-blue-600"
 }: BlueSection) {
+  // Determine text color and background styling based on selection
+  const isGray = backgroundColor === "bg-gray-600";
+  const textColor = isGray ? "text-black" : "text-white";
+  const buttonColor = isGray ? "text-white" : "text-blue-600";
+  const buttonBg = isGray ? "bg-blue-600" : "bg-white";
+  const sectionBg = isGray ? "bg-gray-200" : backgroundColor; // Override to light gray for gray option
+  const hoverClass = isGray ? "hover:bg-blue-800" : "hover:bg-gray-200";
+  
   return (
-    <section className={`py-20 ${backgroundColor}`}>
+    <section className={`py-20 mt-15 ${sectionBg}` } >
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-5xl lg:text-5xl text-white mb-6 leading-tight">
+        <h2 className={`text-3xl md:text-5xl lg:text-5xl ${textColor} mb-6 leading-tight`}>
           {heading}
         </h2>
-        <p className="text-lg md:text-xl text-white mb-10 max-w-3xl mx-auto leading-relaxed">
+        <p className={`text-lg md:text-xl ${textColor} mb-10 max-w-3xl mx-auto leading-relaxed`}>
           {description}
         </p>
         <Link
           href={buttonUrl}
-          className="inline-block bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg"
+          className={`inline-block ${buttonBg} ${buttonColor} ${hoverClass} px-8 py-4 rounded-full font-semibold text-lg transition-colors shadow-lg`}
         >
           {buttonText}
         </Link>
