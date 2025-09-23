@@ -19,6 +19,8 @@ import SplitFeature from "./SplitFeature";
 import type { BlockData } from "../types";
 import VideoSection from "./VideoSection";
 import GalleryMarquee from "./GalleryMarquee";
+import BlogList from "./BlogList";
+import BlogGrid from "./BlogGrid";
 
 interface PageBuilderProps {
   blocks?: BlockData[];
@@ -67,6 +69,10 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <VideoSection key={i} {...block} />;
           case "galleryMarquee":
             return <GalleryMarquee key={i} {...block} />;
+          case "blogList":
+            return <BlogList key={i} {...block} />;
+          case "blogGrid":
+            return <BlogGrid key={i} {...block} />;
           default:
             return null;
         }

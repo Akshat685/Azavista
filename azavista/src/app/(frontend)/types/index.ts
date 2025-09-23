@@ -379,6 +379,43 @@ export interface VideoSection {
   // bottomText: string;
 }
 
+// Blog List block
+export interface BlogListItem {
+  category?: string;
+  title: string;
+  excerpt?: string;
+  image?: Media | number | CloudinaryImage;
+  link?: string;
+}
+
+export interface BlogListBlock {
+  blockType: "blogList";
+  featured?: BlogListItem;
+  itemsRight?: BlogListItem[];
+  
+}
+
+export interface BlogGridTypeItem {
+  label: string;
+}
+
+export interface BlogGridPostItem {
+  type?: string;
+  category?: string;
+  title: string;
+  excerpt?: string;
+  image?: Media | number | CloudinaryImage;
+  link?: string;
+}
+
+export interface BlogGridBlock {
+  blockType: "blogGrid";
+  searchPlaceholder?: string;
+  types?: BlogGridTypeItem[];
+  items?: BlogGridPostItem[];
+}
+
+
 export type BlockData =
   | HeroBlockData
   | VideoSection
@@ -398,3 +435,6 @@ export type BlockData =
   | FAQBlockData
   | SplitFeature
   | GalleryMarqueeData
+  | BlogListBlock
+  | BlogGridBlock
+  

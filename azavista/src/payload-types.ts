@@ -712,6 +712,60 @@ export interface Page {
             blockName?: string | null;
             blockType: 'videoSection';
           }
+        | {
+            featured: {
+              category?: string | null;
+              title: string;
+              excerpt?: string | null;
+              image?: (number | null) | Media;
+              /**
+               * Enter a slug like how-ai-... or a full URL
+               */
+              link?: string | null;
+            };
+            itemsRight?:
+              | {
+                  category?: string | null;
+                  title: string;
+                  excerpt?: string | null;
+                  image?: (number | null) | Media;
+                  /**
+                   * Enter a slug like how-ai-... or a full URL
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blogList';
+          }
+        | {
+            searchPlaceholder?: string | null;
+            /**
+             * Add manual list of types for filtering
+             */
+            types?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            items?:
+              | {
+                  type?: string | null;
+                  category?: string | null;
+                  title: string;
+                  excerpt?: string | null;
+                  image?: (number | null) | Media;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blogGrid';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1253,6 +1307,55 @@ export interface PagesSelect<T extends boolean = true> {
               description1?: T;
               description2?: T;
               image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        blogList?:
+          | T
+          | {
+              featured?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    excerpt?: T;
+                    image?: T;
+                    link?: T;
+                  };
+              itemsRight?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    excerpt?: T;
+                    image?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        blogGrid?:
+          | T
+          | {
+              searchPlaceholder?: T;
+              types?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              items?:
+                | T
+                | {
+                    type?: T;
+                    category?: T;
+                    title?: T;
+                    excerpt?: T;
+                    image?: T;
+                    link?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

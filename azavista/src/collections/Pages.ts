@@ -17,6 +17,8 @@ import { IntegratedTool } from "@/blocks/IntegratedTool";
 import { FAQ } from "@/blocks/FAQ";
 import { SplitFeature } from "@/blocks/SplitFeature";
 import { GalleryMarquee } from "@/blocks/GalleryMarquee";
+import { BlogList } from "@/blocks/BlogList";
+import { BlogGrid } from "@/blocks/BlogGrid";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -60,6 +62,8 @@ export const Pages: CollectionConfig = {
         SplitFeature,
         GalleryMarquee,
         VideoSection,
+        BlogList,
+        BlogGrid,
       ]
     }
   ],

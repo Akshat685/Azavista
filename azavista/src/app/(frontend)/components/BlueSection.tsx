@@ -15,9 +15,9 @@ export default function BlueSection({
   const buttonBg = isGray ? "bg-blue-600" : "bg-white";
   const sectionBg = isGray ? "bg-gray-200" : backgroundColor; // Override to light gray for gray option
   const hoverClass = isGray ? "hover:bg-blue-800" : "hover:bg-gray-200";
-  
+
   return (
-    <section className={`py-20 mt-15 ${sectionBg}` } >
+    <section className={`py-20 mt-15 ${sectionBg}`} >
       <div className="max-w-4xl mx-auto px-6 text-center">
         <h2 className={`text-3xl md:text-5xl lg:text-5xl ${textColor} mb-6 leading-tight`}>
           {heading}
@@ -25,12 +25,18 @@ export default function BlueSection({
         <p className={`text-lg md:text-xl ${textColor} mb-10 max-w-3xl mx-auto leading-relaxed`}>
           {description}
         </p>
-        <Link
-          href={buttonUrl}
-          className={`inline-block ${buttonBg} ${buttonColor} ${hoverClass} px-8 py-4 rounded-full font-semibold text-lg transition-colors shadow-lg`}
-        >
-          {buttonText}
-        </Link>
+        {buttonUrl ? (
+          <Link
+            href={buttonUrl}
+            className={`inline-block ${buttonBg} ${buttonColor} ${hoverClass} px-8 py-4 rounded-full font-semibold text-lg transition-colors shadow-lg`}
+          >
+            {buttonText}
+          </Link>
+        ) : (
+          buttonText ? (
+            <span className={`inline-block ${buttonBg} ${buttonColor} px-8 py-4 rounded-full font-semibold text-lg shadow-lg opacity-80`}>{buttonText}</span>
+          ) : null
+        )}
       </div>
     </section>
   );
