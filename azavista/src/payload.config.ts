@@ -13,6 +13,7 @@ import { Media } from './collections/Media'
 import { Navbar } from './collections/Navbar'
 import { Footer } from './collections/Footer'
 import { Pages } from './collections/Pages'
+import { Blogs } from './collections/Blogs'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -31,6 +32,7 @@ export default buildConfig({
     Navbar,
     Footer,
     Pages,
+    Blogs
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

@@ -4,6 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import type { BlogListBlock, BlogListItem, Media, CloudinaryImage } from "../types";
 
+// Helper function to construct proper blog URLs
+function getBlogUrl(link?: string): string {
+    if (!link) return "#";
+
+    // If it's already a full URL (http/https) or starts with /, use as-is
+    if (link.startsWith("http") || link.startsWith("/")) {
+        return link;
+    }
+
+    // Otherwise, treat it as a blog slug and prepend /blog/
+    const cleanSlug = link.replace(/^\/+|\/+$/g, ""); // Remove leading/trailing slashes
+    return `/blog/${cleanSlug}`;
+}
+
 export default function BlogList({ featured, itemsRight }: BlogListBlock) {
     return (
         <section className="py-20">
@@ -14,7 +28,7 @@ export default function BlogList({ featured, itemsRight }: BlogListBlock) {
                     <div className="flex flex-col gap-4">
                         {featured.image && (
                             <Link
-                                href={featured.link ? featured.link : "#"}
+                                href={getBlogUrl(featured.link)}
                                 className="w-full relative aspect-[16/11]"
                             >
                                 <Image
@@ -37,7 +51,7 @@ export default function BlogList({ featured, itemsRight }: BlogListBlock) {
                                 </span>
                             )}
                             <Link
-                                href={featured.link ? featured.link : "#"}
+                                href={getBlogUrl(featured.link)}
                                 className="text-2xl font-semibold leading-snug hover:underline"
                             >
                                 {featured.title}
@@ -58,7 +72,7 @@ export default function BlogList({ featured, itemsRight }: BlogListBlock) {
                             <div key={index} className="flex gap-6">
                                 {item.image && (
                                     <Link
-                                        href={item.link ? item.link : "#"}
+                                        href={getBlogUrl(item.link)}
                                         className="min-w-[230px] max-w-[230px] w-full relative aspect-[16/11]"
                                     >
                                         <Image
@@ -81,7 +95,7 @@ export default function BlogList({ featured, itemsRight }: BlogListBlock) {
                                         </span>
                                     )}
                                     <Link
-                                        href={item.link ? item.link : "#"}
+                                        href={getBlogUrl(item.link)}
                                         className="text-2xl font-semibold leading-snug hover:underline"
                                     >
                                         {item.title}

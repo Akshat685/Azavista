@@ -30,11 +30,10 @@ export default function TabsSection(props: TabsSectionData) {
             <button
               key={index}
               onClick={() => setActiveIndex(index)}
-              className={`pb-3 text-lg font-semibold tracking-wide transition-all duration-300 ${
-                activeIndex === index
+              className={`pb-3 text-lg font-semibold tracking-wide transition-all duration-300 ${activeIndex === index
                   ? "text-blue-600 border-b-4 border-blue-600"
                   : "text-gray-500 hover:text-blue-600"
-              }`}
+                }`}
             >
               {tab.tabLabel}
             </button>

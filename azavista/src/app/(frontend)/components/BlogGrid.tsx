@@ -5,6 +5,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { BlogGridBlock, BlogGridPostItem } from '../types'
 
+// Helper function to construct proper blog URLs
+function getBlogUrl(link?: string): string {
+  if (!link) return '#'
+
+  // If it's already a full URL (http/https) or starts with /, use as-is
+  if (link.startsWith('http') || link.startsWith('/')) {
+    return link
+  }
+
+  // Otherwise, treat it as a blog slug and prepend /blog/
+  const cleanSlug = link.replace(/^\/+|\/+$/g, '') // Remove leading/trailing slashes
+  return `/blog/${cleanSlug}`
+}
+
 export default function BlogGrid(props: BlogGridBlock) {
   const { searchPlaceholder = 'Search...', types = [], items = [] } = props
   const [query, setQuery] = useState('')
@@ -13,7 +27,8 @@ export default function BlogGrid(props: BlogGridBlock) {
   const filtered = useMemo(() => {
     return items.filter((item: BlogGridPostItem) => {
       const matchesType =
-        selectedType === 'all' || (item.type || '').toLowerCase() === selectedType.toLowerCase()
+        selectedType === 'all' ||
+        (item.type || '').trim().toLowerCase() === selectedType.toLowerCase()
 
       const q = query.trim().toLowerCase()
       const matchesQuery =
@@ -49,7 +64,7 @@ export default function BlogGrid(props: BlogGridBlock) {
             >
               <option value="all">All Blog Types</option>
               {types.map((t, i) => (
-                <option key={i} value={(t.label || '').toLowerCase()}>
+                <option key={i} value={(t.label || '').trim().toLowerCase()}>
                   {t.label}
                 </option>
               ))}
@@ -70,11 +85,7 @@ export default function BlogGrid(props: BlogGridBlock) {
               (post.image as any)?.url ||
               (post.image as any)?.thumbnailURL ||
               ''
-            const href = post.link
-              ? post.link.startsWith('http') || post.link.startsWith('/')
-                ? post.link
-                : `/blog/${post.link.replace(/^\/+|\/+$/g, '')}`
-              : '#'
+            const href = getBlogUrl(post.link)
 
             return (
               <div key={idx} className="flex flex-col">
@@ -95,11 +106,16 @@ export default function BlogGrid(props: BlogGridBlock) {
                   {post.category && (
                     <div className="text-sm text-gray-500 mb-1">{post.category}</div>
                   )}
-                  <Link href={href} className="font-semibold text-lg leading-snug hover:underline">
+                  <Link
+                    href={href}
+                    className="font-semibold text-lg leading-snug hover:underline line-clamp-2"
+                  >
                     {post.title}
                   </Link>
                   {post.excerpt && (
-                    <p className="text-gray-600 mt-2 text-sm leading-relaxed">{post.excerpt}</p>
+                    <p className="text-gray-600 mt-2 text-sm leading-relaxed line-clamp-4">
+                      {post.excerpt}
+                    </p>
                   )}
                 </div>
               </div>

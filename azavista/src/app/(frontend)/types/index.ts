@@ -416,6 +416,27 @@ export interface BlogGridBlock {
 }
 
 
+// Blog page types (used by blog/[slug]/page.tsx)
+export interface BlogSocialIcon {
+  label?: string;
+  url?: string;
+  icon?: CloudinaryImage | number | Media | null;
+}
+
+export interface BlogPage {
+  title?: string | null;
+  subtitle?: string | null;
+  slug?: string | null;
+  category?: string | null;
+  image?: CloudinaryImage | number | Media | null;
+  publishedAt?: string | null;
+  lastUpdatedAt?: string | null;
+  updatedAt?: string | null;
+  socialIcons?: BlogSocialIcon[] | null;
+  bodyContent?: SerializedEditorState | null;
+}
+
+
 export type BlockData =
   | HeroBlockData
   | VideoSection
@@ -437,4 +458,8 @@ export type BlockData =
   | GalleryMarqueeData
   | BlogListBlock
   | BlogGridBlock
+  | BlogPage
+
+
   
+
