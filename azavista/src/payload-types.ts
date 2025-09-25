@@ -772,6 +772,69 @@ export interface Page {
             blockName?: string | null;
             blockType: 'blogGrid';
           }
+        | {
+            eventTypeLabel?: string | null;
+            eventTypes?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            regionLabel?: string | null;
+            regionsList?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            resetLabel?: string | null;
+            events?:
+              | {
+                  title?: string | null;
+                  description?: string | null;
+                  eventDate?: string | null;
+                  eventType?: string | null;
+                  region?: string | null;
+                  image?: (number | null) | Media;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsGrid';
+          }
+        | {
+            heading?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heading';
+          }
+        | {
+            heading: string;
+            description?: string | null;
+            buttonText: string;
+            buttonUrl: string;
+            backgroundImage: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'integratedHero';
+          }
+        | {
+            title?: string | null;
+            items?:
+              | {
+                  image?: (number | null) | Media;
+                  title: string;
+                  description?: string | null;
+                  learnMore?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'integrateCard';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1410,6 +1473,73 @@ export interface PagesSelect<T extends boolean = true> {
                     excerpt?: T;
                     image?: T;
                     link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        eventsGrid?:
+          | T
+          | {
+              eventTypeLabel?: T;
+              eventTypes?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              regionLabel?: T;
+              regionsList?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              resetLabel?: T;
+              events?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    eventDate?: T;
+                    eventType?: T;
+                    region?: T;
+                    image?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        heading?:
+          | T
+          | {
+              heading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        integratedHero?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              buttonText?: T;
+              buttonUrl?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        integrateCard?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    description?: T;
+                    learnMore?: T;
                     id?: T;
                   };
               id?: T;

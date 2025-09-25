@@ -253,6 +253,15 @@ export interface BlueSection {
   backgroundColor?: string;
 }
 
+export interface IntegratedHero {
+  blockType: "integratedHero";
+  heading: string;
+  description: string;
+  buttonText: string;
+  buttonUrl: string;
+  backgroundImage: Media | number | CloudinaryImage;
+}
+
 // Integrated Tool block
 export interface IntegratedToolItem {
   title: string;
@@ -415,6 +424,33 @@ export interface BlogGridBlock {
   items?: BlogGridPostItem[];
 }
 
+// Events grid types
+export interface EventItem {
+  title: string;
+  description?: string;
+  image?: Media | number | CloudinaryImage;
+  link?: string;
+  date?: string;
+  eventType?: string;
+  regions?: string[];
+}
+
+export interface EventsGridBlock {
+  blockType: "eventsGrid";
+  events?: EventItem[];
+  eventTypes?: { label: string }[];
+  eventTypeLabel?: string;
+  regionLabel?: string;
+  regionsList?: { label: string }[];
+  resetLabel?: string;
+}
+
+export interface HeadingBlock {
+  blockType: "heading";
+  heading?: string;
+}
+
+
 
 // Blog page types (used by blog/[slug]/page.tsx)
 export interface BlogSocialIcon {
@@ -434,6 +470,20 @@ export interface BlogPage {
   updatedAt?: string | null;
   socialIcons?: BlogSocialIcon[] | null;
   bodyContent?: SerializedEditorState | null;
+}
+
+
+export interface IntegrateCardItem {
+  title: string;
+  description?: string;
+  learnMore?: string;
+  image?: Media | number | CloudinaryImage;
+}
+
+export interface IntegrateCardBlock {
+  blockType: "integrateCard";
+  title?: string;
+  items?: IntegrateCardItem[];
 }
 
 
@@ -458,6 +508,10 @@ export type BlockData =
   | GalleryMarqueeData
   | BlogListBlock
   | BlogGridBlock
+  | EventsGridBlock
+  | HeadingBlock
+  | IntegrateCardBlock
+  | IntegratedHero
 
 
   

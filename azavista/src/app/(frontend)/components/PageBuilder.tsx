@@ -21,6 +21,10 @@ import VideoSection from "./VideoSection";
 import GalleryMarquee from "./GalleryMarquee";
 import BlogList from "./BlogList";
 import BlogGrid from "./BlogGrid";
+import EventsGrid from "./EventsGrid";
+import Heading from "./Heading";
+import IntegratedHero from "./IntegratedHero";
+import IntegrateCard from "./IntegrateCard";
 
 interface PageBuilderProps {
   blocks?: BlockData[];
@@ -73,6 +77,14 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <BlogList key={i} {...block} />;
           case "blogGrid":
             return <BlogGrid key={i} {...block} />;
+          case "eventsGrid":
+            return <EventsGrid key={i} {...block} />;
+          case "heading":
+            return <Heading key={i} {...block} />;
+          case "integratedHero":
+            return <IntegratedHero key={i} {...(block)} />;
+          case "integrateCard":
+            return <IntegrateCard key={i} {...(block)} />;
           default:
             return null;
         }
