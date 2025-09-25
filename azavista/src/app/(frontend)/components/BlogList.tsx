@@ -32,13 +32,8 @@ export default function BlogList({ featured, itemsRight }: BlogListBlock) {
                                 className="w-full relative aspect-[16/11]"
                             >
                                 <Image
-                                    src={
-                                        (featured.image as any)?.cloudinary?.secure_url ||
-                                        (featured.image as any)?.url ||
-                                        (featured.image as any)?.thumbnailURL ||
-                                        ""
-                                    }
-                                    alt={featured.title || "Featured Image"}
+                                    src={getImageUrl(featured.image)}
+                                    alt={getAlt(featured.image) || featured.title || "Featured Image"}
                                     fill
                                     className="object-cover"
                                 />
@@ -76,13 +71,8 @@ export default function BlogList({ featured, itemsRight }: BlogListBlock) {
                                         className="min-w-[230px] max-w-[230px] w-full relative aspect-[16/11]"
                                     >
                                         <Image
-                                            src={
-                                                (item.image as any)?.cloudinary?.secure_url ||
-                                                (item.image as any)?.url ||
-                                                (item.image as any)?.thumbnailURL ||
-                                                ""
-                                            }
-                                            alt={item.title || "Blog Image"}
+                                            src={getImageUrl(item.image)}
+                                            alt={getAlt(item.image) || item.title || "Blog Image"}
                                             fill
                                             className="object-cover"
                                         />
@@ -112,4 +102,20 @@ export default function BlogList({ featured, itemsRight }: BlogListBlock) {
             </div>
         </section>
     );
+}
+
+function getImageUrl(image?: CloudinaryImage | number | Media): string {
+    if (!image || typeof image === "number") return "";
+    const cloud = (image as CloudinaryImage).cloudinary;
+    if (cloud?.secure_url) return cloud.secure_url;
+    const media = image as Media;
+    return media.url || media.thumbnailURL || "";
+}
+
+function getAlt(image?: CloudinaryImage | number | Media): string | undefined {
+    if (!image || typeof image === "number") return undefined;
+    const asCloud = image as CloudinaryImage;
+    if (asCloud.alt) return asCloud.alt;
+    const asMedia = image as Media;
+    return asMedia.alt;
 }

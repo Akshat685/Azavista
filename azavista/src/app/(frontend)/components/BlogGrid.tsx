@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import type { BlogGridBlock, BlogGridPostItem } from '../types'
+import type { BlogGridBlock, BlogGridPostItem, Media, CloudinaryImage } from '../types'
 
 // Helper function to construct proper blog URLs
 function getBlogUrl(link?: string): string {
@@ -80,11 +80,7 @@ export default function BlogGrid(props: BlogGridBlock) {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {filtered.map((post: BlogGridPostItem, idx: number) => {
-            const imgUrl =
-              (post.image as any)?.cloudinary?.secure_url ||
-              (post.image as any)?.url ||
-              (post.image as any)?.thumbnailURL ||
-              ''
+            const imgUrl = getImageUrl(post.image)
             const href = getBlogUrl(post.link)
 
             return (
@@ -96,7 +92,7 @@ export default function BlogGrid(props: BlogGridBlock) {
                   >
                     <Image
                       src={imgUrl}
-                      alt={post.title || 'Blog Image'}
+                      alt={getAlt(post.image) || post.title || 'Blog Image'}
                       fill
                       className="object-cover"
                     />
@@ -125,4 +121,20 @@ export default function BlogGrid(props: BlogGridBlock) {
       </div>
     </section>
   )
+}
+
+function getImageUrl(image?: CloudinaryImage | number | Media): string {
+  if (!image || typeof image === 'number') return ''
+  const cloud = (image as CloudinaryImage).cloudinary
+  if (cloud?.secure_url) return cloud.secure_url
+  const media = image as Media
+  return media.url || media.thumbnailURL || ''
+}
+
+function getAlt(image?: CloudinaryImage | number | Media): string | undefined {
+  if (!image || typeof image === 'number') return undefined
+  const asCloud = image as CloudinaryImage
+  if (asCloud.alt) return asCloud.alt
+  const asMedia = image as Media
+  return asMedia.alt
 }

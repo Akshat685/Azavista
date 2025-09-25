@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import PageBuilder from "@/app/(frontend)/components/PageBuilder";
-import type { BlockData, BlogPage } from "@/app/(frontend)/types";
+import type { BlockData, BlogPage, Media, CloudinaryImage, BlogSocialIcon } from "@/app/(frontend)/types";
+import type { SerializedEditorState } from "lexical";
 import { getPageBySlug } from "@/lib/actions/page.action";
 import { getBlogPostBySlug } from "@/lib/actions/blog.action";
 import { RichText } from "@payloadcms/richtext-lexical/react";
@@ -16,7 +17,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
 
   // Prefer Blogs collection first
   const blog: BlogPage | null =
-    ((await getBlogPostBySlug(slug)) || (await getBlogPostBySlug(fullSlug))) as unknown as BlogPage | null;
+    ((await getBlogPostBySlug(slug)) || (await getBlogPostBySlug(fullSlug))) as BlogPage | null;
   if (blog) {
     return (
       <article className="px-4 lg:px-6 py-14">
@@ -70,19 +71,20 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
                 <path d="M6 2a1 1 0 0 1 1 1v1h6V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 1 1 2 0v1Zm11 6H3v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" />
               </svg>
               <span>Last Updated Date :</span>
-              <time dateTime={(blog as any).lastUpdatedAt as string || blog.updatedAt as string}>
-                {new Date(((blog as any).lastUpdatedAt as string) || (blog.updatedAt as string)).toLocaleDateString(
-                  undefined,
-                  { year: "numeric", month: "long", day: "numeric" }
-                )}
+              <time dateTime={(blog.lastUpdatedAt as string) || (blog.updatedAt as string)}>
+                {new Date((blog.lastUpdatedAt as string) || (blog.updatedAt as string)).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
               </time>
             </span>
           </div>
 
           {/* Share icons from Payload */}
-          {Array.isArray((blog as any).socialIcons) && (blog as any).socialIcons.length > 0 && (
+          {Array.isArray(blog.socialIcons) && blog.socialIcons.length > 0 && (
             <div className="mt-4 flex items-center justify-left gap-5 text-gray-500">
-              {(blog as any).socialIcons.map((s: any, i: number) => (
+              {blog.socialIcons.map((s: BlogSocialIcon, i: number) => (
                 <a
                   key={i}
                   aria-label={s.label || "Social link"}
@@ -91,7 +93,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
                   rel="noopener noreferrer"
                 >
                   <Image
-                    src={s.icon?.cloudinary?.secure_url || s.icon?.url || s.icon?.thumbnailURL || ""}
+                    src={getImageUrl(s.icon)}
                     alt={s.label || "Icon"}
                     width={22}
                     height={22}
@@ -105,13 +107,8 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
           {blog.image && (
             <div className="relative w-full aspect-[16/9] mt-8">
               <Image
-                src={
-                  (blog.image as any)?.cloudinary?.secure_url ||
-                  (blog.image as any)?.url ||
-                  (blog.image as any)?.thumbnailURL ||
-                  ""
-                }
-                alt={(blog.image as any)?.alt || blog.title || "Blog image"}
+                src={getImageUrl(blog.image)}
+                alt={getAlt(blog.image) || blog.title || "Blog image"}
                 fill
                 className="object-cover"
               />
@@ -150,7 +147,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
                   [&>.callout-tools]:border-l-4 [&>.callout-tools]:border-blue-500 [&>.callout-tools]:bg-blue-50 [&>.callout-tools]:p-4 [&>.callout-tools]:rounded-md [&>.callout-tools]:mb-6
                 "
               >
-                <RichText data={blog.bodyContent as any} />
+                <RichText data={blog.bodyContent as SerializedEditorState} />
               </div>
             </div>
           )}
@@ -166,4 +163,20 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
   }
 
   return notFound();
+}
+
+function getImageUrl(image?: CloudinaryImage | number | Media | null): string {
+  if (!image || typeof image === "number") return "";
+  const cloud = (image as CloudinaryImage).cloudinary;
+  if (cloud?.secure_url) return cloud.secure_url;
+  const media = image as Media;
+  return media.url || media.thumbnailURL || "";
+}
+
+function getAlt(image?: CloudinaryImage | number | Media | null): string | undefined {
+  if (!image || typeof image === "number") return undefined;
+  const asCloud = image as CloudinaryImage;
+  if (asCloud.alt) return asCloud.alt;
+  const asMedia = image as Media;
+  return asMedia.alt;
 }
