@@ -458,7 +458,6 @@ export type BlockData =
   | GalleryMarqueeData
   | BlogListBlock
   | BlogGridBlock
-  | BlogPage
 
 
   
