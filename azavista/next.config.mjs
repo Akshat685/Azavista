@@ -7,8 +7,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: `res.cloudinary.com`,
-        pathname: `/dyzcs1rlb/**`, // Your cloud name from env
+        hostname: 'res.cloudinary.com',
+        pathname: '/**', // Allow all Cloudinary paths
       },
     ],
     domains: [

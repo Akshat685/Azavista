@@ -4,6 +4,8 @@ export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
     mimeTypes: ['image/*'],
+    // Disable local file storage since we're using Cloudinary
+    disableLocalStorage: true,
   },
   access: {
     read: () => true, // Public access for frontend
@@ -44,6 +46,22 @@ export const Media: CollectionConfig = {
         beforeChange: [
           ({ siblingData }) => {
             return siblingData?.cloudinary?.public_id || null;
+          },
+        ],
+      },
+    },
+    {
+      name: 'publicUrl',
+      type: 'text',
+      admin: {
+        readOnly: true,
+        description: 'Public URL for this media file',
+      },
+      hooks: {
+        afterRead: [
+          ({ data }) => {
+            // Return the best available URL
+            return data?.cloudinary?.secure_url || data?.url || data?.thumbnailURL || null;
           },
         ],
       },

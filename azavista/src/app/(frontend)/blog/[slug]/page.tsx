@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-
 import PageBuilder from "@/app/(frontend)/components/PageBuilder";
 import type { BlockData, BlogPage } from "@/app/(frontend)/types";
 import { getPageBySlug } from "@/lib/actions/page.action";
@@ -41,14 +40,41 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
             {blog.category && <span>{blog.category}</span>}
             {blog.publishedAt && (
               <span className="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="w-4 h-4 text-gray-500"
+                >
+                  <path d="M6 2a1 1 0 0 1 1 1v1h6V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 1 1 2 0v1Zm11 6H3v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" />
+                </svg>
                 <span>Original Publish Date :</span>
-                <time dateTime={blog.publishedAt as string}>{new Date(blog.publishedAt as string).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                <time dateTime={blog.publishedAt as string}>
+                  {new Date(blog.publishedAt as string).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
               </span>
             )}
             <span className="flex items-center gap-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                className="w-4 h-4 text-gray-500"
+              >
+                <path d="M6 2a1 1 0 0 1 1 1v1h6V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 1 1 2 0v1Zm11 6H3v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" />
+              </svg>
               <span>Last Updated Date :</span>
               <time dateTime={(blog as any).lastUpdatedAt as string || blog.updatedAt as string}>
-                {new Date(((blog as any).lastUpdatedAt as string) || (blog.updatedAt as string)).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                {new Date(((blog as any).lastUpdatedAt as string) || (blog.updatedAt as string)).toLocaleDateString(
+                  undefined,
+                  { year: "numeric", month: "long", day: "numeric" }
+                )}
               </time>
             </span>
           </div>
@@ -57,7 +83,13 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
           {Array.isArray((blog as any).socialIcons) && (blog as any).socialIcons.length > 0 && (
             <div className="mt-4 flex items-center justify-left gap-5 text-gray-500">
               {(blog as any).socialIcons.map((s: any, i: number) => (
-                <a key={i} aria-label={s.label || "Social link"} href={s.url} target="_blank" rel="noopener noreferrer">
+                <a
+                  key={i}
+                  aria-label={s.label || "Social link"}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Image
                     src={s.icon?.cloudinary?.secure_url || s.icon?.url || s.icon?.thumbnailURL || ""}
                     alt={s.label || "Icon"}
@@ -73,7 +105,12 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
           {blog.image && (
             <div className="relative w-full aspect-[16/9] mt-8">
               <Image
-                src={(blog.image as any)?.cloudinary?.secure_url || (blog.image as any)?.url || (blog.image as any)?.thumbnailURL || ""}
+                src={
+                  (blog.image as any)?.cloudinary?.secure_url ||
+                  (blog.image as any)?.url ||
+                  (blog.image as any)?.thumbnailURL ||
+                  ""
+                }
                 alt={(blog.image as any)?.alt || blog.title || "Blog image"}
                 fill
                 className="object-cover"
@@ -85,36 +122,39 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
         {/* Body with TOC layout */}
         <div className="mt-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-8">
           <aside className="hidden lg:block w-full">
-            <TableOfContents containerSelector="#article-content" headingsSelector="h1, h2, h3" maxHeightClass="max-h-[60vh]" />
+            <TableOfContents
+              containerSelector="#article-content"
+              headingsSelector="h1, h2, h3"
+              maxHeightClass="max-h-[60vh]"
+            />
           </aside>
 
           {blog.bodyContent && (
             <div id="article-content" className="max-w-4xl mx-auto">
               <div
                 className="
-        prose prose-lg md:prose-xl max-w-none dark:prose-invert
-        prose-headings:font-bold prose-headings:tracking-tight
-        [&>div>h1]:text-4xl [&>div>h1]:md:text-5xl [&>div>h1]:mt-10 [&>div>h1]:mb-6 [&>div>h1]:scroll-mt-28
-        [&>div>h2]:text-2xl [&>div>h2]:md:text-3xl [&>div>h2]:mt-10 [&>div>h2]:mb-6 [&>div>h2]:scroll-mt-28
-        [&>div>h3]:mt-10 [&>div>h3]:mb-6 [&>div>h3]:scroll-mt-10
-        [&>div>p]:text-gray-700 [&>div>p]:leading-relaxed [&>div>p]:mb-6
-        [&>div>strong]:font-semibold [&>div>strong]:text-gray-900
-        [&_a]:text-blue-600 [&_a]:underline hover:[&_a]:text-blue-700 [&_a]:underline-offset-2
-        [&>div>ul]:list-disc [&>div>ul]:pl-6 [&>div>ul]:mb-6
-        [&>div>ol]:list-decimal [&>div>ol]:pl-6 [&>div>ol]:mb-6
-        [&>div>li]:my-2
-        [&>div>img]:rounded-lg [&>div>img]:shadow-md [&>div>img]:mx-auto [&>div>img]:my-6
-        [&>.callout-problem]:border-l-4 [&>.callout-problem]:border-red-500 [&>.callout-problem]:bg-red-50 [&>.callout-problem]:p-4 [&>.callout-problem]:rounded-md [&>.callout-problem]:mb-6
-        [&>.callout-help]:border-l-4 [&>.callout-help]:border-green-500 [&>.callout-help]:bg-green-50 [&>.callout-help]:p-4 [&>.callout-help]:rounded-md [&>.callout-help]:mb-6
-        [&>.callout-tools]:border-l-4 [&>.callout-tools]:border-blue-500 [&>.callout-tools]:bg-blue-50 [&>.callout-tools]:p-4 [&>.callout-tools]:rounded-md [&>.callout-tools]:mb-6
-      "
+                  prose prose-lg md:prose-xl max-w-none dark:prose-invert
+                  prose-headings:font-bold prose-headings:tracking-tight
+                  [&>div>h1]:text-4xl [&>div>h1]:md:text-5xl [&>div>h1]:mb-6 [&>div>h1]:scroll-mt-28
+                  [&>div>h2]:text-3xl [&>div>h2]:font-bold [&>div>h2]:md:text-3xl [&>div>h2]:mt-10 [&>div>h2]:mb-6 [&>div>h2]:scroll-mt-28
+                  [&>div>h3]:text-2xl [&>div>h3]:font-bold [&>div>h3]:mt-10 [&>div>h3]:mb-6 [&>div>h3]:scroll-mt-10
+                  [&>div>p]:text-gray-700 [&>div>p]:leading-relaxed [&>div>p]:mb-6
+                  [&>div>strong]:font-semibold [&>div>strong]:text-gray-900 
+                  [&_a]:text-blue-600 [&_a]:underline hover:[&_a]:text-blue-700 [&_a]:underline-offset-2
+                  [&>div>ul]:list-disc [&>div>ul]:pl-6 [&>div>ul]:mb-6
+                  [&>div>ol]:list-decimal [&>div>ol]:pl-6 [&>div>ol]:mb-6
+                  [&>div>li]:my-2
+                  [&>div>img]:w-full [&>div>img]:shadow-md [&>div>img]:mx-auto [&>div>img]:my-6
+                  [&>.callout-problem]:border-l-4 [&>.callout-problem]:border-red-500 [&>.callout-problem]:bg-red-50 [&>.callout-problem]:p-4 [&>.callout-problem]:rounded-md [&>.callout-problem]:mb-6
+                  [&>.callout-help]:border-l-4 [&>.callout-help]:border-green-500 [&>.callout-help]:bg-green-50 [&>.callout-help]:p-4 [&>.callout-help]:rounded-md [&>.callout-help]:mb-6
+                  [&>.callout-tools]:border-l-4 [&>.callout-tools]:border-blue-500 [&>.callout-tools]:bg-blue-50 [&>.callout-tools]:p-4 [&>.callout-tools]:rounded-md [&>.callout-tools]:mb-6
+                "
               >
                 <RichText data={blog.bodyContent as any} />
               </div>
             </div>
           )}
         </div>
-
       </article>
     );
   }

@@ -157,6 +157,10 @@ export interface Media {
    */
   cloudinaryId?: string | null;
   /**
+   * Public URL for this media file
+   */
+  publicUrl?: string | null;
+  /**
    * Cloudinary Media Information
    */
   cloudinary?: {
@@ -920,6 +924,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   cloudinaryId?: T;
+  publicUrl?: T;
   cloudinary?:
     | T
     | {
