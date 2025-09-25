@@ -8,12 +8,13 @@ export default function IntegratedHero({
   buttonUrl,
   backgroundImage,
 }: IntegratedHero) {
-  const imageUrl =
-    // @ts-ignore - handle flexible shapes coming from CMS
-    (backgroundImage as any)?.cloudinary?.secure_url ||
-    // @ts-ignore
-    (backgroundImage as any)?.url ||
-    undefined;
+  const imageUrl = (() => {
+    if (!backgroundImage || typeof backgroundImage === "number") return undefined;
+    const asCloud = backgroundImage as { cloudinary?: { secure_url?: string } };
+    if (asCloud.cloudinary?.secure_url) return asCloud.cloudinary.secure_url;
+    const asMedia = backgroundImage as { url?: string };
+    return asMedia.url;
+  })();
 
   return (
     <section

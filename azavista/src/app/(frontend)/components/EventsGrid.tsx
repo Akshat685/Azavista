@@ -28,6 +28,14 @@ function getEventUrl(link?: string): string | undefined {
   return `/${clean}`
 }
 
+function getEventDateUnknown(input: unknown): string | undefined {
+  if (input && typeof input === "object" && "eventDate" in (input as Record<string, unknown>)) {
+    const v = (input as { eventDate?: unknown }).eventDate
+    return typeof v === "string" ? v : undefined
+  }
+  return undefined
+}
+
 
 
 export default function EventsGrid(props: EventsGridBlock) {
@@ -184,8 +192,8 @@ export default function EventsGrid(props: EventsGridBlock) {
                   {ev.date && (
                     <div className="text-sm text-gray-600 mb-3">{ev.date}</div>
                   )}
-                  {(!ev.date && (ev as any).eventDate) && (
-                    <div className="text-sm text-gray-600 mb-3">{new Date((ev as any).eventDate as string).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                  {!ev.date && getEventDateUnknown(ev) && (
+                    <div className="text-sm text-gray-600 mb-3">{new Date(getEventDateUnknown(ev) as string).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</div>
                   )}
                   {ev.description && (
                     <p className="text-gray-700 leading-relaxed line-clamp-4 mb-4">{ev.description}</p>
