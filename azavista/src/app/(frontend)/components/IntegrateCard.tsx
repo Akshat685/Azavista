@@ -33,7 +33,7 @@ export default function IntegrateCard({ title, items = [] }: IntegrateCardBlock)
             const img = getImageUrl(item.image)
             const href = item.learnMore
             return (
-              <article key={idx} className="rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)]">
+              <article key={idx} className="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)]">
                 {img && (
                   href ? (
                     <Link href={href} className="relative block w-full aspect-[16/10]">

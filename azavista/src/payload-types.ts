@@ -438,8 +438,8 @@ export interface Page {
             blockType: 'whyAzavista';
           }
         | {
-            badge: string;
-            title: string;
+            badge?: string | null;
+            title?: string | null;
             subtitle?: string | null;
             cards?:
               | {
@@ -834,6 +834,76 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'integrateCard';
+          }
+        | {
+            searchPlaceholder?: string | null;
+            filterByLabel?: string | null;
+            clearAllLabel?: string | null;
+            categoriesLabel?: string | null;
+            showingResultsLabel?: string | null;
+            resultsLabel?: string | null;
+            categories?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            integrations?:
+              | {
+                  name: string;
+                  description?: string | null;
+                  logo?: (number | null) | Media;
+                  category?: string | null;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'integrationsGrid';
+          }
+        | {
+            industriesLabel?: string | null;
+            regionsLabel?: string | null;
+            solutionsLabel?: string | null;
+            resetLabel?: string | null;
+            showIndustries?: boolean | null;
+            showRegions?: boolean | null;
+            showSolutions?: boolean | null;
+            industries?:
+              | {
+                  label?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            regions?:
+              | {
+                  label?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            solutions?:
+              | {
+                  label?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            items?:
+              | {
+                  title?: string | null;
+                  excerpt?: string | null;
+                  link?: string | null;
+                  mainImage?: (number | null) | Media;
+                  badgeImage?: (number | null) | Media;
+                  industry?: string | null;
+                  region?: string | null;
+                  solution?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'caseStudiesGrid';
           }
       )[]
     | null;
@@ -1540,6 +1610,78 @@ export interface PagesSelect<T extends boolean = true> {
                     title?: T;
                     description?: T;
                     learnMore?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        integrationsGrid?:
+          | T
+          | {
+              searchPlaceholder?: T;
+              filterByLabel?: T;
+              clearAllLabel?: T;
+              categoriesLabel?: T;
+              showingResultsLabel?: T;
+              resultsLabel?: T;
+              categories?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              integrations?:
+                | T
+                | {
+                    name?: T;
+                    description?: T;
+                    logo?: T;
+                    category?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        caseStudiesGrid?:
+          | T
+          | {
+              industriesLabel?: T;
+              regionsLabel?: T;
+              solutionsLabel?: T;
+              resetLabel?: T;
+              showIndustries?: T;
+              showRegions?: T;
+              showSolutions?: T;
+              industries?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              regions?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              solutions?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              items?:
+                | T
+                | {
+                    title?: T;
+                    excerpt?: T;
+                    link?: T;
+                    mainImage?: T;
+                    badgeImage?: T;
+                    industry?: T;
+                    region?: T;
+                    solution?: T;
                     id?: T;
                   };
               id?: T;

@@ -25,6 +25,8 @@ import EventsGrid from "./EventsGrid";
 import Heading from "./Heading";
 import IntegratedHero from "./IntegratedHero";
 import IntegrateCard from "./IntegrateCard";
+import IntegrationsGrid from "./IntegrationsGrid";
+import CaseStudiesGrid from "./CaseStudiesGrid";
 
 interface PageBuilderProps {
   blocks?: BlockData[];
@@ -85,6 +87,10 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <IntegratedHero key={i} {...(block)} />;
           case "integrateCard":
             return <IntegrateCard key={i} {...(block)} />;
+          case "integrationsGrid":
+            return <IntegrationsGrid key={i} {...(block)} />;
+          case "caseStudiesGrid":
+            return <CaseStudiesGrid key={i} {...(block)} />;
           default:
             return null;
         }

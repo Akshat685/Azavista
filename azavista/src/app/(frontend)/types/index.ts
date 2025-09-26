@@ -486,6 +486,58 @@ export interface IntegrateCardBlock {
   items?: IntegrateCardItem[];
 }
 
+// Integrations Grid types
+export interface IntegrationItem {
+  name: string;
+  description?: string;
+  logo?: Media | number | CloudinaryImage;
+  category?: string;
+  link?: string;
+}
+
+export interface IntegrationsGridBlock {
+  blockType: "integrationsGrid";
+  integrations?: IntegrationItem[];
+  searchPlaceholder?: string;
+  filterByLabel?: string;
+  clearAllLabel?: string;
+  categoriesLabel?: string;
+  showingResultsLabel?: string;
+  resultsLabel?: string;
+  categories?: { label: string }[];
+}
+
+
+// Case Studies Grid (filterable) types
+export interface CaseStudyGridItem {
+  title: string;
+  excerpt?: string;
+  link?: string;
+  mainImage?: Media | number | CloudinaryImage;
+  badgeImage?: Media | number | CloudinaryImage; // small logo at top-left
+  industry?: string; // "All Industries" filter
+  region?: string;   // "All Regions" filter
+  solution?: string; // "All Solutions" filter
+}
+
+export interface CaseStudiesGridBlock {
+  blockType: "caseStudiesGrid";
+  // Optional labels for controls; if omitted, controls can be hidden via flags
+  industriesLabel?: string; // e.g., "All Industries"
+  regionsLabel?: string;    // e.g., "All Regions"
+  solutionsLabel?: string;  // e.g., "All Solutions"
+  resetLabel?: string;      // e.g., "Reset"
+  // Allow hiding any control per-page
+  showIndustries?: boolean;
+  showRegions?: boolean;
+  showSolutions?: boolean;
+  // Optionally predefine available values; otherwise derive from items
+  industries?: { label: string }[];
+  regions?: { label: string }[];
+  solutions?: { label: string }[];
+  items?: CaseStudyGridItem[];
+}
+
 
 export type BlockData =
   | HeroBlockData
@@ -512,6 +564,8 @@ export type BlockData =
   | HeadingBlock
   | IntegrateCardBlock
   | IntegratedHero
+  | IntegrationsGridBlock
+  | CaseStudiesGridBlock
 
 
   

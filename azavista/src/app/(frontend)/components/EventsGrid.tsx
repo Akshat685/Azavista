@@ -63,18 +63,31 @@ export default function EventsGrid(props: EventsGridBlock) {
   const uniqueRegions = useMemo(() => {
     if (regionsList.length) return regionsList.map((r) => (r.label || '').trim()).filter(Boolean)
     const set = new Set<string>()
-    events.forEach((e) => (e.regions || []).forEach((r) => {
-      const s = normalizeRegion(r)
-      if (s) set.add(s)
-    }))
+    events.forEach((e) => {
+      // Handle array of regions
+      ;(e.regions || []).forEach((r) => {
+        const s = normalizeRegion(r)
+        if (s) set.add(s)
+      })
+      // Handle single region field from Payload
+      const single = (e as unknown as { region?: unknown }).region
+      const singleNorm = normalizeRegion(single as unknown)
+      if (singleNorm) set.add(singleNorm)
+    })
     return Array.from(set)
   }, [events, regionsList])
 
   const filtered = useMemo(() => {
     return events.filter((e) => {
       const matchesType = typeFilter === "all" || (e.eventType || "").toLowerCase() === typeFilter
-      const matchesRegion =
-        regionFilter === "all" || (e.regions || []).some((r) => normalizeRegion(r).toLowerCase() === regionFilter)
+      const matchesRegion = (() => {
+        if (regionFilter === "all") return true
+        // Check array field
+        if ((e.regions || []).some((r) => normalizeRegion(r).toLowerCase() === regionFilter)) return true
+        // Check single field
+        const single = (e as unknown as { region?: unknown }).region
+        return !!single && normalizeRegion(single as unknown).toLowerCase() === regionFilter
+      })()
       return matchesType && matchesRegion
     })
   }, [events, typeFilter, regionFilter])
@@ -153,7 +166,12 @@ export default function EventsGrid(props: EventsGridBlock) {
           {filtered.map((ev: EventItem, idx: number) => {
             const img = getImageUrl(ev.image)
             const typeBadge = ev.eventType
-            const regions = (ev.regions || []).map((r) => normalizeRegion(r)).filter(Boolean)
+            const regions = (() => {
+              const arr = (ev.regions || []).map((r) => normalizeRegion(r)).filter(Boolean)
+              const single = (ev as unknown as { region?: unknown }).region
+              const norm = normalizeRegion(single as unknown)
+              return norm ? Array.from(new Set([norm, ...arr])) : arr
+            })()
             const href = getEventUrl(ev.link)
 
             return (

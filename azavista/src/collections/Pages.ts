@@ -23,10 +23,12 @@ import { EventsGrid } from "@/blocks/EventsGrid";
 import { Heading } from "@/blocks/Heading";
 import { IntegratedHero } from "@/blocks/IntegratedHero";
 import { IntegrateCard } from "@/blocks/IntegrateCard";
+import { IntegrationsGrid } from "@/blocks/IntegrationsGrid";
+import { CaseStudiesGrid } from "@/blocks/CaseStudiesGrid";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
-    admin: {
+  admin: {
     useAsTitle: "title",
   },
   fields: [
@@ -72,6 +74,8 @@ export const Pages: CollectionConfig = {
         Heading,
         IntegratedHero,
         IntegrateCard,
+        IntegrationsGrid,
+        CaseStudiesGrid,
       ]
     }
   ],

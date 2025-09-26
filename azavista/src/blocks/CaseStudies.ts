@@ -11,13 +11,13 @@ export const CaseStudies: Block = {
       name: "badge",
       type: "text",
       label: "Badge",
-      required: true,
+      
     },
     {
       name: "title",
       type: "text",
       label: "Section Title",
-      required: true,
+      
     },
     {
       name: "subtitle",
