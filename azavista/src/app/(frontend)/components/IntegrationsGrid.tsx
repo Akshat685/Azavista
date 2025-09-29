@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import type { IntegrationsGridBlock, IntegrationItem, Media, CloudinaryImage } from "../types"
 
 function getImageUrl(image?: CloudinaryImage | number | Media): string {
@@ -144,7 +143,6 @@ export default function IntegrationsGrid(props: IntegrationsGridBlock) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
               {filtered.map((integration: IntegrationItem, idx: number) => {
                 const img = getImageUrl(integration.logo)
-                const href = getIntegrationUrl(integration.link)
 
                 return (
                   <div
@@ -183,17 +181,12 @@ export default function IntegrationsGrid(props: IntegrationsGridBlock) {
                             {integration.description}
                           </p>
                         )}
-                        {/* {href && (
-                          <Link 
-                            href={href} 
-                            className="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-800"
-                          >
-                            Learn More
-                            <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </Link>
-                        )} */}
+                        <span className="inline-flex items-center text-blue-600 font-medium text-sm mt-auto">
+                          Learn More
+                          <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </span>
                       </div>
                     </div>
                   </div>

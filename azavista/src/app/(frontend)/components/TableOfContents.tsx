@@ -20,7 +20,7 @@ function slugify(text: string): string {
 export default function TableOfContents({ containerSelector = "#article-content", headingsSelector = "h1, h2, h3", maxHeightClass = "max-h-[calc(100vh-6rem)]" }: { containerSelector?: string; headingsSelector?: string; maxHeightClass?: string; }) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>("");
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  // removed IntersectionObserver usage to avoid jitter with duplicate headings
   const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
