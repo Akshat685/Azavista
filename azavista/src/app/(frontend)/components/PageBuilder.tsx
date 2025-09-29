@@ -27,7 +27,9 @@ import IntegratedHero from "./IntegratedHero";
 import IntegrateCard from "./IntegrateCard";
 import IntegrationsGrid from "./IntegrationsGrid";
 import CaseStudiesGrid from "./CaseStudiesGrid";
-
+import HeroHighlight from "./HeroHighlight";
+import StatsWithLogos from "./StatsWithLogos";
+import CustomerTestimonial from "./CustomerTestimonial";
 interface PageBuilderProps {
   blocks?: BlockData[];
 }
@@ -91,7 +93,13 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <IntegrationsGrid key={i} {...(block)} />;
           case "caseStudiesGrid":
             return <CaseStudiesGrid key={i} {...(block)} />;
-          default:
+          case "heroHighlight":
+            return <HeroHighlight key={i} {...(block)} />;
+          case "statsWithLogos":
+            return <StatsWithLogos key={i} {...(block)} />;
+          case "customerTestimonial":
+            return <CustomerTestimonial key={i} {...(block)} />;
+           default:
             return null;
         }
       })}

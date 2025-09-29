@@ -33,7 +33,7 @@ export default function IntegrateCard({ title, items = [] }: IntegrateCardBlock)
             const img = getImageUrl(item.image)
             const href = item.learnMore
             return (
-              <article key={idx} className="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)]">
+              <article key={idx} className="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)] h-full flex flex-col">
                 {img && (
                   href ? (
                     <Link href={href} className="relative block w-full aspect-[16/10]">
@@ -45,15 +45,13 @@ export default function IntegrateCard({ title, items = [] }: IntegrateCardBlock)
                     </div>
                   )
                 )}
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   <h3 className="text-[20px] font-semibold justify-center leading-snug mb-2">{item.title}</h3>
                   {item.description && (
                     <p className="text-gray-700 leading-relaxed mb-4 line-clamp-5">{item.description}</p>
                   )}
                   {href && (
-                    <Link href={href} className="text-blue-600 font-semibold text-sm hover:underline">
-                      {"Learn More >"}
-                    </Link>
+                    <span className="text-blue-600 font-semibold text-sm mt-auto hover:cursor-pointer">{"Learn More >"}</span>
                   )}
                 </div>
               </article>

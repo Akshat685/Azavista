@@ -99,7 +99,7 @@ export default function CaseStudiesGrid(props: CaseStudiesGridBlock) {
   return (
     <section className="py-8 md:py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
-        <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8">
           {showIndustries && (
             <div className="relative">
               <select
@@ -175,8 +175,8 @@ export default function CaseStudiesGrid(props: CaseStudiesGridBlock) {
             const href = card.link && (card.link.startsWith("http") || card.link.startsWith("/"))
               ? card.link
               : card.link
-              ? `/${card.link.replace(/^\/+|\/+$/g, "")}`
-              : undefined
+                ? `/${card.link.replace(/^\/+|\/+$/g, "")}`
+                : undefined
 
             const ArticleInner = (
               <>
@@ -194,24 +194,23 @@ export default function CaseStudiesGrid(props: CaseStudiesGridBlock) {
                     )}
                   </div>
                 )}
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   {card.title && (
                     <h3 className="text-[22px] font-semibold leading-snug mb-2">{card.title}</h3>
                   )}
                   {href && (
-                    <Link href={href} className="text-blue-600 font-semibold text-sm ">
-                      {"Read The Case Study "}
-                      {">"}
-                    </Link>
+                    <span className="text-blue-600 font-semibold text-sm mt-auto">
+                      {"Read The Case Study >"}
+                    </span>
                   )}
                 </div>
               </>
             )
 
             return (
-              <article key={idx} className="rounded-md overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)]">
+              <article key={idx} className="rounded-md overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)] h-full flex flex-col">
                 {href ? (
-                  <Link href={href} className="block">{ArticleInner}</Link>
+                  <Link href={href} className=" h-full flex flex-col">{ArticleInner}</Link>
                 ) : (
                   ArticleInner
                 )}

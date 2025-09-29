@@ -514,28 +514,63 @@ export interface CaseStudyGridItem {
   excerpt?: string;
   link?: string;
   mainImage?: Media | number | CloudinaryImage;
-  badgeImage?: Media | number | CloudinaryImage; // small logo at top-left
-  industry?: string; // "All Industries" filter
-  region?: string;   // "All Regions" filter
-  solution?: string; // "All Solutions" filter
+  badgeImage?: Media | number | CloudinaryImage; 
+  industry?: string; 
+  region?: string;   
+  solution?: string; 
 }
 
 export interface CaseStudiesGridBlock {
   blockType: "caseStudiesGrid";
-  // Optional labels for controls; if omitted, controls can be hidden via flags
-  industriesLabel?: string; // e.g., "All Industries"
-  regionsLabel?: string;    // e.g., "All Regions"
-  solutionsLabel?: string;  // e.g., "All Solutions"
-  resetLabel?: string;      // e.g., "Reset"
-  // Allow hiding any control per-page
+  industriesLabel?: string;
+  regionsLabel?: string;  
+  solutionsLabel?: string;  
+  resetLabel?: string;    
   showIndustries?: boolean;
   showRegions?: boolean;
   showSolutions?: boolean;
-  // Optionally predefine available values; otherwise derive from items
   industries?: { label: string }[];
   regions?: { label: string }[];
   solutions?: { label: string }[];
   items?: CaseStudyGridItem[];
+}
+
+export interface HeroHighlight {
+  blockType: "heroHighlight";
+  title: string;
+  description: string;
+  primaryButton: {
+    label: string;
+    link: string;
+  };
+  secondaryButton: {
+    label: string;
+    link: string;
+  };
+}
+
+export interface StatsWithLogos {
+  blockType: "statsWithLogos";
+  heading: string;
+  stats: {
+    percentage: string;
+    description: string;
+  }[];
+  logos: {
+    logo: CloudinaryImage;
+  }[];
+}
+
+export interface CustomerTestimonial {
+  blockType: "customerTestimonial";
+  logo: CloudinaryImage;
+  quote: string;
+  author: {
+    name: string;
+    role: string;
+    company: string;
+    image: CloudinaryImage ;
+  };  
 }
 
 
@@ -566,6 +601,9 @@ export type BlockData =
   | IntegratedHero
   | IntegrationsGridBlock
   | CaseStudiesGridBlock
+  | HeroHighlight
+  | StatsWithLogos
+  | CustomerTestimonial
 
 
   

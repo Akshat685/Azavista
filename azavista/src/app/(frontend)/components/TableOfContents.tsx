@@ -29,51 +29,52 @@ export default function TableOfContents({ containerSelector = "#article-content"
 
     const nodes = Array.from(container.querySelectorAll(headingsSelector)) as HTMLElement[];
 
+    // ensure unique ids for duplicate headings
+    const usedIds = new Set<string>();
     const collected: Heading[] = nodes.map((node) => {
-      // ensure each heading has an id
-      if (!node.id) {
-        const generated = slugify(node.innerText || node.textContent || "");
-        // avoid empty ids
-        node.id = generated || `heading-${Math.random().toString(36).slice(2, 8)}`;
+      const text = node.innerText || node.textContent || "";
+      let id = node.id;
+      if (!id) {
+        const base = slugify(text) || `heading-${Math.random().toString(36).slice(2, 8)}`;
+        id = base;
+        let i = 2;
+        while (usedIds.has(id)) id = `${base}-${i++}`;
+        node.id = id;
+      } else if (usedIds.has(id)) {
+        let i = 2;
+        let candidate = `${id}-${i}`;
+        while (usedIds.has(candidate)) candidate = `${id}-${++i}`;
+        id = candidate;
+        node.id = id;
       }
+      usedIds.add(id);
       const level = Number(node.tagName.replace("H", ""));
-      return { id: node.id, text: node.innerText || node.textContent || "", level };
+      return { id, text, level };
     });
 
     setHeadings(collected);
 
-    // Observe headings for active highlight
-    if (observerRef.current) observerRef.current.disconnect();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // pick the closest heading in view
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => (a.boundingClientRect.top > b.boundingClientRect.top ? 1 : -1));
-
-        if (visible.length > 0) {
-          setActiveId((visible[0].target as HTMLElement).id);
-        } else {
-          // fall back to the last heading above viewport
-          const past = entries
-            .filter((e) => e.boundingClientRect.top < 0)
-            .sort((a, b) => (a.boundingClientRect.top > b.boundingClientRect.top ? 1 : -1));
-          if (past.length > 0) setActiveId((past[past.length - 1].target as HTMLElement).id);
-        }
-      },
-      {
-        rootMargin: "0px 0px -65% 0px",
-        threshold: [0, 1.0],
+    // stable active detection using scroll position
+    function updateActive() {
+      const offset = 120;
+      let current = collected[0]?.id || "";
+      for (const h of collected) {
+        const el = document.getElementById(h.id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top - offset <= 0) current = h.id; else break;
       }
-    );
+      if (current) setActiveId(current);
+    }
 
-    nodes.forEach((n) => observer.observe(n));
-    observerRef.current = observer;
+    updateActive();
+    const onScroll = () => requestAnimationFrame(updateActive);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
 
-    // cleanup
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [containerSelector, headingsSelector]);
 

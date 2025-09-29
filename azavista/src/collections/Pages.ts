@@ -25,6 +25,9 @@ import { IntegratedHero } from "@/blocks/IntegratedHero";
 import { IntegrateCard } from "@/blocks/IntegrateCard";
 import { IntegrationsGrid } from "@/blocks/IntegrationsGrid";
 import { CaseStudiesGrid } from "@/blocks/CaseStudiesGrid";
+import { HeroHighlight } from "@/blocks/HeroHighlight";
+import { StatsWithLogos } from "@/blocks/StatsWithLogos";
+import { CustomerTestimonial } from "@/blocks/CustomerTestimonial";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -76,6 +79,9 @@ export const Pages: CollectionConfig = {
         IntegrateCard,
         IntegrationsGrid,
         CaseStudiesGrid,
+        HeroHighlight,
+        StatsWithLogos,
+        CustomerTestimonial,
       ]
     }
   ],

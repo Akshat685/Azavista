@@ -905,6 +905,53 @@ export interface Page {
             blockName?: string | null;
             blockType: 'caseStudiesGrid';
           }
+        | {
+            title?: string | null;
+            description?: string | null;
+            primaryButton?: {
+              label?: string | null;
+              link?: string | null;
+            };
+            secondaryButton?: {
+              label?: string | null;
+              link?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroHighlight';
+          }
+        | {
+            heading?: string | null;
+            stats?:
+              | {
+                  percentage?: string | null;
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            logos?:
+              | {
+                  logo?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'statsWithLogos';
+          }
+        | {
+            logo?: (number | null) | Media;
+            quote?: string | null;
+            author?: {
+              name?: string | null;
+              role?: string | null;
+              company?: string | null;
+              image?: (number | null) | Media;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'customerTestimonial';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1683,6 +1730,62 @@ export interface PagesSelect<T extends boolean = true> {
                     region?: T;
                     solution?: T;
                     id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        heroHighlight?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              primaryButton?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                  };
+              secondaryButton?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        statsWithLogos?:
+          | T
+          | {
+              heading?: T;
+              stats?:
+                | T
+                | {
+                    percentage?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              logos?:
+                | T
+                | {
+                    logo?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        customerTestimonial?:
+          | T
+          | {
+              logo?: T;
+              quote?: T;
+              author?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    company?: T;
+                    image?: T;
                   };
               id?: T;
               blockName?: T;

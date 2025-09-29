@@ -100,7 +100,7 @@ export default function EventsGrid(props: EventsGridBlock) {
   return (
     <section className="py-8 md:py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
-        <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8">
           {/* Event Type select styled like pill with chevron */}
           <div className="relative">
             <select
@@ -175,7 +175,7 @@ export default function EventsGrid(props: EventsGridBlock) {
             const href = getEventUrl(ev.link)
 
             return (
-              <article key={idx} className="rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)]">
+              <article key={idx} className="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-[0_6px_24px_rgba(0,0,0,0.07)] h-full flex flex-col">
                 {img && (
                   href ? (
                     <Link href={href} className="relative block w-full aspect-[16/10]">
@@ -188,7 +188,7 @@ export default function EventsGrid(props: EventsGridBlock) {
                   )
                 )}
 
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   <div className="flex flex-wrap items-center gap-2 text-xs font-medium mb-3">
                     {regions.map((r, i) => (
                       <span key={i} className="rounded-full bg-gray-100 text-gray-700 px-3 py-1">
@@ -218,10 +218,9 @@ export default function EventsGrid(props: EventsGridBlock) {
                   )}
 
                   {href && (
-                    <Link href={href} className="text-blue-600 font-semibold text-sm hover:underline">
-                      {"Learn More "}
-                      {">"}
-                    </Link>
+                    <span className="text-blue-600 font-semibold text-sm mt-auto">
+                      {"Learn More >"}
+                    </span>
                   )}
                 </div>
               </article>
