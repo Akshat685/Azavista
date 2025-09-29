@@ -20,12 +20,6 @@ function getAlt(image?: CloudinaryImage | number | Media): string | undefined {
   return asMedia.alt
 }
 
-function getIntegrationUrl(link?: string): string | undefined {
-  if (!link) return undefined
-  if (link.startsWith('http') || link.startsWith('/')) return link
-  const clean = link.replace(/^\/+|\/+$/g, '')
-  return `/${clean}`
-}
 
 export default function IntegrationsGrid(props: IntegrationsGridBlock) {
   const {
