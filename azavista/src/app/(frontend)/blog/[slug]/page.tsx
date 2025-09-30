@@ -10,6 +10,23 @@ import TableOfContents from "@/app/(frontend)/components/TableOfContents";
 
 export const revalidate = 60;
 
+function getImageUrl(image?: CloudinaryImage | number | Media | null): string {
+  if (!image || typeof image === "number") return "";
+  const cloud = (image as CloudinaryImage).cloudinary;
+  if (cloud?.secure_url) return cloud.secure_url;
+  const media = image as Media;
+  return media.url || media.thumbnailURL || "";
+}
+
+function getAlt(image?: CloudinaryImage | number | Media | null): string | undefined {
+  if (!image || typeof image === "number") return undefined;
+  const asCloud = image as CloudinaryImage;
+  if (asCloud.alt) return asCloud.alt;
+  const asMedia = image as Media;
+  return asMedia.alt;
+}
+
+
 export default async function BlogSlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
@@ -121,7 +138,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
           <aside className="hidden lg:block w-full">
             <TableOfContents
               containerSelector="#article-content"
-              headingsSelector="h1, h2, h3"
+              headingsSelector="h1 , h2"
               maxHeightClass="max-h-[60vh]"
             />
           </aside>
@@ -130,21 +147,21 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
             <div id="article-content" className="max-w-4xl mx-auto">
               <div
                 className="
-                  prose prose-lg md:prose-xl max-w-none dark:prose-invert
+                  prose prose-xl md:prose-2xl max-w-none dark:prose-invert
                   prose-headings:font-bold prose-headings:tracking-tight
-                  [&>div>h1]:text-4xl [&>div>h1]:md:text-5xl [&>div>h1]:mb-6 [&>div>h1]:scroll-mt-28
-                  [&>div>h2]:text-3xl [&>div>h2]:font-bold [&>div>h2]:md:text-3xl [&>div>h2]:mt-10 [&>div>h2]:mb-6 [&>div>h2]:scroll-mt-28
-                  [&>div>h3]:text-2xl [&>div>h3]:font-bold [&>div>h3]:mt-10 [&>div>h3]:mb-6 [&>div>h3]:scroll-mt-10
-                  [&>div>p]:text-gray-700 [&>div>p]:leading-relaxed [&>div>p]:mb-6
+                  [&>div>h1]:text-4xl [&>div>h1]:md:text-5xl [&>div>h1]:mb-8 [&>div>h1]:scroll-mt-28 [&>div>h1]:font-bold
+                  [&>div>h2]:text-3xl [&>div>h2]:font-bold [&>div>h2]:md:text-3xl [&>div>h2]:mt-10 [&>div>h2]:mb-8 [&>div>h2]:scroll-mt-28
+                  [&>div>h3]:text-2xl [&>div>h3]:font-bold [&>div>h3]:mt-10 [&>div>h3]:mb-8 [&>div>h3]:scroll-mt-10
+                  [&>div>p]:text-gray-700 [&>div>p]:leading-loose [&>div>p]:my-8 [&>div>p]:text-[1.1rem] md:[&>div>p]:text-[1.3rem]
                   [&>div>strong]:font-semibold [&>div>strong]:text-gray-900 
                   [&_a]:text-blue-600 [&_a]:underline hover:[&_a]:text-blue-700 [&_a]:underline-offset-2
-                  [&>div>ul]:list-disc [&>div>ul]:pl-6 [&>div>ul]:mb-6
-                  [&>div>ol]:list-decimal [&>div>ol]:pl-6 [&>div>ol]:mb-6
-                  [&>div>li]:my-2
-                  [&>div>img]:w-full [&>div>img]:shadow-md [&>div>img]:mx-auto [&>div>img]:my-6
-                  [&>.callout-problem]:border-l-4 [&>.callout-problem]:border-red-500 [&>.callout-problem]:bg-red-50 [&>.callout-problem]:p-4 [&>.callout-problem]:rounded-md [&>.callout-problem]:mb-6
-                  [&>.callout-help]:border-l-4 [&>.callout-help]:border-green-500 [&>.callout-help]:bg-green-50 [&>.callout-help]:p-4 [&>.callout-help]:rounded-md [&>.callout-help]:mb-6
-                  [&>.callout-tools]:border-l-4 [&>.callout-tools]:border-blue-500 [&>.callout-tools]:bg-blue-50 [&>.callout-tools]:p-4 [&>.callout-tools]:rounded-md [&>.callout-tools]:mb-6
+                  [&>div>ul]:list-disc [&>div>ul]:pl-6 [&>div>ul]:mb-8 [&>div>ul]:space-y-6 lg:[&>div>ul]:space-y-5
+                  [&>div>ol]:list-decimal [&>div>ol]:pl-6 [&>div>ol]:mb-8 [&>div>ol]:space-y-6 lg:[&>div>ol]:space-y-10
+                  [&>div>ul>li]:my-6 lg:[&>div>ul>li]:my-7 [&>div>ol>li]:my-6 lg:[&>div>ol>li]:my-5 [&>div>li]:text-[1.3rem] md:[&>div>li]:text-[1.35rem]
+                  [&>div>img]:w-full [&>div>img]:shadow-md [&>div>img]:mx-auto [&>div>img]:my-8
+                  [&>.callout-problem]:border-l-4 [&>.callout-problem]:border-red-500 [&>.callout-problem]:bg-red-50 [&>.callout-problem]:p-4 [&>.callout-problem]:rounded-md [&>.callout-problem]:mb-8
+                  [&>.callout-help]:border-l-4 [&>.callout-help]:border-green-500 [&>.callout-help]:bg-green-50 [&>.callout-help]:p-4 [&>.callout-help]:rounded-md [&>.callout-help]:mb-8
+                  [&>.callout-tools]:border-l-4 [&>.callout-tools]:border-blue-500 [&>.callout-tools]:bg-blue-50 [&>.callout-tools]:p-4 [&>.callout-tools]:rounded-md [&>.callout-tools]:mb-8
                 "
               >
                 <RichText data={blog.bodyContent as SerializedEditorState} />
@@ -165,18 +182,3 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
   return notFound();
 }
 
-function getImageUrl(image?: CloudinaryImage | number | Media | null): string {
-  if (!image || typeof image === "number") return "";
-  const cloud = (image as CloudinaryImage).cloudinary;
-  if (cloud?.secure_url) return cloud.secure_url;
-  const media = image as Media;
-  return media.url || media.thumbnailURL || "";
-}
-
-function getAlt(image?: CloudinaryImage | number | Media | null): string | undefined {
-  if (!image || typeof image === "number") return undefined;
-  const asCloud = image as CloudinaryImage;
-  if (asCloud.alt) return asCloud.alt;
-  const asMedia = image as Media;
-  return asMedia.alt;
-}

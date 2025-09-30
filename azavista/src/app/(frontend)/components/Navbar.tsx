@@ -12,6 +12,17 @@ const mediaUrl = (img?: PayloadMedia | FrontendMedia | number | null) => {
   return img.cloudinary?.secure_url || img.thumbnailURL || img.url || "";
 };
 
+// Normalize CMS-provided links to absolute paths.
+// - Full URLs (http/https) and absolute paths (starting with /) are returned as-is
+// - Relative paths like "blog" or "blog/slug" become "/blog" or "/blog/slug"
+function normalizeNavLink(link?: string | null): string {
+  if (!link) return "#";
+  const raw = link.trim();
+  if (raw.startsWith("http") || raw.startsWith("/")) return raw;
+  const trimmed = raw.replace(/^\/+|\/+$/g, "");
+  return `/${trimmed}`;
+}
+
 export default async function Navbar() {
   try {
     const payload = await getPayload({ config: configPromise });
@@ -114,7 +125,7 @@ export default async function Navbar() {
                                     <ul className="space-y-3">
                                       {(doc.items || []).map((item, k) => (
                                         <li key={k}>
-                                          <a href={item.link || '#'} className="block text-base text-blue-800 font-medium hover:text-blue-600 focus:text-blue-600 active:text-blue-600 transition-colors duration-150 py-1.5">
+                                          <a href={normalizeNavLink(item.link)} className="block text-base text-blue-800 font-medium hover:text-blue-600 focus:text-blue-600 active:text-blue-600 transition-colors duration-150 py-1.5">
                                             {item.title}
                                           </a>
                                         </li>
@@ -180,8 +191,8 @@ export default async function Navbar() {
                                             )}
                                             <h3 className="text-lg font-bold text-gray-900 mb-2">{hl.title}</h3>
                                             <p className="text-sm text-gray-600 mb-4 leading-relaxed">{hl.description}</p>
-                                            {hl.link && (
-                                              <Link href={hl.link} className="text-blue-600 text-sm font-medium hover:text-blue-700">{hl.linkText || "Contact Sales"} &gt;</Link>
+                                              {hl.link && (
+                                              <Link href={normalizeNavLink(hl.link)} className="text-blue-600 text-sm font-medium hover:text-blue-700">{hl.linkText || "Contact Sales"} &gt;</Link>
                                             )}
                                           </>
                                         );
@@ -201,7 +212,7 @@ export default async function Navbar() {
                                               <Image src={mediaUrl(item.icon)} alt="" width={20} height={20} className="w-5 h-5 mt-0.5 flex-shrink-0" />
                                             )}
                                             <div>
-                                              <Link href={item.link || '#'} className="text-sm font-semibold text-gray-900 hover:text-blue-600 block">{item.title}</Link>
+                                              <Link href={normalizeNavLink(item.link)} className="text-sm font-semibold text-gray-900 hover:text-blue-600 block">{item.title}</Link>
                                               {item.description && <p className="text-xs text-gray-500 mt-1">{item.description}</p>}
                                             </div>
                                           </li>

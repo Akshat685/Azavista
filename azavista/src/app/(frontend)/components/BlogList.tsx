@@ -8,14 +8,16 @@ import type { BlogListBlock, BlogListItem, Media, CloudinaryImage } from "../typ
 function getBlogUrl(link?: string): string {
     if (!link) return "#";
 
+    const raw = link.trim();
     // If it's already a full URL (http/https) or starts with /, use as-is
-    if (link.startsWith("http") || link.startsWith("/")) {
-        return link;
+    if (raw.startsWith("http") || raw.startsWith("/")) {
+        return raw;
     }
 
-    // Otherwise, treat it as a blog slug and prepend /blog/
-    const cleanSlug = link.replace(/^\/+|\/+$/g, ""); // Remove leading/trailing slashes
-    return `/blog/${cleanSlug}`;
+    // Normalize possible values like "blog/slug" coming from CMS
+    const trimmed = raw.replace(/^\/+|\/+$/g, ""); // Remove leading/trailing slashes
+    const withoutBlogPrefix = trimmed.replace(/^blog\//, "");
+    return `/blog/${withoutBlogPrefix}`;
 }
 
 export default function BlogList({ featured, itemsRight }: BlogListBlock) {
