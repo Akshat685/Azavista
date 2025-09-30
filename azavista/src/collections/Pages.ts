@@ -28,6 +28,7 @@ import { CaseStudiesGrid } from "@/blocks/CaseStudiesGrid";
 import { HeroHighlight } from "@/blocks/HeroHighlight";
 import { StatsWithLogos } from "@/blocks/StatsWithLogos";
 import { CustomerTestimonial } from "@/blocks/CustomerTestimonial";
+import { PolicyContent } from "@/blocks/PolicyContent";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -82,6 +83,7 @@ export const Pages: CollectionConfig = {
         HeroHighlight,
         StatsWithLogos,
         CustomerTestimonial,
+        PolicyContent,
       ]
     }
   ],

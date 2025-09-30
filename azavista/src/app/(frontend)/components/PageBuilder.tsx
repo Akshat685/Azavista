@@ -30,6 +30,7 @@ import CaseStudiesGrid from "./CaseStudiesGrid";
 import HeroHighlight from "./HeroHighlight";
 import StatsWithLogos from "./StatsWithLogos";
 import CustomerTestimonial from "./CustomerTestimonial";
+import PolicyContent from "./PolicyContent";
 interface PageBuilderProps {
   blocks?: BlockData[];
 }
@@ -99,7 +100,9 @@ export default function PageBuilder({ blocks }: PageBuilderProps) {
             return <StatsWithLogos key={i} {...(block)} />;
           case "customerTestimonial":
             return <CustomerTestimonial key={i} {...(block)} />;
-           default:
+          case "policyContent":
+            return <PolicyContent key={i} {...(block)} />;
+          default:
             return null;
         }
       })}

@@ -952,6 +952,39 @@ export interface Page {
             blockName?: string | null;
             blockType: 'customerTestimonial';
           }
+        | {
+            title?: string | null;
+            lastUpdatedDate?: string | null;
+            /**
+             * Fallback text if date is not provided
+             */
+            lastUpdated?: string | null;
+            sections?:
+              | {
+                  heading: string;
+                  level?: number | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: string;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'policyContent';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1786,6 +1819,23 @@ export interface PagesSelect<T extends boolean = true> {
                     role?: T;
                     company?: T;
                     image?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        policyContent?:
+          | T
+          | {
+              title?: T;
+              lastUpdatedDate?: T;
+              lastUpdated?: T;
+              sections?:
+                | T
+                | {
+                    heading?: T;
+                    level?: T;
+                    content?: T;
+                    id?: T;
                   };
               id?: T;
               blockName?: T;

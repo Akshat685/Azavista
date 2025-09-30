@@ -573,6 +573,21 @@ export interface CustomerTestimonial {
   };  
 }
 
+export interface PolicyContentSection {
+  heading: string;
+  level?: 1 | 2 | 3;
+  content?: SerializedEditorState | null;
+}
+
+export interface PolicyContentBlock {
+  blockType: "policyContent";
+  title?: string;
+  lastUpdatedDate?: string | null;
+  lastUpdated?: string; // legacy text
+  bodyContent?: SerializedEditorState | null;
+  sections?: PolicyContentSection[];
+}
+
 
 export type BlockData =
   | HeroBlockData
@@ -604,6 +619,7 @@ export type BlockData =
   | HeroHighlight
   | StatsWithLogos
   | CustomerTestimonial
+  | PolicyContentBlock
 
 
   

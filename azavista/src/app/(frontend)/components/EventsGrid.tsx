@@ -65,7 +65,7 @@ export default function EventsGrid(props: EventsGridBlock) {
     const set = new Set<string>()
     events.forEach((e) => {
       // Handle array of regions
-      ;(e.regions || []).forEach((r) => {
+      ; (e.regions || []).forEach((r) => {
         const s = normalizeRegion(r)
         if (s) set.add(s)
       })
