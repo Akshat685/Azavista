@@ -5,9 +5,7 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { JSX as ReactJSX } from "react";
 import type { PolicyContentBlock, PolicyContentSection } from "../types";
 
-interface PolicyContentProps extends PolicyContentBlock {}
-
-export default function PolicyContent(props: PolicyContentProps) {
+export default function PolicyContent(props: PolicyContentBlock) {
   const { lastUpdatedDate, lastUpdated, sections } = props;
 
   const formattedLastUpdated = (() => {
