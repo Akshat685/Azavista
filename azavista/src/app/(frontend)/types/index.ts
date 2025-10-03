@@ -22,6 +22,12 @@ export interface Media {
   url?: string;
 }
 
+// Navbar component props
+export interface NavbarProps {
+  navbar: import("@/payload-types").Navbar;
+}
+
+
 // HeroBlock
 export interface Button {
   url: string;
@@ -587,6 +593,7 @@ export interface PolicyContentBlock {
   bodyContent?: SerializedEditorState | null;
   sections?: PolicyContentSection[];
 }
+
 
 
 export type BlockData =
