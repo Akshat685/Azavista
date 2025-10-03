@@ -15,6 +15,8 @@ export interface CloudinaryImage {
 }
 
 export interface Media {
+  height: number | undefined;
+  width: number | undefined;
   id?: string | number;
   alt?: string;
   cloudinary?: CloudinaryImage["cloudinary"];

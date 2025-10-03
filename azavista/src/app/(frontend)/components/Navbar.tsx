@@ -4,11 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-import type { Navbar as NavbarType, Media as PayloadMedia } from "@/payload-types";
-import type { MegaMenuBlock, MegaMenuColumn, MegaMenuItem, Media as FrontendMedia, NavbarProps } from "../types";
+import type { MegaMenuBlock, MegaMenuColumn, MegaMenuItem, Media , NavbarProps } from "../types";
 
 
-const mediaUrl = (img?: PayloadMedia | FrontendMedia | number | null) => {
+const mediaUrl = (img?: Media | number | null) => {
   if (!img || typeof img === "number") return "";
   return img.cloudinary?.secure_url || img.thumbnailURL || img.url || "";
 };
@@ -60,7 +59,7 @@ export default function Navbar({ navbar }: NavbarProps) {
   const menuItems: MegaMenuBlock[] = (
     (navbar as unknown as { menuItems?: MegaMenuBlock[] } | undefined)?.menuItems
   ) || [];
-  const logo = navbar?.logo as PayloadMedia | number | undefined;
+  const logo = navbar?.logo as Media | number | undefined;
 
   let logoUrl: string | null = null;
   let logoAlt = "Logo";
