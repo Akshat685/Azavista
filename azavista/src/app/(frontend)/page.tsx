@@ -7,6 +7,16 @@ import AnnouncementBar from "./components/AnnouncementBar";
 
 export const revalidate = 60;
 
+interface HeaderGlobal {
+  enabled?: boolean;
+  message?: string;
+  link?: {
+    label?: string;
+    url?: string;
+  };
+  dismissible?: boolean;
+} 
+
 export default async function HomePage() {
   const payload = await getPayload({ config });
 
@@ -23,7 +33,7 @@ export default async function HomePage() {
   if (!page) return <div>Page not found</div>;
 
   // Fetch header global for announcement bar
-  const header = await payload.findGlobal({ slug: 'header' }).catch(() => null) as any;
+  const header = await payload.findGlobal({ slug: 'header' }).catch(() => null) as HeaderGlobal | null;
 
   return (
     <>

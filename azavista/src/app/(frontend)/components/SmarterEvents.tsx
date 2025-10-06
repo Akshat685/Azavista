@@ -23,6 +23,13 @@ export default function SmarterEvents(props: SmarterEventsBlockData) {
     const imgHeight = media?.cloudinary?.height || 400;
     const imageAlt = media?.alt || "Feature image";
 
+    // Properly type the icon
+    const iconMedia = typeof icon === 'number' ? undefined : (icon as CloudinaryImage | undefined);
+    const iconUrl = iconMedia?.cloudinary?.secure_url || iconMedia?.url || iconMedia?.thumbnailURL || "";
+    const iconAlt = iconMedia?.alt || "icon";
+    const iconWidth = iconMedia?.cloudinary?.width || 20;
+    const iconHeight = iconMedia?.cloudinary?.height || 20;
+
     return (
         <section className="bg-white mb-12 py-10 sm:py-14 lg:py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,12 +65,12 @@ export default function SmarterEvents(props: SmarterEventsBlockData) {
                     <div>
                         {categoryLabel && (
                             <div className="flex items-center gap-2 text-[#3BB7C4] font-semibold text-base sm:text-lg mb-6 sm:mb-8 lg:mb-10">
-                                {icon && (
+                                {iconUrl && (
                                     <Image
-                                        src={(icon as any)?.cloudinary?.secure_url || (icon as any)?.url || (icon as any)?.thumbnailURL || ""}
-                                        alt={(icon as any)?.alt || "icon"}
-                                        width={(icon as any)?.cloudinary?.width || 20}
-                                        height={(icon as any)?.cloudinary?.height || 20}
+                                        src={iconUrl}
+                                        alt={iconAlt}
+                                        width={iconWidth}
+                                        height={iconHeight}
                                         className="w-4 h-4 sm:w-5 sm:h-5 object-contain"
                                     />
                                 )}

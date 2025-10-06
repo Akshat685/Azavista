@@ -49,7 +49,6 @@ export default function AnnouncementBar({
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentY = window.scrollY || 0
-          const lastY = lastScrollYRef.current
           const deltaFromLastChange = currentY - lastDirectionChangeYRef.current
           
           lastScrollYRef.current = currentY

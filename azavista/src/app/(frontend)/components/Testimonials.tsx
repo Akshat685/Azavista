@@ -1,8 +1,12 @@
 import Image from "next/image";
-import { TestimonialsBlockData, CloudinaryImage } from "../types"; 
+import { TestimonialsBlockData, CloudinaryImage } from "../types";
 
 export default function TestimonialsBlock(props: TestimonialsBlockData) {
   const { badge, title, subtitle, items, quoteImage } = props;
+
+  // Properly type the quoteImage
+  const quoteMedia = typeof quoteImage === 'number' ? undefined : (quoteImage as CloudinaryImage | undefined);
+  const quoteUrl = quoteMedia?.cloudinary?.secure_url || quoteMedia?.url || quoteMedia?.thumbnailURL || "";
 
   return (
     <section className="py-20 bg-white">
@@ -30,15 +34,10 @@ export default function TestimonialsBlock(props: TestimonialsBlockData) {
               className="bg-gray-100 rounded-lg p-6 text-left shadow-sm relative"
             >
               {/* Quote Icon in exact top-left position */}
-              {quoteImage && (
+              {quoteUrl && (
                 <Image
                   className="absolute -top-6 left-4"
-                  src={
-                    (quoteImage as CloudinaryImage)?.cloudinary?.secure_url ||
-                    (quoteImage as any)?.url ||
-                    (quoteImage as any)?.thumbnailURL ||
-                    ""
-                  }
+                  src={quoteUrl}
                   alt="quote"
                   width={56}
                   height={56}

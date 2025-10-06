@@ -1,23 +1,23 @@
 // CSS Module declarations
-declare module "*.css" {
+declare module "*.module.css" {
   const content: { [className: string]: string };
   export default content;
 }
 
 // Global CSS imports
 declare module "*.css" {
-  const content: any;
+  const content: Record<string, string>;
   export default content;
 }
 
 // SCSS Module declarations
-declare module "*.scss" {
+declare module "*.module.scss" {
   const content: { [className: string]: string };
   export default content;
 }
 
 // Global SCSS imports
 declare module "*.scss" {
-  const content: any;
+  const content: Record<string, string>;
   export default content;
 }
