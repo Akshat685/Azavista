@@ -9,17 +9,17 @@ export default function CaseStudiesBlock(props: CaseStudiesBlockData) {
       <div className="max-w-7xl mx-auto px-4 text-center">
         {/* Top Section */}
         {badge && (
-          <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium mb-4">
+          <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium mb-8">
             {badge}
           </span>
         )}
         {title && (
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8">
             {title}
           </h2>
         )}
         {subtitle && (
-          <p className="text-gray-600 text-base sm:text-lg mb-12 max-w-3xl mx-auto">
+          <p className="text-gray-600 text-base sm:text-lg mb-13 max-w-4xl mx-auto">
             {subtitle}
           </p>
         )}
@@ -47,12 +47,12 @@ export default function CaseStudiesBlock(props: CaseStudiesBlockData) {
                     alt={card.image?.alt || card.title || "Case Study"}
                     width={width}
                     height={height}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-cover mb-10"
                   />
                 )}
                 <div className="p-6">
                   {card.category && (
-                    <p className="text-xs font-semibold uppercase text-gray-500 tracking-wide">
+                    <p className="text-sm font-semibold uppercase text-gray-500 tracking-wide mb-3">
                       {card.category}
                     </p>
                   )}
@@ -62,7 +62,7 @@ export default function CaseStudiesBlock(props: CaseStudiesBlockData) {
                     </h3>
                   )}
                   {card.description && (
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p className="mt-2 text-lg text-gray-600">
                       {card.description}
                     </p>
                   )}

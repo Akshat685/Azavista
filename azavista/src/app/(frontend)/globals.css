@@ -1,15 +1,50 @@
 @import "tailwindcss";
 
+:root {
+  --navbar-height: 64px;
+}
+
+body {
+  scroll-padding-top: var(--navbar-height);
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 
 .animate-marquee {
   display: flex;
-  animation: marquee 10s linear infinite;
+  animation: marquee 12s linear infinite;
+  width: fit-content;
+  will-change: transform;
+}
+
+/* Responsive speed adjustments */
+@media (min-width: 640px) {
+  .animate-marquee {
+    animation-duration: 10s;
+  }
+}
+
+@media (min-width: 768px) {
+  .animate-marquee {
+    animation-duration: 8s;
+  }
+}
+
+@media (min-width: 1024px) {
+  .animate-marquee {
+    animation-duration: 6s;
+  }
+}
+
+@media (min-width: 1280px) {
+  .animate-marquee {
+    animation-duration: 10s;
+  }
 }

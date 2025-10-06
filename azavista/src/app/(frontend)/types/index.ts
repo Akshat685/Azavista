@@ -46,6 +46,7 @@ export interface HeroBlockData {
   blockType: "hero";
   heading: string;
   subheading?: string;
+  trustedCompaniesText?: string;
   buttons?: Button[];
   logos?: Logo[];
 }
@@ -59,6 +60,7 @@ export interface SmarterEventsBlockData {
   heading: string;
   image: CloudinaryImage;
   categoryLabel: string;
+  icon?: CloudinaryImage | number;
   title: string;
   description: string;
   primaryButtonLabel?: string;
@@ -102,6 +104,8 @@ export interface Feature {
   headingBlack?: string;
   description?: string;
   icon?: CloudinaryImage;
+  iconWidth?: number;
+  iconHeight?: number;
 }
 
 export interface WhyAzavistaBlockData {
@@ -154,6 +158,7 @@ export interface TestimonialsBlockData {
   badge?: string;
   title?: string;
   subtitle?: string;
+  quoteImage?: CloudinaryImage | number;
   items?: TestimonialItem[];
 }
 
@@ -597,6 +602,15 @@ export interface PolicyContentBlock {
 }
 
 
+// Announcement Bar types
+export interface AnnouncementBarBlock {
+  blockType: "announcementBar";
+  prefixText: string;
+  linkText: string;
+  linkUrl: string;
+}
+
+
 
 export type BlockData =
   | HeroBlockData
@@ -629,6 +643,7 @@ export type BlockData =
   | StatsWithLogos
   | CustomerTestimonial
   | PolicyContentBlock
+  | AnnouncementBarBlock
 
 
   

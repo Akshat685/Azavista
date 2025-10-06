@@ -35,6 +35,16 @@ export const WhyAzavista: Block = {
           required: true,
         },
         {
+          name: "iconWidth",
+          type: "number",
+          label: "Icon Width (px)",
+        },
+        {
+          name: "iconHeight",
+          type: "number",
+          label: "Icon Height (px)",
+        },
+        {
           name: "headingBlue",
           type: "text",
           required: true,

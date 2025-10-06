@@ -24,6 +24,13 @@ export const SmarterEvents : Block = {
       required: true,
     },
     {
+      name: "icon",
+      type: "upload",
+      relationTo: "media",
+      label: "Icon",
+      required: false,
+    },
+    {
       name: "title",
       type: "text",
       required: true,

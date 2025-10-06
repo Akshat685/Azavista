@@ -92,8 +92,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    header: Header;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -357,6 +361,7 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            trustedCompaniesText?: string | null;
             logos?:
               | {
                   logo: number | Media;
@@ -372,6 +377,7 @@ export interface Page {
             heading: string;
             image: number | Media;
             categoryLabel: string;
+            icon?: (number | null) | Media;
             title: string;
             description: string;
             primaryButtonLabel?: string | null;
@@ -427,6 +433,8 @@ export interface Page {
             features?:
               | {
                   icon: number | Media;
+                  iconWidth?: number | null;
+                  iconHeight?: number | null;
                   headingBlue: string;
                   headingBlack: string;
                   description: string;
@@ -457,6 +465,7 @@ export interface Page {
           }
         | {
             badge?: string | null;
+            quoteImage?: (number | null) | Media;
             title: string;
             subtitle?: string | null;
             items?:
@@ -1279,6 +1288,7 @@ export interface PagesSelect<T extends boolean = true> {
                     variant?: T;
                     id?: T;
                   };
+              trustedCompaniesText?: T;
               logos?:
                 | T
                 | {
@@ -1295,6 +1305,7 @@ export interface PagesSelect<T extends boolean = true> {
               heading?: T;
               image?: T;
               categoryLabel?: T;
+              icon?: T;
               title?: T;
               description?: T;
               primaryButtonLabel?: T;
@@ -1342,6 +1353,8 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     icon?: T;
+                    iconWidth?: T;
+                    iconHeight?: T;
                     headingBlue?: T;
                     headingBlack?: T;
                     description?: T;
@@ -1373,6 +1386,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               badge?: T;
+              quoteImage?: T;
               title?: T;
               subtitle?: T;
               items?:
@@ -1899,6 +1913,40 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  enabled?: boolean | null;
+  message?: string | null;
+  link?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  dismissible?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  enabled?: T;
+  message?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  dismissible?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -35,6 +35,11 @@ export const Hero: Block = {
       ],
     },
     {
+      name: "trustedCompaniesText",
+      type: "text",
+      label: "Trusted Companies Text",
+    },
+    {
       name: "logos",
       type: "array",
       label: "Logos",

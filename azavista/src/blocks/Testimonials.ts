@@ -13,6 +13,12 @@ export const Testimonials: Block = {
       label: "Badge (e.g. Testimonials)",
     },
     {
+      name: "quoteImage",
+      type: "upload",
+      relationTo: "media",
+      label: "Quote Mark Image",
+    },
+    {
       name: "title",
       type: "text",
       label: "Section Title",

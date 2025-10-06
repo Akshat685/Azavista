@@ -9,6 +9,7 @@ export const Navbar: CollectionConfig = {
     read: () => true,
   },
   fields: [
+    
     {
       name: "label",
       type: "text",

@@ -2,12 +2,12 @@ import Image from "next/image";
 import { HeroBlockData } from "../types";
 
 export default function HeroBlock(props: HeroBlockData) {
-  const { heading, subheading, buttons, logos } = props;
+  const { heading, subheading, trustedCompaniesText, buttons, logos } = props;
 
   return (
     <section className="relative bg-gray-100 py-16 md:py-24">
-      <div className="max-w-6xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl lg:text-6xl text-gray-900 mb-4">
+      <div className="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h1 className="max-w-4xl mx-auto text-4xl sm:text-5xl lg:text-6xl text-gray-900 mb-4">
           {heading}
         </h1>
 
@@ -18,15 +18,15 @@ export default function HeroBlock(props: HeroBlockData) {
         )}
 
         {(buttons ?? []).length > 0 && (
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row justify-center gap-6 mb-12">
             {(buttons ?? []).map((btn, i) => (
               <a
                 key={i}
                 href={btn.url}
-                className={`px-6 py-3 rounded-full font-medium text-sm sm:text-base transition ${
+                className={`px-7 py-4 rounded-full font-bold text-lg sm:text-base transition ${
                   btn.variant === "primary"
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    ? "bg-blue-600 text-white hover:bg-blue-800"
+                    : "border border-blue-600 text-blue-600 hover:bg-gray-300"
                 }`}
               >
                 {btn.label}
@@ -35,33 +35,51 @@ export default function HeroBlock(props: HeroBlockData) {
           </div>
         )}
 
-        <p className="text-center text-gray-600 text-sm sm:text-base font-medium mb-6">
-          Trusted by industry-leading companies around the world
-        </p>
+        {trustedCompaniesText && (
+          <p className="text-center text-black-600 text-sm sm:text-base font-medium mb-6">
+            {trustedCompaniesText}
+          </p>
+        )}
       </div>
 
-      {/* Logos */}
+      {/* Logos Marquee */}
       {(logos ?? []).length > 0 && (
-        <div className="mt-15 w-full overflow-hidden">
-          <div className="flex animate-marquee whitespace-nowrap gap-10">
-            {(logos ?? [])
-              .concat(logos ?? [])
-              .map((logo, i) => (
-                <div key={i} className="flex-shrink-0 h-8 sm:h-10 md:h-12">
-                  <Image
-                    src={
-                      logo.logo?.cloudinary?.secure_url ||
-                      logo.logo?.thumbnailURL ||
-                      logo.logo?.url ||
-                      ""
-                    }
-                    alt={logo.alt || "logo"}
-                    width={logo.logo?.cloudinary?.width || 80}
-                    height={logo.logo?.cloudinary?.height || 50}
-                    className="h-full w-auto object-contain ml-20"
-                  />
-                </div>
-              ))}
+        <div className="mt-15 w-full overflow-hidden relative">
+          <div className="flex animate-marquee gap-12 sm:gap-10 md:gap-12 lg:gap-16">
+            {/* First set of logos */}
+            {(logos ?? []).map((logo, i) => (
+              <div key={`set1-${i}`} className="flex-shrink-0 h-8 sm:h-10 md:h-12 flex items-center">
+                <Image
+                  src={
+                    logo.logo?.cloudinary?.secure_url ||
+                    logo.logo?.thumbnailURL ||
+                    logo.logo?.url ||
+                    ""
+                  }
+                  alt={logo.alt || "logo"}
+                  width={logo.logo?.cloudinary?.width || 120}
+                  height={logo.logo?.cloudinary?.height || 50}
+                  className="h-full w-auto object-contain"
+                />
+              </div>
+            ))}
+            {/* Second set of logos for seamless loop */}
+            {(logos ?? []).map((logo, i) => (
+              <div key={`set2-${i}`} className="flex-shrink-0 h-8 sm:h-10 md:h-12 flex items-center">
+                <Image
+                  src={
+                    logo.logo?.cloudinary?.secure_url ||
+                    logo.logo?.thumbnailURL ||
+                    logo.logo?.url ||
+                    ""
+                  }
+                  alt={logo.alt || "logo"}
+                  width={logo.logo?.cloudinary?.width || 120}
+                  height={logo.logo?.cloudinary?.height || 50}
+                  className="h-full w-auto object-contain"
+                />
+              </div>
+            ))}
           </div>
         </div>
       )}

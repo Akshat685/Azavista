@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-import type { MegaMenuBlock, MegaMenuColumn, MegaMenuItem, Media , NavbarProps } from "../types";
+import type { MegaMenuBlock, MegaMenuColumn, MegaMenuItem, Media, NavbarProps } from "../types";
 
 
 const mediaUrl = (img?: Media | number | null) => {
@@ -37,6 +37,18 @@ export default function Navbar({ navbar }: NavbarProps) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   // Close mobile menu when clicking a link
   const handleMobileLinkClick = () => {
@@ -80,7 +92,8 @@ export default function Navbar({ navbar }: NavbarProps) {
   }
 
   return (
-      <nav className="sticky top-0 bg-slate-50 z-50">
+    <>
+      <nav className="fixed top-0 left-0 right-0 bg-slate-50 z-50 shadow-sm" style={{ top: 'var(--announcement-offset, 0px)' }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center h-16">
             {/* Logo */}
@@ -108,68 +121,24 @@ export default function Navbar({ navbar }: NavbarProps) {
 
             {/* Mobile menu (hamburger) */}
             <div className="md:hidden ml-auto">
-              <button 
+              <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
+                aria-label="Toggle menu"
               >
                 <span className="sr-only">Open menu</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
+                {isMobileMenuOpen ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  </svg>
+                )}
               </button>
-              {isMobileMenuOpen && (
-                <div className="fixed inset-x-0 top-16 bottom-0 bg-white border-t border-gray-200 overflow-y-auto px-6 py-6 z-50">
-                  <nav className="max-w-3xl mx-auto">
-                    <ul className="space-y-6">
-                      {menuItems.map((mi, i) => {
-                        const blockType = mi?.blockType || mi?.blockType_ || mi?._blockType || mi?.blockTypeSlug;
-                        if (blockType !== 'megaMenu') return null;
-                        const cols = (mi.columns || []);
-                        const hl = mi.highlight;
-                        return (
-                          <li key={mi.id || i} className="border-b last:border-b-0 border-gray-200 py-3">
-                            <input id={`mob-acc-${i}`} type="checkbox" data-acc="mobile" className="peer sr-only" />
-                            <label htmlFor={`mob-acc-${i}`} className="flex items-center justify-between py-2 cursor-pointer select-none">
-                              <span className="text-gray-900 font-semibold text-lg">{mi.label}</span>
-                              <svg className="w-5 h-5 text-gray-500 transition-transform duration-500 ease-in-out peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                              </svg>
-                            </label>
-                            <div className="max-h-0 overflow-hidden transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]">
-                              {hl && (hl.title) && (
-                                <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                                  <div className="text-sm font-bold text-gray-900">{hl.title}</div>
-                                </div>
-                              )}
-                              <div className="grid grid-cols-1 gap-5 pb-3">
-                                {cols.map((doc, j) => (
-                                  <div key={j}>
-                                    {doc.category && <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">{doc.category}</div>}
-                                    <ul className="space-y-3">
-                                      {(doc.items || []).map((item, k) => (
-                                        <li key={k}>
-                                          <a 
-                                            href={normalizeNavLink(item.link)} 
-                                            onClick={handleMobileLinkClick}
-                                            className="block text-base text-blue-800 font-medium hover:text-blue-600 focus:text-blue-600 active:text-blue-600 transition-colors duration-150 py-1.5"
-                                          >
-                                            {item.title}
-                                          </a>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </nav>
-                </div>
-              )}
             </div>
+
             {/* Menu Items - starts from left after logo */}
             <div className="hidden md:flex items-center space-x-8 flex-1">
               {/* Dynamic menu items from Admin if present */}
@@ -181,22 +150,21 @@ export default function Navbar({ navbar }: NavbarProps) {
                       const cols = sortByOrder(mi.columns || []);
                       const hl = mi.highlight;
                       return (
-                        <div 
-                          key={mi.id || i} 
-                          className="relative group navbar-menu-group"
+                        <div
+                          key={mi.id || i}
+                          className="group navbar-menu-group"
                           onMouseEnter={() => setOpenMenuIndex(i)}
                           onMouseLeave={() => setOpenMenuIndex(null)}
                         >
-                          <button 
+                          <button
                             onClick={() => setOpenMenuIndex(openMenuIndex === i ? null : i)}
-                            className="text-gray-600 hover:text-blue-600 text-sm font-medium py-4 border-b-2 border-transparent hover:border-blue-600 transition-all duration-200"
+                            className="text-black-500 hover:text-blue-600 text-lg font-medium py-4 border-b-2 border-transparent hover:border-blue-600 transition-all duration-200"
                           >
                             {mi.label}
                           </button>
-                          <div className={`transition-all duration-300 fixed left-0 right-0 top-16 bg-white w-screen pointer-events-none z-50 ${
-                            openMenuIndex === i ? 'visible opacity-100' : 'invisible opacity-0'
-                          }`}>
-                            <div className="pointer-events-auto p-8">
+                          <div className={`transition-all duration-300 absolute inset-x-0 top-full bg-white w-full pointer-events-none z-50 ${openMenuIndex === i ? 'visible opacity-100' : 'invisible opacity-0'
+                            }`}>
+                            <div className="max-w-7xl mx-auto py-10 pointer-events-auto">
                               <div className="flex gap-8">
                                 {/* Left highlight section */}
                                 {hl && (hl.title || hl.description || hl.image) && (
@@ -213,9 +181,9 @@ export default function Navbar({ navbar }: NavbarProps) {
                                             )}
                                             <h3 className="text-lg font-bold text-gray-900 mb-2">{hl.title}</h3>
                                             <p className="text-sm text-gray-600 mb-4 leading-relaxed">{hl.description}</p>
-                                              {hl.link && (
-                                              <Link 
-                                                href={normalizeNavLink(hl.link)} 
+                                            {hl.link && (
+                                              <Link
+                                                href={normalizeNavLink(hl.link)}
                                                 onClick={handleDesktopLinkClick}
                                                 className="text-blue-600 text-sm font-medium hover:text-blue-700"
                                               >
@@ -240,14 +208,14 @@ export default function Navbar({ navbar }: NavbarProps) {
                                               <Image src={mediaUrl(item.icon)} alt="" width={20} height={20} className="w-5 h-5 mt-0.5 flex-shrink-0" />
                                             )}
                                             <div>
-                                              <Link 
-                                                href={normalizeNavLink(item.link)} 
+                                              <Link
+                                                href={normalizeNavLink(item.link)}
                                                 onClick={handleDesktopLinkClick}
                                                 className="text-sm font-semibold text-gray-900 hover:text-blue-600 block"
                                               >
                                                 {item.title}
                                               </Link>
-                                              {item.description && <p className="text-xs text-gray-500 mt-1">{item.description}</p>}
+                                              {item.description && <p className="text-xs text-black-500 mt-1">{item.description}</p>}
                                             </div>
                                           </li>
                                         ))}
@@ -274,7 +242,7 @@ export default function Navbar({ navbar }: NavbarProps) {
               <div className="ml-auto hidden md:block">
                 <Link
                   href={navbar.ctaUrl || "#"}
-                  className="inline-flex items-center px-4 py-2 border border-blue-600 text-blue-600 text-sm font-medium rounded-full hover:bg-blue-600 hover:text-white transition-all duration-200"
+                  className="inline-flex items-center px-5 py-3 border border-blue-600 text-blue-600 text-md font-bold rounded-full hover:bg-gray-200  transition-all duration-200"
                 >
                   {navbar.ctaLabel}
                 </Link>
@@ -283,5 +251,67 @@ export default function Navbar({ navbar }: NavbarProps) {
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden" style={{ top: 'calc(var(--announcement-offset, 0px) + 64px)' }}>
+          <div className="absolute inset-0 bg-white overflow-y-auto">
+            <div className="px-6 py-6">
+              <nav className="max-w-3xl mx-auto">
+                <ul className="space-y-6">
+                  {menuItems.map((mi, i) => {
+                    const blockType = mi?.blockType || mi?.blockType_ || mi?._blockType || mi?.blockTypeSlug;
+                    if (blockType !== 'megaMenu') return null;
+                    const cols = (mi.columns || []);
+                    const hl = mi.highlight;
+                    return (
+                      <li key={mi.id || i} className="border-b last:border-b-0 border-gray-200 py-3">
+                        <input id={`mob-acc-${i}`} type="checkbox" data-acc="mobile" className="peer sr-only" />
+                        <label htmlFor={`mob-acc-${i}`} className="flex items-center justify-between py-2 cursor-pointer select-none">
+                          <span className="text-gray-900 font-semibold text-lg">{mi.label}</span>
+                          <svg className="w-5 h-5 text-gray-500 transition-transform duration-500 ease-in-out peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </label>
+                        <div className="max-h-0 overflow-hidden transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]">
+                          {hl && (hl.title) && (
+                            <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                              <div className="text-sm font-bold text-gray-900">{hl.title}</div>
+                            </div>
+                          )}
+                          <div className="grid grid-cols-1 gap-5 pb-3">
+                            {cols.map((doc, j) => (
+                              <div key={j}>
+                                {doc.category && <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">{doc.category}</div>}
+                                <ul className="space-y-3">
+                                  {(doc.items || []).map((item, k) => (
+                                    <li key={k}>
+                                      <a
+                                        href={normalizeNavLink(item.link)}
+                                        onClick={handleMobileLinkClick}
+                                        className="block text-base text-blue-800 font-medium hover:text-blue-600 focus:text-blue-600 active:text-blue-600 transition-colors duration-150 py-1.5"
+                                      >
+                                        {item.title}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Spacer to prevent content from hiding under fixed navbar */}
+      <div className="h-16" style={{ marginTop: 'var(--announcement-offset, 0px)' }} />
+    </>
   );
 }
