@@ -45,7 +45,7 @@ export default function HeroBlock(props: HeroBlockData) {
       {/* Logos Marquee */}
       {(logos ?? []).length > 0 && (
         <div className="mt-15 w-full overflow-hidden relative">
-          <div className="flex animate-marquee gap-12 sm:gap-10 md:gap-12 lg:gap-16">
+          <div className="flex animate-marquee gap-12 sm:gap-10 md:gap-12 lg:gap-30">
             {/* First set of logos */}
             {(logos ?? []).map((logo, i) => (
               <div key={`set1-${i}`} className="flex-shrink-0 h-8 sm:h-10 md:h-12 flex items-center">

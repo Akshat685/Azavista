@@ -33,18 +33,18 @@ body {
 
 @media (min-width: 768px) {
   .animate-marquee {
-    animation-duration: 8s;
+    animation-duration: 12s;
   }
 }
 
 @media (min-width: 1024px) {
   .animate-marquee {
-    animation-duration: 6s;
+    animation-duration: 14s;
   }
 }
 
 @media (min-width: 1280px) {
   .animate-marquee {
-    animation-duration: 10s;
+    animation-duration: 20s;
   }
 }
